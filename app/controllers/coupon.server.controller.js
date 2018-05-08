@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    couponModel = require('../models/coupon.server.model.js'),
+    couponModel = mongoose.model('coupon'),
     userDbConn = require('../../config/user.connection.db.config'),
     crypto = require('crypto');
 
@@ -123,9 +123,9 @@ exports.list = function (req, res) {
 exports.detail = function (req, res) {
     //for user database
     userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var coupon = userdb.model('client');
-        client.findOne({id: req.params.id}).sort('-type').exec(function (err, client) {
-            if (!client) {
+        var coupon = userdb.model('coupon');
+        coupon.findOne({id: req.params.id}).sort('-type').exec(function (err, coupon) {
+            if (!coupon) {
                 res.status(200).send()
             } else {
                 if (err) {
@@ -133,7 +133,7 @@ exports.detail = function (req, res) {
                         message: err
                     });
                 } else {
-                    res.jsonp(client);
+                    res.jsonp(coupon);
                 }
             }
         });

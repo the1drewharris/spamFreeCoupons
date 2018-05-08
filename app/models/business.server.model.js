@@ -46,7 +46,7 @@ var businessSchema = new Schema ({
         type: String
     },
     picture: {
-        type: File
+        type: String
     },
     status: {
         type: String

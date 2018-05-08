@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../AnonymousCoupons/.idea/AnonymousCoupons.iml" filepath="$PROJECT_DIR$/../AnonymousCoupons/.idea/AnonymousCoupons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/anonymousCoupons.iml" filepath="$PROJECT_DIR$/anonymousCoupons.iml" />
     </modules>
   </component>
 </project>

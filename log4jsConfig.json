@@ -1,0 +1,14 @@
+{
+  "appenders": [
+    {
+      "type": "console",
+      "filename": "../logs/anonymousCouponsApp.log",
+      "maxLogSize": 20480,
+      "backups": 3,
+      "category": "acLogs"
+    },
+    {
+      "type": "console"
+    }
+  ]
+}

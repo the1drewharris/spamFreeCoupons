@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 /**
- * clients Schema
+ * coupon Schema
  */
 var couponSchema = new Schema ({
     id: {

@@ -3,7 +3,7 @@
 var express = require('express'),
     app = express(),
     path = require('path'),
-    debug = require('debug')('TrakkTask'),
+    debug = require('debug')('anonymousCoupons'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     session = require('express-session'),
