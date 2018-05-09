@@ -5,7 +5,7 @@
  */
 var mongoose = require('mongoose'),
     businessOwnerModel = require('../models/businessOwner.server.model.js'),
-    userDbConn = require('../../config/user.connection.db.config'),
+    businessOwner = mongoose.model('businessOwner'),
     crypto = require('crypto');
 
 
@@ -32,28 +32,22 @@ exports.create = function (req, res) {
     // used to create ID
     var current_date = (new Date()).valueOf().toString();
     var random = Math.random().toString();
-    //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var businessOwner = userdb.model('businessOwner');
-        var v = new businessOwner({
-            id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
-            email: req.body.email,
-            password: req.body.password,
-            businesses: req.body.businesses
+    var v = new businessOwner({
+        id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
+        email: req.body.email,
+        password: req.body.password,
+        businesses: req.body.businesses
 
-        });
-
-        v.save(function (err, businessOwner) {
-            if (err) {
-                return res.status(400).send({
-                    message:  err
-                });
-            } else {
-                res.status(200).send({success: true, id: businessOwner.id});
-            }
-        });
     });
-
+    v.save(function (err, businessOwner) {
+        if (err) {
+            return res.status(400).send({
+                message:  err
+            });
+        } else {
+            res.status(200).send({success: true, id: businessOwner.id});
+        }
+    });
 };
 
 /**
@@ -72,24 +66,18 @@ exports.create = function (req, res) {
 *     }
  */
 exports.list = function (req, res) {
-    //for user database
-    console.log('req.user.database: ' + req.user.database);
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var businessOwner = userdb.model('businessOwner');
-
-        businessOwner.find().sort('-type').exec(function (err, businessOwners) {
-            if (!businessOwner.length) {
-                res.status(200).send({businessOwners: businessOwners})
+    businessOwner.find().sort('-type').exec(function (err, businessOwners) {
+        if (!businessOwner.length) {
+            res.status(200).send({businessOwners: businessOwners})
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message:  err
+                });
             } else {
-                if (err) {
-                    return res.status(400).send({
-                        message:  err
-                    });
-                } else {
-                    res.jsonp(businessOwners);
-                }
+                res.jsonp(businessOwners);
             }
-        });
+        }
     });
 };
 
@@ -109,22 +97,18 @@ exports.list = function (req, res) {
 *     }
  */
 exports.detail = function (req, res) {
-    //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var businessOwner = userdb.model('businessOwner');
-        businessOwner.findOne({id: req.params.id}).sort('-type').exec(function (err, businessOwner) {
-            if (!businessOwner) {
-                res.status(200).send()
+    businessOwner.findOne({id: req.params.id}).sort('-type').exec(function (err, businessOwner) {
+        if (!businessOwner) {
+            res.status(200).send()
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message: err
+                });
             } else {
-                if (err) {
-                    return res.status(400).send({
-                        message: err
-                    });
-                } else {
-                    res.jsonp(businessOwner);
-                }
+                res.jsonp(businessOwner);
             }
-        });
+        }
     });
 };
 
@@ -148,18 +132,14 @@ exports.detail = function (req, res) {
  */
 exports.update = function (req, res) {
     var query = {id: req.body.id};
-    //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var businessOwner = userdb.model('businessOwner');
-        businessOwner.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
-            if (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            } else {
-                res.status(200).send({results: doc});
-            }
-        });
+    businessOwner.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send({results: doc});
+        }
     });
 };
 
@@ -182,18 +162,14 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
     var query = {id: req.params.id};
-    //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var businessOwner = userdb.model('businessOwner');
-        businessOwner.remove(query, function (err, doc) {
-            if (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            } else {
-                res.status(200).send({results: doc});
-            }
+    businessOwner.remove(query, function (err, doc) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send({results: doc});
+        }
 
-        })
-    });
+    })
 };

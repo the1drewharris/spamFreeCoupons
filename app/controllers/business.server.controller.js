@@ -5,7 +5,6 @@
  */
 var mongoose = require('mongoose'),
     businessModel = require('../models/business.server.model.js'),
-    userDbConn = require('../../config/user.connection.db.config'),
     crypto = require('crypto');
 
 
@@ -46,7 +45,7 @@ exports.create = function (req, res) {
     var current_date = (new Date()).valueOf().toString();
     var random = Math.random().toString();
     //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var business = userdb.model('business');
         var v = new business({
             id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
@@ -99,8 +98,8 @@ exports.create = function (req, res) {
  */
 exports.list = function (req, res) {
     //for user database
-    console.log('req.user.database: ' + req.user.database);
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    console.log('req.dbname: ' + req.dbname);
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var business = userdb.model('business');
 
         business.find().sort('-type').exec(function (err, businesses) {
@@ -136,7 +135,7 @@ exports.list = function (req, res) {
  */
 exports.detail = function (req, res) {
     //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var business = userdb.model('business');
         business.findOne({id: req.params.id}).sort('-type').exec(function (err, business) {
             if (!business) {
@@ -175,7 +174,7 @@ exports.detail = function (req, res) {
 exports.update = function (req, res) {
     var query = {id: req.body.id};
     //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var business = userdb.model('business');
         business.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
             if (err) {
@@ -209,7 +208,7 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
     var query = {id: req.params.id};
     //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var business = userdb.model('business');
         business.remove(query, function (err, doc) {
             if (err) {

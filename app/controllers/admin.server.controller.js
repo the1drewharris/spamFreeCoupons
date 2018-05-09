@@ -5,7 +5,7 @@
  */
 var mongoose = require('mongoose'),
     adminModel = require('../models/admin.server.model.js'),
-    userDbConn = require('../../config/user.connection.db.config'),
+    admin = mongoose.model('admin'),
     crypto = require('crypto');
 
 
@@ -32,28 +32,21 @@ exports.create = function (req, res) {
     // used to create ID
     var current_date = (new Date()).valueOf().toString();
     var random = Math.random().toString();
-    //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var admin = userdb.model('admin');
-        var v = new admin({
-            id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
-            email: req.body.email,
-            password: req.body.password,
-            DateCreated: current_date
-
-        });
-
-        v.save(function (err, admin) {
-            if (err) {
-                return res.status(400).send({
-                    message:  err
-                });
-            } else {
-                res.status(200).send({success: true, id: admin.id});
-            }
-        });
+    var v = new admin({
+        id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
+        email: req.body.email,
+        password: req.body.password,
+        DateCreated: current_date
     });
-
+    v.save(function (err, admin) {
+        if (err) {
+            return res.status(400).send({
+                message:  err
+            });
+        } else {
+            res.status(200).send({success: true, id: admin.id});
+        }
+    });
 };
 
 /**
@@ -72,24 +65,18 @@ exports.create = function (req, res) {
 *     }
  */
 exports.list = function (req, res) {
-    //for user database
-    console.log('req.user.database: ' + req.user.database);
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var admin = userdb.model('admin');
-
-        admin.find().sort('-type').exec(function (err, admins) {
-            if (!admin.length) {
-                res.status(200).send({admins: admins})
+    admin.find().sort('-type').exec(function (err, admins) {
+        if (!admin.length) {
+            res.status(200).send({admins: admins})
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message:  err
+                });
             } else {
-                if (err) {
-                    return res.status(400).send({
-                        message:  err
-                    });
-                } else {
-                    res.jsonp(admins);
-                }
+                res.jsonp(admins);
             }
-        });
+        }
     });
 };
 
@@ -109,22 +96,18 @@ exports.list = function (req, res) {
 *     }
  */
 exports.detail = function (req, res) {
-    //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var admin = userdb.model('admin');
-        admin.findOne({id: req.params.id}).sort('-type').exec(function (err, admin) {
-            if (!admin) {
-                res.status(200).send()
+    admin.findOne({id: req.params.id}).sort('-type').exec(function (err, admin) {
+        if (!admin) {
+            res.status(200).send()
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message: err
+                });
             } else {
-                if (err) {
-                    return res.status(400).send({
-                        message: err
-                    });
-                } else {
-                    res.jsonp(admin);
-                }
+                res.jsonp(admin);
             }
-        });
+        }
     });
 };
 
@@ -148,18 +131,14 @@ exports.detail = function (req, res) {
  */
 exports.update = function (req, res) {
     var query = {id: req.body.id};
-    //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var admin = userdb.model('admin');
-        admin.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
-            if (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            } else {
-                res.status(200).send({results: doc});
-            }
-        });
+    admin.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send({results: doc});
+        }
     });
 };
 
@@ -182,18 +161,14 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
     var query = {id: req.params.id};
-    //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
-        var admin = userdb.model('admin');
-        admin.remove(query, function (err, doc) {
-            if (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            } else {
-                res.status(200).send({results: doc});
-            }
+    admin.remove(query, function (err, doc) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send({results: doc});
+        }
 
-        })
-    });
+    })
 };

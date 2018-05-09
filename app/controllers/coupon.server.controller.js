@@ -4,8 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    couponModel = mongoose.model('coupon'),
-    userDbConn = require('../../config/user.connection.db.config'),
+    couponModel = require('../models/coupon.server.model.js'),
     crypto = require('crypto');
 
 
@@ -38,9 +37,11 @@ exports.create = function (req, res) {
     // used to create ID
     var current_date = (new Date()).valueOf().toString();
     var random = Math.random().toString();
+    console.dir(req.dbname);
     //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var coupon = userdb.model('coupon');
+        console.dir(req.body);
         var v = new coupon({
             id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
             title: req.body.title,
@@ -50,8 +51,7 @@ exports.create = function (req, res) {
             status: req.body.status,
             storeAvailability: req.body.storeAvailability,
             couponCode: req.body.couponCode,    //TODO: make randomly generated unless manualy typed in.
-            DateAdded: current_date,
-            DateDeleted: req.body.DateDeleted
+            DateAdded: current_date
 
         });
 
@@ -85,8 +85,8 @@ exports.create = function (req, res) {
  */
 exports.list = function (req, res) {
     //for user database
-    console.log('req.user.database: ' + req.user.database);
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    console.log('req.dbname: ' + req.dbname);
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var coupon = userdb.model('coupon');
 
         coupon.find().sort('-type').exec(function (err, coupons) {
@@ -122,7 +122,7 @@ exports.list = function (req, res) {
  */
 exports.detail = function (req, res) {
     //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var coupon = userdb.model('coupon');
         coupon.findOne({id: req.params.id}).sort('-type').exec(function (err, coupon) {
             if (!coupon) {
@@ -161,7 +161,7 @@ exports.detail = function (req, res) {
 exports.update = function (req, res) {
     var query = {id: req.body.id};
     //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var coupon = userdb.model('coupon');
         coupon.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
             if (err) {
@@ -195,7 +195,7 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
     var query = {id: req.params.id};
     //for user database
-    userDbConn.userDBConnection(req.user.database, function (userdb) {
+    userDbConn.userDBConnection(req.dbname, function (userdb) {
         var coupon = userdb.model('coupon');
         coupon.remove(query, function (err, doc) {
             if (err) {

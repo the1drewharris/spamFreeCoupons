@@ -6,10 +6,8 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-/**
- * clients Schema
- */
-var couponSchema = new Schema ({
+
+var businessOwnerSchema = new Schema ({
     id: {
         type: String,
         required: 'Must have an id for the coupon',
@@ -27,4 +25,4 @@ var couponSchema = new Schema ({
 });
 
 
-mongoose.model('coupon', couponSchema);
+mongoose.model('businessOwner', businessOwnerSchema);
