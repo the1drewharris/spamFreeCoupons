@@ -169,6 +169,5 @@ exports.delete = function (req, res) {
         } else {
             res.status(200).send({results: doc});
         }
-
     })
 };

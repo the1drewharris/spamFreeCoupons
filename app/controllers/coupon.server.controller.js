@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     couponModel = require('../models/coupon.server.model.js'),
+    coupon = mongoose.model('coupon'),
     crypto = require('crypto');
 
 
@@ -37,35 +38,27 @@ exports.create = function (req, res) {
     // used to create ID
     var current_date = (new Date()).valueOf().toString();
     var random = Math.random().toString();
-    console.dir(req.dbname);
-    //for user database
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var coupon = userdb.model('coupon');
-        console.dir(req.body);
-        var v = new coupon({
-            id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
-            title: req.body.title,
-            description: req.body.description,
-            repeatFrequency: req.body.repeatFrequency,
-            category: req.body.category,
-            status: req.body.status,
-            storeAvailability: req.body.storeAvailability,
-            couponCode: req.body.couponCode,    //TODO: make randomly generated unless manualy typed in.
-            DateAdded: current_date
-
-        });
-
-        v.save(function (err, coupon) {
-            if (err) {
-                return res.status(400).send({
-                    message:  err
-                });
-            } else {
-                res.status(200).send({success: true, id: coupon.id});
-            }
-        });
+    var v = new coupon({
+        id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
+        title: req.body.title,
+        description: req.body.description,
+        repeatFrequency: req.body.repeatFrequency,
+        category: req.body.category,
+        status: req.body.status,
+        storeAvailability: req.body.storeAvailability,
+        couponCode: req.body.couponCode,    //TODO: make randomly generated unless manualy typed in.
+        DateAdded: current_date
     });
 
+    v.save(function (err, coupon) {
+        if (err) {
+            return res.status(400).send({
+                message:  err
+            });
+        } else {
+            res.status(200).send({success: true, id: coupon.id});
+        }
+    });
 };
 
 /**
@@ -84,24 +77,18 @@ exports.create = function (req, res) {
 *     }
  */
 exports.list = function (req, res) {
-    //for user database
-    console.log('req.dbname: ' + req.dbname);
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var coupon = userdb.model('coupon');
-
-        coupon.find().sort('-type').exec(function (err, coupons) {
-            if (!coupon.length) {
-                res.status(200).send({coupons: coupons})
+    coupon.find().sort('-type').exec(function (err, coupons) {
+        if (!coupon.length) {
+            res.status(200).send({coupons: coupons})
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message:  err
+                });
             } else {
-                if (err) {
-                    return res.status(400).send({
-                        message:  err
-                    });
-                } else {
-                    res.jsonp(coupons);
-                }
+                res.jsonp(coupons);
             }
-        });
+        }
     });
 };
 
@@ -121,22 +108,18 @@ exports.list = function (req, res) {
 *     }
  */
 exports.detail = function (req, res) {
-    //for user database
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var coupon = userdb.model('coupon');
-        coupon.findOne({id: req.params.id}).sort('-type').exec(function (err, coupon) {
-            if (!coupon) {
-                res.status(200).send()
+    coupon.findOne({id: req.params.id}).sort('-type').exec(function (err, coupon) {
+        if (!coupon) {
+            res.status(200).send()
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message: err
+                });
             } else {
-                if (err) {
-                    return res.status(400).send({
-                        message: err
-                    });
-                } else {
-                    res.jsonp(coupon);
-                }
+                res.jsonp(coupon);
             }
-        });
+        }
     });
 };
 
@@ -160,18 +143,14 @@ exports.detail = function (req, res) {
  */
 exports.update = function (req, res) {
     var query = {id: req.body.id};
-    //for user database
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var coupon = userdb.model('coupon');
-        coupon.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
-            if (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            } else {
-                res.status(200).send({results: doc});
-            }
-        });
+    coupon.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send({results: doc});
+        }
     });
 };
 
@@ -194,18 +173,13 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
     var query = {id: req.params.id};
-    //for user database
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var coupon = userdb.model('coupon');
-        coupon.remove(query, function (err, doc) {
-            if (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            } else {
-                res.status(200).send({results: doc});
-            }
-
-        })
-    });
+    coupon.remove(query, function (err, doc) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send({results: doc});
+        }
+    })
 };

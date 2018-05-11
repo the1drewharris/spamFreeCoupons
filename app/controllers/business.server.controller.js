@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     businessModel = require('../models/business.server.model.js'),
+    business = mongoose.model('business'),
     crypto = require('crypto');
 
 
@@ -44,39 +45,35 @@ exports.create = function (req, res) {
     // used to create ID
     var current_date = (new Date()).valueOf().toString();
     var random = Math.random().toString();
-    //for user database
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var business = userdb.model('business');
-        var v = new business({
-            id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
-            companyName: req.body.companyName,
-            address: req.body.address,
-            city: req.body.city,
-            state: req.body.state,
-            postalCode: req.body.postalCode,
-            phone: req.body.phone,
-            websiteURL: req.body.websiteURL,
-            facebook: req.body.facebook,
-            instagram: req.body.instagram,
-            twitter: req.body.twitter,
-            picture: req.body.picture,
-            status: req.body.status,
-            Coupon: req.body.Coupon,
-            DateAdded: current_date,
-            DateClaimed: req.body.DateClaimed,
-            DateRemoved: req.body.DateRemoved
+    var v = new business({
+        id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
+        companyName: req.body.companyName,
+        address: req.body.address,
+        city: req.body.city,
+        state: req.body.state,
+        postalCode: req.body.postalCode,
+        phone: req.body.phone,
+        websiteURL: req.body.websiteURL,
+        facebook: req.body.facebook,
+        instagram: req.body.instagram,
+        twitter: req.body.twitter,
+        picture: req.body.picture,
+        status: req.body.status,
+        Coupon: req.body.Coupon,
+        DateAdded: current_date,
+        DateClaimed: req.body.DateClaimed,
+        DateRemoved: req.body.DateRemoved
 
-        });
+    });
 
-        v.save(function (err, business) {
-            if (err) {
-                return res.status(400).send({
-                    message:  err
-                });
-            } else {
-                res.status(200).send({success: true, id: business.id});
-            }
-        });
+    v.save(function (err, business) {
+        if (err) {
+            return res.status(400).send({
+                message:  err
+            });
+        } else {
+            res.status(200).send({success: true, id: business.id});
+        }
     });
 
 };
@@ -97,24 +94,18 @@ exports.create = function (req, res) {
 *     }
  */
 exports.list = function (req, res) {
-    //for user database
-    console.log('req.dbname: ' + req.dbname);
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var business = userdb.model('business');
-
-        business.find().sort('-type').exec(function (err, businesses) {
-            if (!business.length) {
-                res.status(200).send({businesses: businesses})
+    business.find().sort('-type').exec(function (err, businesses) {
+        if (!business.length) {
+            res.status(200).send({businesses: businesses})
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message:  err
+                });
             } else {
-                if (err) {
-                    return res.status(400).send({
-                        message:  err
-                    });
-                } else {
-                    res.jsonp(businesses);
-                }
+                res.jsonp(businesses);
             }
-        });
+        }
     });
 };
 
@@ -134,22 +125,18 @@ exports.list = function (req, res) {
 *     }
  */
 exports.detail = function (req, res) {
-    //for user database
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var business = userdb.model('business');
-        business.findOne({id: req.params.id}).sort('-type').exec(function (err, business) {
-            if (!business) {
-                res.status(200).send()
+    business.findOne({id: req.params.id}).sort('-type').exec(function (err, business) {
+        if (!business) {
+            res.status(200).send()
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message: err
+                });
             } else {
-                if (err) {
-                    return res.status(400).send({
-                        message: err
-                    });
-                } else {
-                    res.jsonp(business);
-                }
+                res.jsonp(business);
             }
-        });
+        }
     });
 };
 
@@ -173,18 +160,14 @@ exports.detail = function (req, res) {
  */
 exports.update = function (req, res) {
     var query = {id: req.body.id};
-    //for user database
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var business = userdb.model('business');
-        business.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
-            if (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            } else {
-                res.status(200).send({results: doc});
-            }
-        });
+    business.findOneAndUpdate(query, req.body, {upsert: true}, function (err, doc) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send({results: doc});
+        }
     });
 };
 
@@ -207,18 +190,14 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
     var query = {id: req.params.id};
-    //for user database
-    userDbConn.userDBConnection(req.dbname, function (userdb) {
-        var business = userdb.model('business');
-        business.remove(query, function (err, doc) {
-            if (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            } else {
-                res.status(200).send({results: doc});
-            }
+    business.remove(query, function (err, doc) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send({results: doc});
+        }
 
-        })
-    });
+    })
 };
