@@ -36,7 +36,9 @@ exports.create = function (req, res) {
         id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
         email: req.body.email,
         password: req.body.password,
-        businesses: req.body.businesses
+        businesses: [{
+            id: req.body.id
+        }]
 
     });
     v.save(function (err, businessOwner) {

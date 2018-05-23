@@ -26,7 +26,7 @@ var mongoose = require('mongoose'),
  * @apiParam {twitter} twitter
  * @apiParam {picture} picture
  * @apiParam {status} status
- * @apiParam {Coupon} Coupon
+ * @apiParam {coupons} coupons
  * @apiParam {DateAdded} DateAdded
  * @apiParam {DateClaimed} DateClaimed
  * @apiParam {DateRemoved} DateRemoved
@@ -59,7 +59,15 @@ exports.create = function (req, res) {
         twitter: req.body.twitter,
         picture: req.body.picture,
         status: req.body.status,
-        Coupon: req.body.Coupon,
+        coupons: [{
+            title: req.body.title,
+            description: req.body.description,
+            repeatFrequency: req.body.repeatFrequency,
+            category: req.body.category,
+            status: req.body.couponStatus,
+            storeAvailability: req.body.storeAvailability,
+            couponCode: req.body.couponCode    //TODO: make randomly generated unless manually typed in.
+        }],
         DateAdded: current_date,
         DateClaimed: req.body.DateClaimed,
         DateRemoved: req.body.DateRemoved
