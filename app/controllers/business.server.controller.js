@@ -45,6 +45,7 @@ exports.create = function (req, res) {
     // used to create ID
     var current_date = (new Date()).valueOf().toString();
     var random = Math.random().toString();
+    console.dir(req.body.coupons);
     var v = new business({
         id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
         companyName: req.body.companyName,
@@ -59,18 +60,10 @@ exports.create = function (req, res) {
         twitter: req.body.twitter,
         picture: req.body.picture,
         status: req.body.status,
-        coupons: [{
-            title: req.body.title,
-            description: req.body.description,
-            repeatFrequency: req.body.repeatFrequency,
-            category: req.body.category,
-            status: req.body.couponStatus,
-            storeAvailability: req.body.storeAvailability,
-            couponCode: req.body.couponCode    //TODO: make randomly generated unless manually typed in.
-        }],
-        DateAdded: current_date,
-        DateClaimed: req.body.DateClaimed,
-        DateRemoved: req.body.DateRemoved
+        dateAdded: current_date,
+        dateClaimed: req.body.dateClaimed,
+        dateRemoved: req.body.dateRemoved,
+        coupons: req.body.coupons
 
     });
 
