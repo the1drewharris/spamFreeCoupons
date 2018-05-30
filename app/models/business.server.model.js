@@ -52,6 +52,9 @@ var businessSchema = new Schema ({
         type: String
     },
     coupons: [{
+        couponId: {
+            type: String
+        },
         title: {
             type: String
         },

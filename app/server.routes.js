@@ -55,8 +55,8 @@ router.delete('/businessOwner/delete/:id', businessOwner.delete);
 var coupon = require('./controllers/coupon.server.controller.js');
 router.get('/coupon/list', coupon.list);
 router.get('/coupon/detail/:id', coupon.detail);
-router.post('/coupon/create', coupon.create);
+router.post('/coupon/addCoupon', coupon.addCoupon);
 router.post('/coupon/update', coupon.update);
-router.delete('/coupon/delete/:id', coupon.delete);
+router.post('/coupon/removeCoupon', coupon.removeCoupon);
 
 module.exports = router;

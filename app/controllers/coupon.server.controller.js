@@ -4,62 +4,45 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    couponModel = require('../models/coupon.server.model.js'),
-    coupon = mongoose.model('coupon'),
+    businessModel = require('../models/business.server.model.js'),
+    business = mongoose.model('business'),
     crypto = require('crypto');
 
-
 /**
- @api {post} /coupon/create
- @apiName create
- @apiGroup coupon
-
- @apiParam {title} title
- @apiParam {description} description
- @apiParam {repeatFrequency} repeatFrequency
- @apiParam {category} category
- @apiParam {status} status
- @apiParam {storeAvailability} storeAvailability
- @apiParam {couponCode} couponCode
- @apiParam {DateAdded} DateAdded
- @apiParam {DateDeleted} DateDeleted
-
- @apiSuccessExample Success-Response:
-  200 OK
-  {success: true, id: frequency.id}
-
- @apiErrorExample Error-Response:
-  400 Bad Request
-  {
-    "message": "error of some kind"
-    }
-*/
-exports.create = function (req, res) {
-    // used to create ID
+ * @api {post} /business
+ * @apiName add coupon
+ * @apiGroup business
+ *
+ * @apiParam {businessid} businessid
+ * @apiParam {coupon} coupon
+ *
+ * @apiSuccessExample Success-Response:
+ *  200 OK
+ *  {results: doc}
+ *
+ * @apiErrorExample Error-Response:
+ *  400 Bad Request
+ *  {
+*  "message": "error of some kind"
+*     }
+ */
+exports.addCoupon = function (req, res) {
     var current_date = (new Date()).valueOf().toString();
     var random = Math.random().toString();
-    var v = new coupon({
-        id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
-        title: req.body.title,
-        description: req.body.description,
-        repeatFrequency: req.body.repeatFrequency,
-        category: req.body.category,
-        status: req.body.status,
-        storeAvailability: req.body.storeAvailability,
-        couponCode: req.body.couponCode,    //TODO: make randomly generated unless manualy typed in.
-        DateAdded: current_date
-    });
-
-    v.save(function (err, coupon) {
+    var query = {id: req.body.id};
+    var newCoupon = req.body.coupons;
+    newCoupon.couponId = crypto.createHash('sha1').update(current_date + random).digest('hex');
+    business.findOneAndUpdate(query, {$push: {coupons: newCoupon}}, {upsert: true}, function (err, doc) {
         if (err) {
             return res.status(400).send({
-                message:  err
+                message: err
             });
         } else {
-            res.status(200).send({success: true, id: coupon.id});
+            res.status(200).send({id: req.body.id});
         }
     });
 };
+
 
 /**
  * @api {get} /coupon
@@ -154,15 +137,17 @@ exports.update = function (req, res) {
     });
 };
 
+
 /**
- * @api {delete} /coupon/:coupon
- * @apiName delete
- * @apiGroup coupon
+ * @api {post} /business
+ * @apiName remove coupon
+ * @apiGroup business
  *
- * @apiParam {couponid} couponid
+ * @apiParam {businessid} businessid
+ * @apiParam {coupon} coupon
  *
  * @apiSuccessExample Success-Response:
- * 200 OK
+ *  200 OK
  *  {results: doc}
  *
  * @apiErrorExample Error-Response:
@@ -171,9 +156,9 @@ exports.update = function (req, res) {
 *  "message": "error of some kind"
 *     }
  */
-exports.delete = function (req, res) {
-    var query = {id: req.params.id};
-    coupon.remove(query, function (err, doc) {
+exports.removeCoupon = function (req, res) {
+    var query = {id: req.body.id};
+    business.findOneAndUpdate(query, {$pull: {coupons: {couponId: req.body.couponId}}}, {upsert: true}, function (err, doc) {
         if (err) {
             return res.status(400).send({
                 message: err
@@ -181,5 +166,5 @@ exports.delete = function (req, res) {
         } else {
             res.status(200).send({results: doc});
         }
-    })
+    });
 };
