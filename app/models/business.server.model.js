@@ -51,16 +51,18 @@ var businessSchema = new Schema ({
     status: {
         type: String
     },
-    Coupon: {
-        type: Array
-    },
-    DateAdded: {
+    coupons: [{
+        id: {
+            type: String
+        }
+    }],
+    dateAdded: {
         type: Date
     },
-    DateClaimed: {
+    dateClaimed: {
         type: Date
     },
-    DateRemoved: {
+    dateRemoved: {
         type: Date
     }
 });

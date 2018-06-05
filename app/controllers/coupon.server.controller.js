@@ -21,6 +21,7 @@ var mongoose = require('mongoose'),
  @apiParam {status} status
  @apiParam {storeAvailability} storeAvailability
  @apiParam {couponCode} couponCode
+ @apiParam {postalCode} postalCode
  @apiParam {DateAdded} DateAdded
  @apiParam {DateDeleted} DateDeleted
 
@@ -46,7 +47,8 @@ exports.create = function (req, res) {
         category: req.body.category,
         status: req.body.status,
         storeAvailability: req.body.storeAvailability,
-        couponCode: req.body.couponCode,    //TODO: make randomly generated unless manualy typed in.
+        couponCode: req.body.couponCode,    //TODO: make randomly generated unless manually typed in.
+        postalCode: req.body.postalCode,
         DateAdded: current_date
     });
 
@@ -79,6 +81,39 @@ exports.create = function (req, res) {
 exports.list = function (req, res) {
     coupon.find().sort('-type').exec(function (err, coupons) {
         if (!coupon.length) {
+            res.status(200).send({coupons: coupons})
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message:  err
+                });
+            } else {
+                res.jsonp(coupons);
+            }
+        }
+    });
+};
+
+/**
+ * @api {post} /coupon
+ * @apiName list
+ * @apiGroup coupon
+ *
+ * @apiParam {postalCode} postalCode
+ *
+ * @apiSuccessExample Success-Response:
+ *  200 OK
+ * {coupon}
+ *
+ * @apiErrorExample Error-Response:
+ *  400 Bad Request
+ *  {
+* "message": "error of some kind"
+*     }
+ */
+exports.search = function (req, res) {
+    coupon.find({postalCode: req.params.postalCode}).sort('-type').exec(function (err, coupons) {
+        if (!coupon) {
             res.status(200).send({coupons: coupons})
         } else {
             if (err) {

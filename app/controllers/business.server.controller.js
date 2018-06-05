@@ -26,10 +26,10 @@ var mongoose = require('mongoose'),
  * @apiParam {twitter} twitter
  * @apiParam {picture} picture
  * @apiParam {status} status
- * @apiParam {Coupon} Coupon
- * @apiParam {DateAdded} DateAdded
- * @apiParam {DateClaimed} DateClaimed
- * @apiParam {DateRemoved} DateRemoved
+ * @apiParam {coupons} coupons
+ * @apiParam {dateAdded} dateAdded
+ * @apiParam {dateClaimed} dateClaimed
+ * @apiParam {dateRemoved} dateRemoved
  *
  * @apiSuccessExample Success-Response:
  *  200 OK
@@ -59,10 +59,10 @@ exports.create = function (req, res) {
         twitter: req.body.twitter,
         picture: req.body.picture,
         status: req.body.status,
-        Coupon: req.body.Coupon,
-        DateAdded: current_date,
-        DateClaimed: req.body.DateClaimed,
-        DateRemoved: req.body.DateRemoved
+        coupons: req.body.coupons,
+        dateAdded: current_date,
+        dateClaimed: req.body.dateClaimed,
+        dateRemoved: req.body.dateRemoved
 
     });
 

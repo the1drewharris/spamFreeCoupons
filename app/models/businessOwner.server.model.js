@@ -19,8 +19,13 @@ var businessOwnerSchema = new Schema ({
     password: {
         type: String
     },
-    businesses: {
-        type: Array
+    businesses: [{
+        id: {
+            type: String
+        }
+    }],
+    dateCreated: {
+        type: Date
     }
 });
 

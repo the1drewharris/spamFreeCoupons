@@ -36,10 +36,13 @@ var couponSchema = new Schema ({
     couponCode: {
         type: String
     },
-    DateAdded: {
+    postalCode: {
+        type: String
+    },
+    dateAdded: {
         type: Date
     },
-    DateDeleted: {
+    dateDeleted: {
         type: Date
     }
 });
