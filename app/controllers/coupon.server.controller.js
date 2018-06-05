@@ -8,7 +8,6 @@ var mongoose = require('mongoose'),
     coupon = mongoose.model('coupon'),
     crypto = require('crypto');
 
-
 /**
  @api {post} /coupon/create
  @apiName create
@@ -55,7 +54,7 @@ exports.create = function (req, res) {
     v.save(function (err, coupon) {
         if (err) {
             return res.status(400).send({
-                message:  err
+                message: err
             });
         } else {
             res.status(200).send({success: true, id: coupon.id});

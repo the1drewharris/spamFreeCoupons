@@ -16,7 +16,6 @@ var mongoose = require('mongoose'),
  *
  * @apiParam {email} email
  * @apiParam {password} password
- * @apiParam {DateCreated} DateCreated
  *
  * @apiSuccessExample Success-Response:
  *  200 OK
@@ -35,8 +34,8 @@ exports.create = function (req, res) {
     var v = new admin({
         id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
         email: req.body.email,
-        password: req.body.password,
-        DateCreated: current_date
+        password: req.body.password, //TODO: make password hash
+        dateCreated: current_date
     });
     v.save(function (err, admin) {
         if (err) {
@@ -156,8 +155,8 @@ exports.update = function (req, res) {
  * @apiErrorExample Error-Response:
  *  400 Bad Request
  *  {
-*  "message": "error of some kind"
-*     }
+ *       "message": "error of some kind"
+ *  }
  */
 exports.delete = function (req, res) {
     var query = {id: req.params.id};
