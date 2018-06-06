@@ -56,6 +56,9 @@ var businessSchema = new Schema ({
             type: String
         }
     }],
+    businessOwnerId: {
+        type: String
+    },
     dateAdded: {
         type: Date
     },

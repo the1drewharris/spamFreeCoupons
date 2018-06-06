@@ -33,6 +33,7 @@ router.delete('/admin/delete/:id', admin.delete);
 var business = require('./controllers/business.server.controller.js');
 router.get('/business/list', business.list);
 router.get('/business/detail/:id', business.detail);
+router.post('/business/search', business.search);
 router.post('/business/create', business.create);
 router.post('/business/update', business.update);
 router.delete('/business/delete/:id', business.delete);
@@ -53,10 +54,11 @@ router.delete('/businessOwner/delete/:id', businessOwner.delete);
  * @type {exports|module.exports}
  */
 var coupon = require('./controllers/coupon.server.controller.js');
+router.post('/coupon/create', coupon.create);
 router.get('/coupon/list', coupon.list);
 router.get('/coupon/detail/:id', coupon.detail);
-router.post('/coupon/addCoupon', coupon.addCoupon);
+router.post('/coupon/search', coupon.search);
 router.post('/coupon/update', coupon.update);
-router.post('/coupon/removeCoupon', coupon.removeCoupon);
+router.delete('/coupon/delete/:id', coupon.delete);
 
 module.exports = router;

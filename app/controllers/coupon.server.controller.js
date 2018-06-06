@@ -48,6 +48,7 @@ exports.create = function (req, res) {
         storeAvailability: req.body.storeAvailability,
         couponCode: req.body.couponCode,    //TODO: make randomly generated unless manually typed in.
         postalCode: req.body.postalCode,
+        businessId: req.body.businessId,
         DateAdded: current_date
     });
 
@@ -111,7 +112,8 @@ exports.list = function (req, res) {
 *     }
  */
 exports.search = function (req, res) {
-    coupon.find({postalCode: req.params.postalCode}).sort('-type').exec(function (err, coupons) {
+    var query = req.body;
+    coupon.find(query).sort('-type').exec(function (err, coupons) {
         if (!coupon) {
             res.status(200).send({coupons: coupons})
         } else {
@@ -191,7 +193,7 @@ exports.update = function (req, res) {
 /**
  * @api {delete} /coupon/:coupon
  * @apiName delete
- * @apiGroup coupon
+ * @apiGroup business
  *
  * @apiParam {couponid} couponid
  *
@@ -215,5 +217,6 @@ exports.delete = function (req, res) {
         } else {
             res.status(200).send({results: doc});
         }
+
     })
 };

@@ -60,6 +60,7 @@ exports.create = function (req, res) {
         picture: req.body.picture,
         status: req.body.status,
         coupons: req.body.coupons,
+        businessOwnerId: req.body.businessOwnerId,
         dateAdded: current_date,
         dateClaimed: req.body.dateClaimed,
         dateRemoved: req.body.dateRemoved
@@ -135,6 +136,40 @@ exports.detail = function (req, res) {
                 });
             } else {
                 res.jsonp(business);
+            }
+        }
+    });
+};
+
+/**
+ * @api {post} /business
+ * @apiName list
+ * @apiGroup business
+ *
+ * @apiParam {businessOwnerId} businessOwnerId
+ *
+ * @apiSuccessExample Success-Response:
+ *  200 OK
+ * {business}
+ *
+ * @apiErrorExample Error-Response:
+ *  400 Bad Request
+ *  {
+* "message": "error of some kind"
+*     }
+ */
+exports.search = function (req, res) {
+    var query = req.body;
+    business.find(query).sort('-type').exec(function (err, businesses) {
+        if (!business) {
+            res.status(200).send({business: businesses})
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message:  err
+                });
+            } else {
+                res.jsonp(businesses);
             }
         }
     });

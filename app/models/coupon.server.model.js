@@ -39,6 +39,9 @@ var couponSchema = new Schema ({
     postalCode: {
         type: String
     },
+    businessId: {
+        type: String
+    },
     dateAdded: {
         type: Date
     },
