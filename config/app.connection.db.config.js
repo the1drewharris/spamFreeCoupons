@@ -22,5 +22,5 @@ exports.appDBConnection = function (callback) {
             //console.dir(appdb);
             callback(appdb);
         });
-    };
+    }
 };

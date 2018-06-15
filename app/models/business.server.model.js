@@ -62,6 +62,9 @@ var businessSchema = new Schema ({
     dateAdded: {
         type: Date
     },
+    verifyCode: {
+        type: String
+    },
     dateClaimed: {
         type: Date
     },
