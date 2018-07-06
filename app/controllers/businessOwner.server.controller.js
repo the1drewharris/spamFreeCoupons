@@ -26,13 +26,13 @@ passport.deserializeUser(function(id, done) {
 
 
 
-exports.signIn = function( req, res){
+exports.signIn = function(req, res){
     //businessOwner.findOne with email
     businessOwner.findOne({email: req.body.email}).exec(function (err, foundUser){
         if (err) {
-            console.log('there was a problem checking username');
+            console.log('there was a problem checking email');
         } else if (foundUser) {
-            console.log('found user with username');
+            console.log('found Business Owner with email');
 
             var user = new businessOwner (foundUser);
 
@@ -55,7 +55,7 @@ exports.signIn = function( req, res){
                             user.password = undefined;
                             user.salt = undefined;
                             if (user.free) {
-                                console.log('user is free!');
+                                console.log('businessOwner is free!');
                                 req.login(user, function(err) {
                                     if (err) {
                                         res.status(400).send(err);
@@ -65,8 +65,8 @@ exports.signIn = function( req, res){
                                 });
                             } else {
                                 console.log('check user.subscription.status == Active');
-                                if (user.subscription.status == 'Active'){
-                                    console.log('user has active subscription!');
+                                if (user.active === true){
+                                    console.log('Business Owner has active subscription!');
                                     req.login(user, function(err) {
                                         if (err) {
                                             res.status(400).send(err);
@@ -75,7 +75,7 @@ exports.signIn = function( req, res){
                                         }
                                     });
                                 } else {
-                                    console.log('user does NOT have active subscription');
+                                    console.log('Business Owner does NOT have active subscription');
                                     res.status(400).send({message: 'Subscription is not Active.', checkout: true, user: user});
                                 }
                             }
@@ -87,9 +87,9 @@ exports.signIn = function( req, res){
             });
 
         } else if (!foundUser) {
-            console.log('did NOT find user with username');
+            console.log('did NOT find Business Owner with email');
             return res.status(400).send({
-                message: 'Could not find a user with that username.'
+                message: 'Could not find a Business Owner with that email.'
             })
         }
     });
@@ -103,12 +103,11 @@ exports.signOut = function(req, res) {
     res.redirect('/');
 };
 
-
 exports.me = function(req,res){
-    if(req.user){
+    if(req.businessOwner){
         console.log('in auth.me');
-        console.dir(req.user.username);
-        res.status(200).send({user: req.user})
+        console.dir(req.businessOwner.username);
+        res.status(200).send({user: req.businessOwner})
     } else {
         res.status(400);
     }
@@ -122,6 +121,8 @@ exports.me = function(req,res){
  * @apiParam {email} email
  * @apiParam {password} password
  * @apiParam {businesses} businesses
+ * @apiParam {free} free
+ * @apiParam {active} active
  *
  * @apiSuccessExample Success-Response:
  *  200 OK
@@ -139,9 +140,13 @@ exports.create = function (req, res) {
     var random = Math.random().toString();
     var v = new businessOwner({
         id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
+        name: req.body.name,
         email: req.body.email,
         password: req.body.password,
+        businessId: req.body.businessId,
         businesses: req.body.businesses,
+        free: req.body.free,
+        active: req.body.active,
         createdDate: current_date
     });
     v.save(function (err, businessOwner) {
@@ -171,6 +176,7 @@ exports.create = function (req, res) {
 *     }
  */
 exports.list = function (req, res) {
+    console.log('in list businessOwners function');
     businessOwner.find().sort('-type').exec(function (err, businessOwners) {
         if (!businessOwner.length) {
             res.status(200).send({businessOwners: businessOwners})

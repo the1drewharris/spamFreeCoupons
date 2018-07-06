@@ -15,6 +15,9 @@ var businessOwnerSchema = new Schema ({
         required: 'Must have an id for the coupon',
         unique: 'id must be unique'
     },
+    name: {
+        type: String
+    },
     email: {
         type: String,
         trim: true,
@@ -24,13 +27,18 @@ var businessOwnerSchema = new Schema ({
     },
     password: {
         type: String,
-        required: 'password is required'   //TODO:make password encrypted with hash
+        required: 'password is required'
     },
     free: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     active: {
-        type: Boolean
+        type: Boolean,
+        default: false
+    },
+    businessId: {
+        type: String
     },
     businesses: [{
         id: {
@@ -70,6 +78,23 @@ businessOwnerSchema.methods.hashPassword = function(password) {
     } else {
         return password;
     }
+};
+
+/**
+ * Create instance method for authenticating user
+ */
+businessOwnerSchema.methods.authenticate = function(callback) {
+    console.log('in authenticate');
+    var checkPassword = this.password.toString();
+    var hashedPassword = this.hashPassword(checkPassword).toString();
+    //console.log('checkPassword: ' + checkPassword + ' hashPassword: ' + hashedPassword);
+    //pull the hashed password for this user
+    this.model('businessOwner').findOne({email: this.email}).exec(function (err, foundUser){
+        //console.log('foundUser.password: ' + foundUser.password + ' hashPassword: ' + hashedPassword);
+        //console.log('still in authenticate: ' + foundUser.password == hashedPassword);
+        //this.auth = foundUser.password === hashedPassword;
+        callback(foundUser.password == hashedPassword);
+    });
 };
 
 mongoose.model('businessOwner', businessOwnerSchema);

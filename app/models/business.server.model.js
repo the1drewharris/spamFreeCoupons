@@ -59,11 +59,17 @@ var businessSchema = new Schema ({
     businessOwnerId: {
         type: String
     },
-    dateAdded: {
-        type: Date
+    businessOwnerAttemptClaimId: {
+        type: String
     },
     verifyCode: {
         type: String
+    },
+    dateAdded: {
+        type: Date
+    },
+    dateAttemptedClaim: {
+        type: Date
     },
     dateClaimed: {
         type: Date

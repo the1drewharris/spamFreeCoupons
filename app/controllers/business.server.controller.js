@@ -8,6 +8,9 @@ var mongoose = require('mongoose'),
     business = mongoose.model('business'),
     crypto = require('crypto');
 
+var accountSid = 'ACd48994f8b5519fcdd48822353ec64b2f',
+    authToken = 'bd0cd72dfe7e7d82a41cec4283f2058b',
+    client = require('twilio')(accountSid, authToken);
 
 /**
  * @api {post} /business/create
@@ -173,6 +176,59 @@ exports.search = function (req, res) {
             }
         }
     });
+};
+
+/**
+ * @api {post} /business
+ * @apiName setCode
+ * @apiGroup business
+ *
+ * @apiParam {businessid} businessid
+ *
+ * @apiSuccessExample Success-Response:
+ *  200 OK
+ *  {results: doc}
+ *
+ * @apiErrorExample Error-Response:
+ *  400 Bad Request
+ *  {
+*  "message": "error of some kind"
+*     }
+ */
+exports.setCode = function (req, res) {
+    var query = {id: req.body.id};
+    var code = {
+        verifyCode: crypto.randomBytes(4).toString('hex')
+    };
+    business.findOneAndUpdate(query, code, {upsert: true}, function (err) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send(code);
+        }
+    });
+};
+
+exports.sendCode = function (req, res) {
+    console.log('in send code function for bizId: ' + req.params.id);
+    client.calls.create({
+            url: 'https://handler.twilio.com/twiml/EH709db3cd5812c6bf1722fe5f6811eddb?code=' +  req.params.id,
+            to: '+19188042101',
+            from: '+19189927111'
+        },
+        function (err) {
+            if(err) {
+                return res.status(400).send({
+                    message: err
+                });
+            } else {
+                return res.status(200).send({
+                    body: 'congrats, your phone will ring with your code. Business id: ' + req.params.id
+                })
+            }
+        });
 };
 
 /**

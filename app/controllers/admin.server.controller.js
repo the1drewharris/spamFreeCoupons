@@ -6,7 +6,116 @@
 var mongoose = require('mongoose'),
     adminModel = require('../models/admin.server.model.js'),
     admin = mongoose.model('admin'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local'),
     crypto = require('crypto');
+
+
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+// Deserialize sessions
+passport.deserializeUser(function(id, done) {
+    admin.findOne({
+        _id: id
+    }, '-salt -password', function(err, user) {
+        done(err, user);
+    });
+});
+
+
+
+exports.signIn = function(req, res){
+    //businessOwner.findOne with email
+    admin.findOne({email: req.body.email}).exec(function (err, foundUser){
+        if (err) {
+            console.log('there was a problem checking email');
+        } else if (foundUser) {
+            console.log('found admin with email');
+
+            var adminUser = new admin (foundUser);
+
+            adminUser.password = req.body.password;
+
+            adminUser.authenticate(function(passback){
+                if (passback) {
+                    adminUser.loginTime = Date.now();
+                    adminUser.auth = passback;
+                    //console.log('user.auth: ');
+                    //console.dir(user.auth);
+                    // Then save the user
+                    adminUser.save(function(err) {
+                        if (err) {
+                            return res.status(400).send({
+                                message: logger.log("ERROR", __function, err)
+                            });
+                        } else {
+                            // Remove sensitive data before login
+                            adminUser.password = undefined;
+                            adminUser.salt = undefined;
+                            if (adminUser.free) {
+                                console.log('admin is free!');
+                                req.login(adminUser, function(err) {
+                                    if (err) {
+                                        res.status(400).send(err);
+                                    } else {
+                                        res.json(adminUser);
+                                    }
+                                });
+                            } else {
+                                console.log('check user.subscription.status == Active');
+                                if (adminUser.subscription.status == 'Active'){
+                                    console.log('admin has active subscription!');
+                                    req.login(adminUser, function(err) {
+                                        if (err) {
+                                            res.status(400).send(err);
+                                        } else {
+                                            res.json(adminUser);
+                                        }
+                                    });
+                                } else {
+                                    console.log('admin does NOT have active subscription');
+                                    res.status(400).send({message: 'Subscription is not Active.', checkout: true, adminUser: adminUser});
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    res.status(400).send({message: 'incorrect password!', auth: adminUser.auth})
+                }
+            });
+
+        } else if (!foundUser) {
+            console.log('did NOT find admin with email');
+            return res.status(400).send({
+                message: 'Could not find a admin with that email.'
+            })
+        }
+    });
+};
+
+/**
+ * SignOut
+ */
+exports.signOut = function(req, res) {
+    req.logout();
+    res.redirect('/');
+};
+
+
+exports.me = function(req,res){
+    if(req.admin){
+        console.log('in auth.me');
+        console.dir(req.admin.username);
+        res.status(200).send({user: req.admin})
+    } else {
+        res.status(400);
+    }
+};
+
+
 
 
 /**

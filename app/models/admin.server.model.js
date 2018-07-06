@@ -26,7 +26,7 @@ var adminSchema = new Schema ({
     },
     password: {
         type: String,
-        required: 'password is required'    //TODO:make password encrypted with hash, password reset function
+        required: 'password is required'
     },
     dateCreated: {
         type: Date
@@ -61,6 +61,23 @@ adminSchema.methods.hashPassword = function(password) {
     } else {
         return password;
     }
+};
+
+/**
+ * Create instance method for authenticating user
+ */
+adminSchema.methods.authenticate = function(callback) {
+    console.log('in authenticate');
+    var checkPassword = this.password.toString();
+    var hashedPassword = this.hashPassword(checkPassword).toString();
+    //console.log('checkPassword: ' + checkPassword + ' hashPassword: ' + hashedPassword);
+    //pull the hashed password for this user
+    this.model('businessOwner').findOne({email: this.email}).exec(function (err, foundUser){
+        //console.log('foundUser.password: ' + foundUser.password + ' hashPassword: ' + hashedPassword);
+        //console.log('still in authenticate: ' + foundUser.password == hashedPassword);
+        //this.auth = foundUser.password === hashedPassword;
+        callback(foundUser.password == hashedPassword);
+    });
 };
 
 mongoose.model('admin', adminSchema);
