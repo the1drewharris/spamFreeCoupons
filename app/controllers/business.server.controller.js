@@ -6,7 +6,10 @@
 var mongoose = require('mongoose'),
     businessModel = require('../models/business.server.model.js'),
     business = mongoose.model('business'),
-    crypto = require('crypto');
+    crypto = require('crypto'),
+    async = require('async');
+
+
 
 var accountSid = 'ACd48994f8b5519fcdd48822353ec64b2f',
     authToken = 'bd0cd72dfe7e7d82a41cec4283f2058b',
@@ -212,23 +215,45 @@ exports.setCode = function (req, res) {
 };
 
 exports.sendCode = function (req, res) {
-    console.log('in send code function for bizId: ' + req.params.id);
-    client.calls.create({
-            url: 'https://handler.twilio.com/twiml/EH709db3cd5812c6bf1722fe5f6811eddb?code=' +  req.params.id,
-            to: '+19188042101',
-            from: '+19189927111'
+    var businessCode = '';
+
+    async.series([
+        function(callback) {
+
+            business.findOne({id: req.params.id}).sort('-type').exec(function (err, business) {
+                if (!business) {
+                    console.log('no business found with that Id')
+                } else {
+                    businessCode = business.verifyCode
+                }
+            callback();
+            });
+
+
         },
-        function (err) {
-            if(err) {
-                return res.status(400).send({
-                    message: err
+
+        function() {
+
+            console.log(businessCode);
+            console.log('in send code function for bizId: ' + req.params.id + ' With code: ' + businessCode);
+            client.calls.create({
+                    url: 'https://handler.twilio.com/twiml/EH709db3cd5812c6bf1722fe5f6811eddb?code=' +  businessCode,
+                    to: '+19188042101',
+                    from: '+19189927111'
+                },
+                function (err) {
+                    if(err) {
+                        return res.status(400).send({
+                            message: err
+                        });
+                    } else {
+                        return res.status(200).send({
+                            body: 'congrats, your phone will ring with your code. Business id: ' + req.params.id + ' With code: ' + businessCode
+                        })
+                    }
                 });
-            } else {
-                return res.status(200).send({
-                    body: 'congrats, your phone will ring with your code. Business id: ' + req.params.id
-                })
-            }
-        });
+        }
+    ])
 };
 
 /**

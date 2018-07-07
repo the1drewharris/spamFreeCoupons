@@ -5,7 +5,7 @@ module.exports = {
     ///// Mongo /////
     db: 'mongodb://localhost/',
     dbname: 'anonymousCoupons',
-    port:3000,
+    port:3002,
     app: {
         title: 'local: anonymousCoupons'
     },
