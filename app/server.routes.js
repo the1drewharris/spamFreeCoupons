@@ -70,4 +70,7 @@ router.post('/coupon/search', coupon.search);
 router.post('/coupon/update', coupon.update);
 router.delete('/coupon/delete/:id', coupon.delete);
 
+var authentication = require('./controllers/authentication.server.controller.js');
+router.get('/authentication/authenticate', authentication.authenticate);
+
 module.exports = router;
