@@ -149,7 +149,7 @@ exports.detail = function (req, res) {
 
 /**
  * @api {post} /business
- * @apiName list
+ * @apiName search
  * @apiGroup business
  *
  * @apiParam {businessOwnerId} businessOwnerId

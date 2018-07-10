@@ -224,6 +224,40 @@ exports.detail = function (req, res) {
 };
 
 /**
+ * @api {post} /business
+ * @apiName list
+ * @apiGroup business
+ *
+ * @apiParam {businessOwnerId} businessOwnerId
+ *
+ * @apiSuccessExample Success-Response:
+ *  200 OK
+ * {business}
+ *
+ * @apiErrorExample Error-Response:
+ *  400 Bad Request
+ *  {
+* "message": "error of some kind"
+*     }
+ */
+exports.search = function (req, res) {
+    var query = req.body;
+    businessOwner.findOne(query).sort('-type').exec(function (err, businessOwner) {
+        if (!businessOwner) {
+            res.status(200).send(businessOwner)
+        } else {
+            if (err) {
+                return res.status(400).send({
+                    message:  err
+                });
+            } else {
+                res.jsonp(businessOwner);
+            }
+        }
+    });
+};
+
+/**
  * @api {post} /businessOwner
  * @apiName update
  * @apiGroup businessOwner

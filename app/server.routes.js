@@ -53,6 +53,7 @@ router.get('/businessOwner/list', businessOwner.list);
 router.get('/businessOwner/detail/:id', businessOwner.detail);
 router.get('/businessOwner/signOut',businessOwner.signOut);
 router.get('/businessOwner/me', businessOwner.me);
+router.post('/businessOwner/search', businessOwner.search);
 router.post('/businessOwner/signIn',businessOwner.signIn);
 router.post('/businessOwner/create', businessOwner.create);
 router.post('/businessOwner/update', businessOwner.update);
