@@ -64,9 +64,9 @@ exports.signIn = function(req, res){
                                     }
                                 });
                             } else {
-                                console.log('check user.subscription.status == Active');
-                                if (user.active === true){
-                                    console.log('Business Owner has active subscription!');
+                                //console.log('check user.subscription.status == Active');
+                                //if (user.active === true){
+                                    //console.log('Business Owner has active subscription!');
                                     req.login(user, function(err) {
                                         if (err) {
                                             res.status(400).send(err);
@@ -74,10 +74,10 @@ exports.signIn = function(req, res){
                                             res.json(user);
                                         }
                                     });
-                                } else {
+                                /*} else {
                                     console.log('Business Owner does NOT have active subscription');
                                     res.status(400).send({message: 'Subscription is not Active.', checkout: true, user: user});
-                                }
+                                }*/
                             }
                         }
                     });

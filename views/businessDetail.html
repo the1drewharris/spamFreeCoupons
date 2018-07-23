@@ -4,8 +4,6 @@
     <script src="js/angular.min.js"></script> <!-- AngularJS Lib -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.client.styles.css" rel="stylesheet">
-    <link href="css/ngToast.min.css" rel="stylesheet">
-    <link href="css/ngToast-animations.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
 
     <link href="css/angular-material.min.css" rel="stylesheet">
@@ -13,11 +11,9 @@
     <link href="css/bootstrap-overrides.client.styles.css" rel="stylesheet"> <!-- Bootstrap overrides -->
     <link href="css/core.client.styles.css" rel="stylesheet">
     <link href="css/overrides.client.styles.css" rel="stylesheet">
-    <link href="css/ngtoast-overrides.client.styles.css" rel="stylesheet">
     <link href="css/ng-animate.client.styles.css" rel="stylesheet">
     <link href="css/overrides-mobile.client.styles.css" rel="stylesheet">
     <link href="css/typography.client.styles.css" rel="stylesheet">
-    <link href="css/material-datetimepicker.min.css" rel="stylesheet">
     <link href="css/core.css" rel="stylesheet">
 
     <link href="css/header.client.styles.css" rel="stylesheet">
@@ -25,7 +21,6 @@
     <!--<link href="modules/core/css/mainmenu.client.styles.css" rel="stylesheet">-->
 
     <link href="css/toggle.style.css" rel="stylesheet"> <!-- Toggle Switch styles : http://callmenick.com/post/css-toggle-switch-examples -->
-    <link href="js/angular-ui-grid/ui-grid.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="images/favicon.ico">
 
@@ -34,13 +29,11 @@
     <script src="js/bootstrap.min.js"></script>
 
     <!-- Other plugins and libs -->
-    <script src="js/CryptoJS/rollups/sha1.js"></script> <!-- CryptoJS MD5 Hasher -->
     <script src="js/async.js"></script> <!-- Async -->
 
     <!-- Angular Plugins -->
     <script src="js/xeditable.js"></script> <!-- XEditable -->
     <script src="js/ui-bootstrap-tpls.min.js"></script> <!-- Bootstrap UI 0.13.4 -->
-
     <script src="js/angular-material.min.js"></script> <!-- Angular Material 1.0.7 -->
     <script src="js/angular-animate.min.js"></script>
     <script src="js/angular-aria.min.js"></script>
@@ -48,11 +41,9 @@
     <script src="js/angular-messages.min.js"></script> <!-- Angular Messages -->
     <script src="js/angular-sanitize.min.js"></script>
     <script src="js/angular-clipboard.js"></script> <!-- Angular Clipboard -->
-    <script src="js/ng-csv.min.js"></script> <!-- NG CSV -->
     <script src="js/angular-idle.min.js"></script>
 
     <!--more Plugins-->
-    <script src="js/jstz.min.js"></script> <!-- jsTimezoneDetect -->
     <script src="js/moment.js"></script> <!-- Angular Moment -->
     <script src="js/angular-moment.min.js"></script> <!-- Angular Moment -->
     <script src="js/moment-timezone-with-data-2010-2020.min.js"></script>
@@ -66,7 +57,6 @@
     <script src="js/ng-lodash.min.js"></script> <!-- lodash -->
     <script src="js/angular-ui-grid/ui-grid.js"></script> <!-- UI Grid -->
     <script src="js/ui-grid-custom-select.js"></script> <!-- UI Grid -->
-    <script src="js/FileSaver.min.js"></script> <!-- Used for AppV file downloading -->
     <script src="js/uuid.js"></script>
     <script src="js/ua-parser.min.js"></script>
 
@@ -78,13 +68,45 @@
     <script src="js/gm.typeaheadDropdown.js"></script>
 
     <script src="app.js"></script>
-    <script src="gridModule.js"></script>
+
+    <script src="businessesModule.js"></script>
+    <script src="couponsModule.js"></script>
+    <script src="businessOwnersModule.js"></script>
 
 </head>
-
-<body>
-    {% raw %}
-        <ng-view></ng-view>
-    {% endraw %}
-</body>
+<section>
+    <h1>Business Detail</h1>
+    <form>
+        <div>
+            <input title="Business Name" placeholder="Business Name" ng-model="business.name" ng-required="true">
+        </div>
+        <div>
+            <input title="Address" placeholder="Address" ng-model="business.address" ng-required="true">
+        </div>
+        <div>
+            <input title="City" placeholder="City" ng-model="business.city" ng-required="true">
+        </div>
+        <div>
+            <input title="State" placeholder="State" ng-model="business.state" ng-required="true">
+        </div>
+        <div>
+            <input title="Zip Code" placeholder="Zip Code" ng-model="business.postalCode" ng-required="true">
+        </div>
+        <div>
+            <input title="Website URL" placeholder="Website URL" ng-model="business.websiteURL" ng-required="false">
+        </div>
+        <div>
+            <input title="Facebook Link" placeholder="Facebook Link" ng-model="business.facebook" ng-required="false">
+        </div>
+        <div>
+            <input title="Instagram Link" placeholder="Instagram Link" ng-model="business.instagram" ng-required="false">
+        </div>
+        <div>
+            <input title="Twitter Link" placeholder="Twitter Link" ng-model="business.twitter" ng-required="false">
+        </div>
+        <div>
+            <input title="Verification Code" type="submit" placeholder="Verification Code" ng-model="business.verification" ng-required="true">
+        </div>
+    </form>
+</section>
 </html>

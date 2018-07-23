@@ -1,0 +1,94 @@
+/* ==============================================================================
+   Overrides for Angular Material
+   ============================================================================== */
+
+
+
+
+md-fab-speed-dial.fixed {
+    position: fixed;
+    margin-top: 0;
+    right: 24px;
+}
+
+div.md-fab-action-item {
+    background: rgba(255,255,255,0.93);
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
+    margin: 0 0 0 7px;
+    -webkit-border-radius: 48px;
+    -moz-border-radius: 48px;
+    border-radius: 48px;
+}
+
+.md-button.md-icon-button {
+    margin: 0;
+}
+
+
+.md-button.md-success {
+    background-color : rgba(92,169,12,1);
+    color: #fff;
+}
+
+.md-button.md-success:hover {
+    color : rgba(92,169,12,1);
+    background-color: transparent;
+}
+
+
+/******* mdToast styles *******/
+.md-toast.error {
+    background-color: red;
+}
+
+.md-toast.success {
+    background-color: green;
+}
+
+
+
+
+
+md-dialog md-dialog-content {
+    padding: 12px 24px 24px 24px;
+}
+
+.md-title {
+    font-weight: bold;
+}
+
+
+
+md-backdrop.md-dialog-backdrop,
+.md-dialog-container {
+    z-index: 9999;
+}
+
+md-tooltip {
+    -webkit-box-shadow: 0 0 3px rgba(255, 255, 255, 0.93);
+    -moz-box-shadow: 0 0 3px rgba(255, 255, 255, 0.93);
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.93);
+    z-index: 9999;
+}
+
+md-pagination-wrapper {
+    height: 36px;
+}
+
+md-tabs-canvas {
+    height: 36px;
+}
+
+md-tabs-wrapper {
+    padding: 0 9px;
+}
+
+    md-tab-item.md-tab {
+        border-radius: 4px 4px 0 0;
+        background: #fff;
+        margin: 0 2px;
+        padding: 9px 18px;
+        line-height: 18px;
+    }

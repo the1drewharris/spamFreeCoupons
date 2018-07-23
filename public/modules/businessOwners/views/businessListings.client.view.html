@@ -1,0 +1,14 @@
+<section>
+    <div ng-controller="businessListingsController" ng-init="getUnclaimedBusinesses()">
+        <h1>Claim Businesses</h1>
+        <div ng-init="isAuth()">
+            <md-button ng-if="auth">Logout</md-button>
+        </div>
+        <md-input-container flex>
+            <label><i class="fa fa-search"></i>Search</label>
+            <input title="Search" ng-change="refreshData(search)" ng-model="search">
+        </md-input-container>
+        <div ui-grid="gridOptions" class="grid"></div>
+        <md-button class="btn btnContainer">Create Business</md-button>
+    </div>
+</section>

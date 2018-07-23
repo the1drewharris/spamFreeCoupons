@@ -1,0 +1,23 @@
+<section>
+    <div ng-controller="businessesController" ng-init="getBusiness(id)">
+        <h1>Business</h1>
+        <div>
+            Name: {{business.companyName}}<br>
+            Address: {{business.address}}<br>
+            City: {{business.city}}<br>
+            State: {{business.state}}<br>
+            Zip: {{business.postalCode}}<br>
+            Phone Number : {{business.phone}}<br>
+            Website URL: {{business.websiteURL}}<br>
+            Facebook: {{business.facebook}}<br>
+            Instagram: {{business.instagram}}<br>
+            Twitter: {{business.twitter}}<br>
+        </div>
+        <div>
+            <form>
+                <input placeholder="Verify Code" ng-model="form.submitCode"><br>
+                <md-button type="submit" ng-click="claimBusiness(form)">Submit</md-button>
+            </form>
+        </div>
+    </div>
+</section>

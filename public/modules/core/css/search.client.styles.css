@@ -1,0 +1,371 @@
+/* ================================================================================
+   Content Pane Overrides to accommodate search bar
+   ================================================================================ */
+ng-view > section {
+    /*
+    padding: 103px 0 0 0 !important;
+    */
+}
+
+.appheader {
+    /*
+    margin: -103px 0 0 0;
+    */
+}
+
+
+
+
+/* ================================================================================
+   Search
+   ================================================================================ */
+
+div.content.container-fluid {
+    padding: 0 0 0 45px;
+}
+
+div.content.container-fluid.menuopen {
+    padding: 0 0 0 200px;
+}
+
+.search section.search {
+    /*
+    position: absolute;
+    top: 55px;
+    */
+    left: 0;
+    right: 0;
+    bottom: auto;
+    height: 45px;
+    padding: 7px;
+    overflow: hidden;
+
+    border-bottom: 1px #ccc solid;
+
+    -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.33);
+    -moz-box-shadow:  0 0 3px rgba(0,0,0,0.33);
+    box-shadow:  0 0 3px rgba(0,0,0,0.33);
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,e5e5e5+100&amp;0.09+0,0.09+100 */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0.49) 0%, rgba(255,255,255,0.77) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.49)), color-stop(100%,rgba(255,255,255,0.77))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0.49) 0%,rgba(255,255,255,0.77) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,0.49) 0%,rgba(255,255,255,0.77) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,0.49) 0%,rgba(255,255,255,0.77) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0.49) 0%,rgba(255,255,255,0.77) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#17000000', endColorstr='#17e5e5e5',GradientType=0 ); /* IE6-9 */
+
+    -webkit-transition: height 250ms ease;
+    -moz-transition: height 250ms ease;
+    -ms-transition: height 250ms ease;
+    -o-transition: height 250ms ease;
+    transition: height 250ms ease;
+}
+
+.search.srchOpen section.search {
+    height: 287px;
+}
+
+.search.srchOpen .resultsTabs {
+    top: 349px;
+}
+
+.search.srchOpen .tab-content {
+    top: 379px;
+}
+
+
+
+
+
+
+
+
+
+ul.searchOptions > li:nth-child(2),
+ul.searchOptions > li:nth-child(3),
+ul.searchOptions > li:nth-child(4),
+ul.searchOptions > li:nth-child(5),
+ul.searchOptions > li:nth-child(6) {
+    width: 19.5%;
+    margin: 0 0 0 3px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+ul.searchOptions {
+    margin-bottom: 7px;
+}
+
+    ul.searchOptions > li {
+        margin-bottom: 7px;
+    }
+
+        .search .searchOptions > li div.panel-group {
+            margin-bottom: 0;
+        }
+
+            .search .searchOptions > li div.panel-body {
+                height: 149px;
+                overflow-y: scroll;
+            }
+
+                .search .searchOptions > li div.panel-body ul {
+                    padding: 7px;
+                }
+
+                    ul.searchOptions .panel-body > ul > li:first-child {
+                        padding: 3px;
+                    }
+
+                    .search .searchOptions > li div.panel-body ul a {
+                        padding: 0 3px;
+                    }
+
+                    .search .searchOptions > li div.panel-body ul ul {
+                        padding: 0 0 0 3px;
+                    }
+
+ul.searchOptions select.form-control {
+    width: 150px;
+    padding: 0;
+    float: right;
+    height: auto;
+}
+
+li.resultCount{
+    padding: 7px;
+}
+
+a.btn.srchTogl {
+    padding: 0 7px;
+    color: #fff;
+    text-shadow: 0 0 1px rgba(0,0,0,0.77), 0 0 5px rgba(255,0,0,0.63);
+}
+
+
+
+
+div.search.tickets.col-md-9 {
+    background: #fff;
+    box-shadow: 0 0 7px rgba(0,0,0,0.33);
+}
+
+div.search.tickets.fixed {
+    position: absolute;
+    margin: 5px;
+    z-index: 999;
+    top: 0;
+    right: 0;
+}
+
+div.search.tickets.col-md-9 md-tabs-wrapper {
+    float: left;
+    width: 280px;
+}
+
+div.search.tickets.col-md-9 md-tabs-content-wrapper {
+    float: right;
+    width: 75%;
+    overflow: hidden;
+    height: 49px;
+}
+
+div.search.tickets.col-md-9 .md-padding {
+    padding: 0 16px;
+}
+
+div.search.tickets.col-md-9 md-input-container {
+    padding: 0px 2px 26px;
+}
+
+div.search.tickets.col-md-9 md-input-container label {
+    margin-bottom: 3px;
+}
+
+.btnContainer {
+    height: 28px;
+    margin-top: 18px;
+    text-align: right;
+}
+
+div.search.tickets.col-md-9 .btnContainer {
+    margin-top: 7px;
+}
+
+
+
+div.search.tickets.col-md-6 md-tabs-content-wrapper {
+    box-shadow: 0 3px 7px rgba(0,0,0,0.33);
+}
+
+div.search.tickets.col-md-9 md-tabs-content-wrapper {
+    box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ====================================================================
+   Search Tags/Chips
+   ==================================================================== */
+
+
+
+.searchChips ul.tags li.tag:first-child:before {
+    /* content: "Tags: ";*/
+}
+
+
+/* MD only ====== */
+
+.md-chips .md-chip {
+    height: 21px;
+    margin: 2px 4px 0 0;
+    padding: 0 5px 0 9px;
+    line-height: 20px;
+}
+
+.md-chips .md-chip .md-chip-remove {
+    height: 21px;
+}
+
+md-chips {
+    display: inline-block;
+}
+
+md-chip {
+    font-size: 0.81em;
+}
+
+md-chips .md-chips {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+md-chips em {
+    font-size: 0.81em;
+    text-transform: uppercase;
+}
+
+md-chips a {
+    font-size: 1.21em;
+    display: inline-block;
+    padding: 1px 0;
+}
+
+md-chips a:hover {
+    color: rgba(220,134,12, 0.8);
+    text-shadow: 1px 4px 6px #def, 0 0 0 #000, 1px 4px 6px #def;
+}
+
+
+
+
+
+.tags {
+    padding: 0;
+    margin: 0;
+}
+.tags .tag {
+    border-radius: 6px;
+    background-color: #EFEFEF;
+    border: 1px solid #DDD;
+    padding: 5px;
+    margin-right: 10px;
+    display: inline-block;
+}
+.tags .tag:hover {
+    text-decoration: none;
+}
+
+
+
+
+
+/* ====================================================================
+   Toolbars and Search bars
+   ==================================================================== */
+
+md-toolbar {
+    /*
+    position: absolute;
+    */
+}
+
+    md-toolbar div.md-toolbar-tools form {
+        padding: 3px 0;
+    }
+
+        md-toolbar div.md-toolbar-tools form md-input-container {
+            margin: 0;
+        }
+
+        md-toolbar div.md-toolbar-tools form button.md-button {
+            margin-top: 4px;
+            margin-right: 3px;
+            margin-bottom: 3px;
+            margin-left: 3px;
+        }
+
+section > md-toolbar:first-of-type {
+    /*
+    position: fixed;
+    left: 200px;
+    right: 0;
+    margin-top: -50px;
+    width: auto;
+    overflow: hidden;
+    */
+    margin: 0;
+}
+
+section > md-toolbar:first-of-type + *:first-of-type {
+    margin: -2px -16px 0;
+}
+
+
+
+
+
+
+/* ====================================================================
+   Accordion style search results
+   ==================================================================== */
+md-list > md-list-item.layout-gt-sm-column > div.panelHead.flex,
+md-list > md-list-item.layout-gt-sm-column > div.container-element {
+    min-height: 35px;
+}
+
+md-list > md-list-item.layout-gt-sm-column > div.panelHead h4 {
+    margin: 0;
+}
+
+
+
+
+
+
+
+/* ====================================================================
+   Search results
+   ==================================================================== */
+section > md-toolbar:first-of-type + *:first-of-type {
+    margin: -2px 0 0;
+    /*
+    left: 0;
+    right: 0;
+    position: absolute;
+    bottom: 66px;
+    top: 103px;
+    */
+}

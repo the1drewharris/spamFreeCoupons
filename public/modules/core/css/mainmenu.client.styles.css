@@ -1,0 +1,236 @@
+/* ==================================================================================
+
+   NEW Navigation and Menu
+
+   - old menu is still in place, just hidden, until new menu is completely phased in
+   - new menu hides on mobile query and shows old menu
+
+   ================================================================================== */
+
+nav.mainmenu {
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    width: 45px;
+    height: 100%;
+    z-index: 999;
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,600000+100&amp;0.18+0,0.09+100 */
+    background: -moz-linear-gradient(left,  rgba(0,0,0,0.18) 0%, rgba(96,0,0,0.09) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0.18)), color-stop(100%,rgba(96,0,0,0.09))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(0,0,0,0.18) 0%,rgba(96,0,0,0.09) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(0,0,0,0.18) 0%,rgba(96,0,0,0.09) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(0,0,0,0.18) 0%,rgba(96,0,0,0.09) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(0,0,0,0.18) 0%,rgba(96,0,0,0.09) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e000000', endColorstr='#17600000',GradientType=1 ); /* IE6-9 */
+
+
+    -webkit-transition: -webkit-transform ease 250ms, transform ease 250ms;
+    -moz-transition: -webkit-transform ease 250ms, transform ease 250ms;
+    -ms-transition: -webkit-transform ease 250ms, transform ease 250ms;
+    -o-transition: -webkit-transform ease 250ms, transform ease 250ms;
+    transition: -webkit-transform ease 250ms, transform ease 250ms;
+}
+
+/*
+nav.mainmenu.show {
+    -ms-transform: translate3d(135px, 0, 0);
+    -webkit-transform: translate3d(135px, 0, 0);
+    -o-transform: translate3d(135px, 0, 0);
+    -moz-transform: translate3d(135px, 0, 0);
+    transform: translate3d(135px, 0, 0);
+}
+*/
+
+nav.mainmenu a:hover {
+    color: #000;
+    background: transparent;
+    cursor: pointer;
+}
+
+    nav.mainmenu accordion a span span {
+        display: none;
+        -webkit-transition: display ease 250ms;
+        -moz-transition: display ease 250ms;
+        -ms-transition: display ease 250ms;
+        -o-transition: display ease 250ms;
+        transition: display ease 250ms;
+    }
+
+    nav.mainmenu.show accordion span {
+        display: block;
+        padding: 2px 0;
+    }
+
+nav.mainmenu.show {
+    width: 200px;
+}
+
+nav.mainmenu i {
+    font-size: 1.31em;
+    color: #808080;
+}
+
+nav.mainmenu ul {
+    margin: 0 0 0 2px;
+    padding: 0;
+    -webkit-transition: height ease 250ms;
+    -moz-transition: height ease 250ms;
+    -ms-transition: height ease 250ms;
+    -o-transition: height ease 250ms;
+    transition: height ease 250ms;
+}
+
+nav.mainmenu.show ul {
+    margin: 0;
+    width: 100%;
+}
+
+nav.mainmenu ul li:hover {
+    color: #000;
+    /*text-shadow: 0 0 3px rgba(255,255,255,0.84);*/
+}
+
+.mainmenu ul li a:hover,
+.mainmenu ul li a:hover i,
+.nav .open > a,
+.nav .open > a:hover {
+    color: #094969;
+}
+
+nav.mainmenu ul li ul {
+    margin: 0;
+    padding: 0;
+    background: none;
+    position: relative;
+    z-index: 9;
+    width: 100%;
+}
+
+nav.mainmenu ul ul > li {
+    position: relative;
+    font-size: 1.01em !important;
+    background: #000;
+    background: rgba(0,0,0,0.63);
+    border-top: 1px solid #cccccc;
+}
+
+nav.mainmenu ul ul li a {
+    background: #31729e; /* Old browsers */
+    background: -moz-linear-gradient(top,  #31729e 0%, #1e5799 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#31729e), color-stop(100%,#1e5799)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #31729e 0%,#1e5799 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #31729e 0%,#1e5799 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #31729e 0%,#1e5799 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #31729e 0%,#1e5799 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#31729e', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
+    padding: 10px 15px 10px 25px;
+    -webkit-box-shadow: inset 3px 3px 3px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: inset 3px 3px 3px rgba(0, 0, 0, 0.33);
+    box-shadow: inset 3px 3px 3px rgba(0, 0, 0, 0.33);
+}
+
+nav.mainmenu ul ul li a:hover {
+   -webkit-box-shadow: inset 0 0 3px rgba(255, 255, 255, 1);
+    -moz-box-shadow: inset 0 0 3px rgba(255, 255, 255, 1);
+    box-shadow: inset 0 0 3px rgba(255, 255, 255, 1);
+}
+
+
+nav.mainmenu ul li span {
+    margin: 0 0 0 -200px;
+    opacity: 0;
+    -webkit-transition: margin 0.2s ease, opacity 0.2s ease;
+    -moz-transition: margin 0.2s ease, opacity 0.2s ease;
+    -ms-transition: margin 0.2s ease, opacity 0.2s ease;
+    -o-transition: margin 0.2s ease, opacity 0.2s ease;
+    transition: margin 0.2s ease, opacity 0.2s ease;
+}
+
+nav.mainmenu ul li.dropdown.open {
+    box-shadow: 0 3px 7px rgba(0,0,0,0.77);
+}
+
+nav.mainmenu.show ul li,
+nav.mainmenu ul li.dropdown.open,
+nav.mainmenu ul li.dropdown.open li {
+    width: 100%;
+    margin: 0 21px 0 0;
+}
+
+nav.mainmenu ul li.dropdown.open:first-child,
+nav.mainmenu ul li.dropdown.open li:first-child {
+    margin: -1px 21px 0 0;
+}
+
+nav.mainmenu.show ul li span,
+nav.mainmenu ul li.dropdown.open span{
+    margin: 0;
+    opacity: 1;
+}
+
+nav.mainmenu ul li span i {
+    position: relative;
+    z-index: 8;
+}
+
+.expander {
+    background: #000;
+    background: rgba(0,0,0,0.77);
+    display: block;
+    padding: 3px;
+    font-size: 0.71em;
+    border-bottom: 1px #333 solid;
+}
+
+
+
+
+/* ==============================================================================
+   Accordion Panels
+   ============================================================================== */
+
+
+.mainmenu div.panel-group {
+    padding: 3px;
+}
+
+    .mainmenu div.panel-group div.panel {
+        overflow: hidden;
+        /*border-radius: 21px;*/
+        border-radius: 0;
+        box-shadow: 0 0 7px rgba(0,0,0,0.21);
+        -webkit-transition: box-shadow ease 250ms;
+        -moz-transition: box-shadow ease 250ms;
+        -ms-transition: box-shadow ease 250ms;
+        -o-transition: box-shadow ease 250ms;
+        transition: box-shadow ease 250ms;
+    }
+
+    .mainmenu div.panel-group div.panel:hover {
+        box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    }
+
+        .mainmenu div.panel-group div.panel-heading {
+            padding: 0;
+            min-height: 36px;
+            background-color: #e7e7e7;
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .mainmenu div.panel-group div.panel-body {
+            padding: 0;
+        }
+
+        .mainmenu div.panel-group .panel-title  {
+            font-family: open_sansregular, "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
+            margin: 0;
+        }
+
+            .mainmenu div.panel-group a {
+                display: block;
+                padding: 9px;
+                overflow: hidden;
+                color: #094969;
+            }
+

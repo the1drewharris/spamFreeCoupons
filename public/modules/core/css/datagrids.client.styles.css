@@ -1,0 +1,518 @@
+/* ================================================================================
+   Data Grids and Tables
+   ================================================================================ */
+
+div.gridHead,
+ol.gridHead,
+ul.gridHead {
+    background-color: #424242;
+    background-color: rgba(0,0,0,0.7);
+    color: #fff;
+    padding-right: 18px;
+}
+
+table.data-grid tr {
+    cursor: pointer;
+}
+
+.data-grid > .layout-row,
+.data-grid > .layout-gt-sm-row {
+    border-bottom: 1px solid rgba(0,0,0,0.16);
+}
+
+    .data-grid > .layout-row > div,
+    .data-grid > .layout-gt-sm-row > div {
+        position: relative;
+    }
+
+
+div.gridHead .table > thead > tr > th {
+    background-color: #424242;
+    background-color: rgba(0,0,0,0.49);
+    color: #fff;
+    font-family: open_sansbold, Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: transparent;
+}
+
+div.gridHead .table > thead > tr > th a {
+    color: #fff;
+}
+
+div.gridHead .table > thead > tr > th a:hover {
+    color: #DC860C;
+}
+
+.gridList {
+    overflow-y: scroll;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f0f0f0;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #CCF0FF;
+    background-color: rgba(204,240,255,0.77);
+}
+
+
+
+
+
+
+
+/* ==========================================================================
+ * Search grid footer
+ * =========================================================================*/
+.gridFoot,
+div.gridFoot {
+    background: rgba(255,255,255,0.84);
+    padding: 9px 18px;
+    width: 100%;
+    border-top: 3px solid #ccc;
+}
+
+md-toolbar.gridFoot {
+    /*
+    position: fixed;
+    left: 200px;
+    right: 0;
+    width: auto;
+    */
+    margin: 0;
+}
+
+    md-toolbar.gridFoot .md-toolbar-tools {
+        padding: 0;
+    }
+
+    .gridFoot md-select {
+        margin: 0 8px 0 0;
+    }
+
+    md-toolbar.gridFoot md-input-container {
+        margin: 0 4px;
+        padding: 2px;
+    }
+
+div.gridFoot.full-pane {
+    top: auto;
+    height: 49px;
+    bottom: 0;
+    position: absolute;
+}
+
+.gridFoot select {
+    height: 29px;
+    padding: 0 3px;
+    margin: 0 7px 0 0;
+}
+
+.gridFoot p {
+    margin: 0 0 3px;
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+ * Search grid header
+ * =========================================================================*/
+
+div.gridHead {
+    border-bottom: 2px solid #ddd;
+    padding: 4px 16px;
+}
+
+div.gridWrap > md-list {
+    padding: 0;
+}
+
+div.gridHead a {
+    color: #fff;
+}
+
+div.gridHead .table th:first-child,
+div.gridHead .table td:first-child,
+div.gridFoot .table th:first-child,
+div.gridFoot .table td:first-child,
+div.gridWrap .table th:first-child,
+div.gridWrap .table td:first-child,
+div.gridHead div.md-layout-row > div:first-child,
+div.gridWrap div.md-layout-row > div:first-child {
+    padding: 8px 8px 8px 21px;
+}
+
+div.gridHead .table th:last-child,
+div.gridHead .table td:last-child,
+div.gridFoot .table th:last-child,
+div.gridFoot .table td:last-child,
+div.gridWrap .table th:last-child,
+div.gridWrap .table td:last-child {
+    /*padding: 8px 21px 8px 8px;*/
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+ * Search grid wrapper
+ * =========================================================================*/
+div.gridWrap {
+
+}
+
+div.gridWrap.full-pane {
+    top: 28px;
+    bottom: 49px;
+    overflow-y: scroll;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+div.gridWrap .table td span {
+    display: block;
+    padding: 9px 0;
+}
+
+
+
+
+
+
+/* ==========================================================================
+ * Search grid rows // editable with MD input containers
+ * =========================================================================*/
+
+md-list.listWrapper {
+    overflow-y: auto;
+}
+
+md-list.listWrapper md-list-item {
+    padding: 3px 18px;
+}
+
+.listHead {
+    background-color: rgba(0,0,0,0.7);
+    color: #fff;
+    margin: 0;
+    padding: 0 16px 18px 16px;
+    height: 32px;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    text-overflow: ellipsis;
+}
+
+    .listHead > div {
+        margin: 0;
+        padding: 7px 2px;
+        min-height: 28px;
+    }
+
+        .listHead > div > a {
+            color: #fff;
+        }
+
+    md-list.listWrapper md-list-item.fieldRow {
+        padding: 3px 0 3px 16px;
+        overflow: hidden;
+        border-bottom: 1px solid #ddd;
+    }
+
+    md-list.listWrapper md-list-item.fieldRow .md-title,
+    md-list.listWrapper md-list-item.fieldRow .md-subhead {
+        margin: 5px 0;
+    }
+
+    md-list.listWrapper md-list-item.fieldRow md-input-container {
+        margin: 2px 0;
+        min-height: auto;
+        overflow: hidden;
+    }
+
+    md-list.listWrapper md-list-item.fieldRow md-input-container .md-input.ng-untouched {
+        border-color: rgba(0,0,0,0);
+    }
+
+    md-list.listWrapper md-list-item.fieldRow md-input-container .md-select-value {
+        border-color: rgba(0,0,0,0);
+    }
+
+    md-list.listWrapper md-list-item.fieldRow button.md-button {
+        margin: 1px 1px 0;
+        padding: 6px;
+    }
+
+    md-list.listWrapper md-list-item.fieldRow button.md-button.md-mini {
+        padding: 0 5px;
+    }
+
+    md-list.listWrapper md-list-item.fieldRow .orderHandle,
+    md-list.listWrapper md-list-item.groupRow .orderHandle,
+    md-list.listWrapper md-list md-list-item.listHead > div.orderHandle {
+        padding: 10px 10px 10px 0;
+        border-right: 1px solid #ccc;
+        width: 24px;
+    }
+
+    md-list.listWrapper md-list-item h4 {
+        padding: 7px 8px;
+    }
+
+    md-list.listWrapper md-list-item.fieldRow md-chips {
+        margin: 0;
+    }
+
+    md-list.listWrapper md-list-item.fieldRow md-chips.ng-valid.ng-dirty md-chips-wrap {
+        border-bottom: 1px solid #78FA89;
+    }
+
+
+
+
+
+
+.table-fixed_headers thead {
+    height: 35px;
+}
+
+.table-fixed_headers thead tr {
+    position: absolute;
+    height: 35px;
+}
+
+.table-fixed_headers thead tr th {
+    display: inline-block;
+    margin: 0 -3px 0 0;
+}
+
+.table-fixed_headers tbody {
+
+}
+
+.table-fixed_headers tbody tr {
+    width: 100%;
+}
+
+.data-grid .layout-row {
+    padding: 0 0 0 16px;
+}
+
+.data-grid .layout-row:nth-child(even),
+.data-grid .layout-row:nth-child(even),
+.data-grid .layout-gt-sm-row:nth-child(even) {
+    background-color: rgba(219,227,239,0.5);
+}
+
+.data-grid .layout-row div:nth-child(even),
+.data-grid .layout-row div:nth-child(even),
+.data-grid .layout-gt-sm-row div:nth-child(even) {
+    background-color: rgba(154,154,154,0.07);
+}
+
+.table-fixed_headers tbody tr td,
+.table-fixed_headers div.md-layout-row > div[class*=flex] {
+    /*
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    */
+    position: relative;
+    border-top: 1px solid #bbb;
+    vertical-align: middle;
+    min-height: 36px;
+}
+
+.table-fixed_headers tbody tr td button.md-button.md-fab {
+    font-size: 1.41em;
+    margin: 0 3px;
+    line-height: 1.01em;
+}
+
+.table-fixed_headers tbody tr td > div,
+.table-fixed_headers div[class*=flex] > div[contenteditable] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-fixed_headers tbody tr td > div.textonly,
+.table-fixed_headers div[class*=flex] > div.textonly {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 8px;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+.table-fixed_headers tbody tr td > div,
+.table-fixed_headers div[class*=flex]:last-child {
+    padding: 3px;
+}
+
+.table-fixed_headers tbody tr td input,
+.table-fixed_headers div[class*=flex] > div[contenteditable] {
+    padding: 3px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,0);
+    background: transparent;
+    margin: 0 0 0 -3px;
+}
+
+.table-fixed_headers tbody tr td:first-child > div {
+    left: 20px;
+}
+
+.table-fixed_headers tbody tr td:hover input,
+.table-fixed_headers div[class*=flex]:hover > div,
+.table-fixed_headers div[class*=flex]:hover > div {
+    border: 1px solid #ababab;
+}
+
+.table-fixed_headers tbody tr td div:focus,
+.table-fixed_headers div[class*=flex] > div:focus,
+.table-fixed_headers div[class*=flex] > div:focus{
+    color: #000;
+    border: 1px solid #ababab;
+    background: #fff;
+}
+
+.table-fixed_headers tbody tr td span.copybtn,
+.table-fixed_headers div[class*=flex] span.copybtn {
+    color: #000;
+    position: absolute;
+    right: 5px;
+    bottom: 1px;
+    display: none;
+    padding: 0 2px;
+    background: #ededed;
+    text-transform: uppercase;
+    font-size: 0.71em;
+    cursor: pointer;
+}
+
+.table-fixed_headers tbody tr td:hover span.copybtn,
+.table-fixed_headers div[class*=flex]:hover span.copybtn{
+    display: inline-block;
+}
+
+
+
+.table-fixed_headers tfoot {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 49px;
+}
+
+table.table.table-fixed_headers tfoot tr td {
+    width: 100%;
+    padding: 0;
+    vertical-align: middle;
+    text-align: right;
+}
+
+table.table.table-fixed_headers tfoot tr td .pagination {
+    margin: 7px 0;
+}
+
+
+
+.resultsList {
+    height: 100%;
+}
+
+
+
+
+
+/* ================================================================================
+   Mini Grids
+   ================================================================================ */
+
+
+.minigrid ul,
+.minigrid > div {
+    border-bottom: 1px solid #ccc;
+    padding: 7px;
+    margin-bottom: 0;
+}
+
+    .minigrid > ul > li {
+        padding: 0 15px;
+    }
+
+.minigrid > div {
+    padding: 7px 16px;
+}
+
+.minigrid ul.gridHead,
+.minigrid div.gridHead,
+.minigrid ul.gridhead {
+    border-bottom: 3px solid #ccc;
+}
+
+.resultsList {
+    position:relative;
+}
+.resultsList .ui-grid {
+    position: absolute;
+    height: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.ui-grid-cell-focus {
+    background-color: transparent;
+}
+
+.ui-grid-cell-contents.ui-grid-custom-selected,
+.ui-grid-cell-contents.ui-grid-custom-selected {
+    background-color: rgba(0,119,204, 0.15);
+}
+
+.ui-grid-custom-selected-scrolling .ui-grid-cell-contents.ui-grid-custom-selected {
+    background-color: transparent;
+}
+
+.ui-grid-custom-selection-input {
+    position:	absolute;
+    bottom:		-10px;
+    left:		-10px;
+    width:		10px;
+    height:		10px;
+    display:	block;
+    font-size:	1;
+    z-index:	-1;
+    color:		transparent;
+    background:	transparent;
+    overflow:	hidden;
+    border:		none;
+    padding:	0;
+    resize:		none;
+    outline:	none;
+    -webkit-user-select: text;
+    user-select: text; /* Because for user-select:none, Safari won't allow input */
+}

@@ -1,0 +1,438 @@
+/* ================================================================================
+   Tabsets
+   ================================================================================ */
+
+md-content {
+    /*overflow-y: scroll;*/
+}
+
+ng-view > section > md-content {
+    /*overflow-y: auto;*/
+}
+
+div.content.container-fluid {
+    padding: 14px 0 14px 45px;
+}
+
+
+.resultsTabs .tab-pane {
+    background: #fff;
+    background: rgba(255,255,255,0.93);
+    /*border-radius: 0 0 9px 9px;*/
+    /*box-shadow: 0 2px 3px rgba(0,64,110,0.7);*/
+}
+
+.searchTabs .tab-pane:first-child {
+    background: none;
+    box-shadow: none;
+}
+
+.tab-container {
+    font-weight: normal;
+    /*
+    margin: -61px 0 0;
+    margin: 0 0 0 -6px;
+    padding: 0 1.25% 0 0;
+    max-height: 40px;
+    z-index: 10;
+    position: absolute;
+    top: 99px;
+    left: 26.5%;
+    width: 73.5%;
+    max-width: 73.5%;
+    */
+}
+
+.tab-content {
+    position: absolute;
+    top: 137px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.tab-container ul.nav-tabs {
+    margin: 0;
+    list-style-type: none;
+    line-height: 18px;
+    max-height: 37px;
+    overflow: hidden;
+    display: inline-block;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    padding: 0 20px;
+    border-bottom: 3px #d7d7d7 solid;
+}
+.tab-container ul.nav-tabs > li,
+.tab-container ul.nav-tabs ng-include > li {
+    margin: 5px -3px 0;
+
+    -moz-border-radius-topleft: 9px;
+    -webkit-border-top-left-radius: 9px;
+    border-top-left-radius: 9px;
+    -moz-border-radius-topright: 9px;
+    -webkit-border-top-right-radius: 9px;
+    border-top-right-radius: 9px;
+
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+
+    max-width: 284px;
+
+    padding: 0 3px 0 9px;
+    height: 170px;
+    background: #c3d5e6;
+    position: relative;
+    -moz-box-shadow: 0 4px 6px rgba(0, 64, 110, 0.7);
+    -webkit-box-shadow: 0 4px 6px rgba(0, 64, 110, 0.7);
+    box-shadow: 0 4px 6px rgba(0, 64, 110, 0.7);
+}
+
+.tab-container ul.nav-tabs > li:first-child,
+.tab-container ul.nav-tabs ng-include > li:first-child {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    -webkit-flex: 0;
+    -ms-flex: 0;
+    flex: 0;
+
+    min-width: 64px;
+}
+
+.tab-container ul.nav-tabs > li:first-child,
+.tab-container ul.nav-tabs ng-include > li:first-child {
+    margin-left: 0;
+    width: auto;
+    padding: 0 9px;
+}
+.tab-container ul.nav-tabs > li:last-of-type,
+.tab-container ul.nav-tabs ng-include > li:last-of-type {
+    margin-right: 0;
+}
+.tab-container ul.nav-tabs > li > a,
+.tab-container ul.nav-tabs ng-include > li > a {
+    background-color: transparent;
+    border-color: transparent;
+    display: block;
+    max-width: 100%;
+    text-decoration: none;
+    color: #222;
+    padding: 7px 3px;
+}
+.tab-container ul.nav-tabs > li > a span,
+.tab-container ul.nav-tabs ng-include > li > a span {
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    margin: 0 0 0 7px;
+}
+.tab-container ul.nav-tabs.nav > li > a:focus,
+.tab-container ul.nav-tabs.nav > li > a:hover,
+.tab-container ul.nav-tabs.nav ng-include > li > a:focus,
+.tab-container ul.nav-tabs.nav ng-include > li > a:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+.tab-container ul.nav-tabs > li > a .fa,
+.tab-container ul.nav-tabs ng-include > li > a .fa {
+    display: inline-block;
+    padding: 3px;
+    margin: 0 5px;
+    z-index: 10;
+    position: absolute;
+    top: 6px;
+    right: 0;
+}
+.tab-container ul.nav-tabs > li > a .fa-times,
+.tab-container ul.nav-tabs ng-include > li > a .fa-times {
+    color: #777;
+    font-size: 10px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: rgba(240,240,240,0.93);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+.tab-container ul.nav-tabs > li > a .glyphicon-remove:hover,
+.tab-container ul.nav-tabs ng-include > li > a .glyphicon-remove:hover {
+    background: #d39ea3;
+    color: white;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+.tab-container ul.nav-tabs > li.active,
+.tab-container ul.nav-tabs ng-include > li.active {
+    z-index: 2;
+    background-color: transparent !important;
+    /*
+    background-size: 100%;
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='),
+    -webkit-gradient(linear, 50% 0%, 50% 30, color-stop(0%, #ffffff), color-stop(100%, #f7f7f7)),
+    -moz-linear-gradient(#ffffff, #f7f7f7 30px),
+    -o-linear-gradient(#ffffff, #f7f7f7 30px),
+    -webkit-linear-gradient(#ffffff, #f7f7f7 30px),
+    linear-gradient(#ffffff, #f7f7f7 30px);
+    */
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f7f7f7 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f7f7f7)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f7f7f7 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f7f7f7',GradientType=0 ); /* IE6-9 */
+}
+
+.tab-container ul.nav-tabs > li.active > a,
+.tab-container ul.nav-tabs ng-include > li.active > a{
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.tab-container ul.nav-tabs > li.active > a:focus,
+.tab-container ul.nav-tabs > li.active > a:hover,
+.tab-container ul.nav-tabs ng-include > li.active > a:focus,
+.tab-container ul.nav-tabs ng-include > li.active > a:hover {
+    background-color: transparent;
+    border-color: transparent;
+    outline: none;
+}
+
+.tab-container ul.nav-tabs .btn {
+    float: left;
+    height: 20px;
+    width: 35px;
+    min-width: 35px;
+    max-width: 35px;
+    margin: 10px 0 0 0;
+    border-color: #71a0c9;
+    /*outline: none;*/
+    -moz-transform: skew(30deg);
+    -o-transform: skew(30deg);
+    -ms-transform: skew(30deg);
+    -webkit-transform: skew(30deg);
+    transform: skew(30deg);
+}
+.tab-container ul.nav-tabs .btn.btn-default {
+    background: #c3d5e6;
+}
+.tab-container ul.nav-tabs .btn.btn-default:hover {
+    background: #d2deeb;
+}
+.tab-container ul.nav-tabs .btn.btn-default:active {
+    background: #9cb5cc;
+}
+.tab-container .tab-pane {
+    position: relative;
+    overflow-y: auto;
+}
+
+.tab-container .tab-pane:first-child {
+    overflow: hidden;
+}
+
+.resultsTabs .tab-pane h3 {
+    padding: 7px;
+    text-align: center;
+}
+
+.results {
+    padding: 0;
+}
+
+.itemEnclosure {
+    padding: 75px 18px;
+}
+
+.resultsTabs tab-heading {
+    padding: 0 14px 0 0;
+}
+
+.resultsTabs tab-heading md-progress-linear {
+        position: absolute;
+        margin-top: 2px;
+        left: -10px;
+        right: -10px;
+        width: auto;
+    }
+
+
+
+
+
+
+
+
+/* ================================================================================
+   Detail Property Groups
+   ================================================================================ */
+
+dl.row {
+    margin: 0;
+}
+
+div.ticketProps1 dl dt,
+div.ticketProps1 dl dd {
+    /*
+    border-right: 14px solid #fff;
+    */
+    border-bottom: 1px solid #eee;
+    min-height: 26px;
+    padding: 3px;
+}
+
+div.ticketProps1 dl dt {
+    display: inline-block;
+    /*
+    border-bottom: 1px solid #eee;
+    border-right: 14px solid #fff;
+    */
+    min-height: 26px;
+    padding: 3px;
+}
+
+div.ticketProps1 dl dt span {
+    display: block;
+    text-align: right;
+    margin: 0 14px 0 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.scroll-list-head-sm.row,
+.scroll-list-sm.row {
+    margin: 0;
+}
+
+.scroll-list-head-sm.row li,
+.scroll-list-sm.row li {
+    padding: 3px 7px;
+}
+
+.scroll-list-head-sm li {
+    border-bottom: 1px #aaa solid;
+    border-right: 1px #ddd solid;
+    border-bottom-right-radius: 7px;
+}
+
+.scroll-list-sm,
+.scroll-list-md {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.scroll-list-sm {
+    max-height: 49px;
+}
+
+.scroll-list-sm li {
+    border-bottom: 1px #ddd solid;
+}
+
+.scroll-list-md {
+    max-height: 98px;
+}
+
+
+
+
+
+md-tabs-canvas {
+    height: 36px;
+}
+
+md-pagination-wrapper {
+    height: 36px;
+}
+
+md-tabs-content-wrapper,
+md-tabs[md-border-bottom]:not(.md-dynamic-height) md-tabs-content-wrapper {
+    top: 36px;
+}
+
+md-tab-item.md-tab {
+    font-size: 1.01em;
+    color: #000;
+    padding: 4px 32px 4px 8px;
+}
+
+md-tab-item.md-tab:first-child {
+    padding: 4px 8px;
+}
+
+md-tab-item a {
+    color: #777;
+    font-size: 10px;
+    background: rgba(240,240,240,0.93);
+    display: inline-block;
+    width: 16px;
+    line-height: 16px;
+    position: absolute;
+    right: 6px;
+    top: 5px;
+
+    -webkit-border-radius: 50%;
+       -moz-border-radius: 50%;
+            border-radius: 50%;
+
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+       -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+
+
+
+md-fab-toolbar.fixed {
+    position: fixed;
+    margin-top: 0;
+    right: 33px;
+    left: 60px;
+}
+
+md-tab-content > div {
+    height: 100%;
+}
+
+md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+
+}
+
+.detailHeader {
+    background-color: rgba(49,49,49,0.93);
+    -webkit-box-shadow: 0 7px 7px rgba(0,0,0,0.16);
+    -moz-box-shadow: 0 7px 7px rgba(0,0,0,0.16);
+    box-shadow: 0 7px 7px rgba(0,0,0,0.16);
+    color: #fff;
+}
+
+.detailHeader md-menu > button.md-button.md-fab.md-mini {
+    line-height: 54px;
+}

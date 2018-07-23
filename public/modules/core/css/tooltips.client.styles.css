@@ -1,0 +1,73 @@
+/* ================================================================================
+   Tooltips
+   ================================================================================ */
+
+.tips,
+[ng-class="tips"] {
+    position: relative;
+}
+
+.tips::before,
+[ng-class="tips"]::before {
+    color: #fff;
+    content: attr(tiptxt) ;
+    font-size: 10px;
+    position: absolute;
+    z-index: 999;
+    white-space: nowrap;
+    left: -9999px;
+    margin: -3px 0 0 0;
+    background: #000;
+    background: rgba(0,0,0,0.63);
+    padding: 0 7px;
+    line-height: 24px;
+    height: 24px;
+    opacity: 0;
+    transition: opacity 0.3s ease-out 0.5s;
+}
+
+/*
+.tips:hover::before,
+[ng-class="tips"]:hover::before {
+    opacity: 1;
+    left: 195px;
+}
+*/
+
+span.tips,
+a[ng-class="tips"] {
+    display: block;
+    position: relative;
+    background: #fff;
+    background: rgba(0,0,0,0.77);
+    z-index: 99;
+}
+
+span.tips,
+a[ng-class="tips"],
+nav.mainmenu ul li a {
+    padding: 10px 15px 10px 0;
+}
+
+nav.mainmenu.show span.tips,
+nav.mainmenu.show a[ng-class="tips"],
+nav.mainmenu.show ul li a,
+nav.mainmenu ul li.dropdown.open a {
+    padding: 7px 14px;
+}
+
+nav.mainmenu ul li.dropdown.open li span {
+    padding: 10px 15px 10px 10px;
+}
+
+ul.mainmenu li span.tips,
+[ng-class="tips"] {
+    display: block;
+    padding: 0;
+    background: none;
+}
+
+ul.mainmenu li span.tips::before,
+[ng-class="tips"]::before {
+    left: 195px;
+}
