@@ -1,5 +1,5 @@
 'use strict';
-let coupons = angular.module('coupons',[
+var coupons = angular.module('coupons',[
     'ui.grid',
     'ui.grid.pagination',
     'ui.grid.exporter',
@@ -48,7 +48,7 @@ coupons.controller('couponsController',[
 
         $scope.appheader = 'coupons';
 
-        let coupons = "",
+        var coupons = "",
             newCoupon = '';
 
 
@@ -140,7 +140,7 @@ coupons.controller('couponsController',[
         $scope.refreshData = function (keyword) {
             $scope.gridOptions.data = $scope.coupons;
             while (keyword) {
-                let oSearchArray = keyword.split(' ');
+                var oSearchArray = keyword.split(' ');
                 $scope.gridOptions.data = $filter('filter')($scope.gridOptions.data, oSearchArray[0], undefined);
                 oSearchArray.shift();
                 keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';

@@ -1,5 +1,5 @@
 'use strict';
-let home = angular.module('home',[
+var home = angular.module('home',[
     'ui.grid',
     'ui.grid.pagination',
     'ui.grid.exporter',

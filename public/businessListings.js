@@ -1,5 +1,5 @@
 'use strict';
-let businessListings = angular.module('businessListings', [
+var businessListings = angular.module('businessListings', [
     'ui.grid',
     'ui.grid.pagination',
     'ui.grid.exporter',
@@ -49,10 +49,10 @@ businessListings.config([
 
 businessListings.factory('businessListingsCalls', function($http) {
     console.log("in businessListingsCalls factory");
-    let env = 'http://localhost:3000';
-    let businessOwnersMasterService = {
+    var env = 'http://localhost:3000';
+    var businessOwnersMasterService = {
         isAuth: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/authentication/authenticate',
                 params: req
@@ -62,7 +62,7 @@ businessListings.factory('businessListingsCalls', function($http) {
             return promise;
         },
         claimBusiness: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: '/:businessId',
                 data: req
@@ -73,7 +73,7 @@ businessListings.factory('businessListingsCalls', function($http) {
             return promise;
         },
         updateBusiness: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: '/:businessId',
                 data: req
@@ -84,7 +84,7 @@ businessListings.factory('businessListingsCalls', function($http) {
             return promise;
         },
         detailBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/businessOwner/detail/' + req.id
             }).then(function (response) {
@@ -93,7 +93,7 @@ businessListings.factory('businessListingsCalls', function($http) {
             return promise;
         },
         getBusinessOwners: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/businessOwner/list',
                 params: req
@@ -104,7 +104,7 @@ businessListings.factory('businessListingsCalls', function($http) {
             return promise;
         },
         getBusinesses: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/business/list',
                 params: req
@@ -115,7 +115,7 @@ businessListings.factory('businessListingsCalls', function($http) {
             return promise;
         },
         searchBusinesses: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/business/search',
                 data: req

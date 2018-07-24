@@ -1,5 +1,5 @@
 'use strict';
-let businessOwners = angular.module('businessOwners',[
+var businessOwners = angular.module('businessOwners',[
     'ui.grid',
     'ui.grid.pagination',
     'ui.grid.exporter',
@@ -15,7 +15,7 @@ let businessOwners = angular.module('businessOwners',[
     'angular-clipboard',
     'ngRoute',
     'oc.lazyLoad',
-    'ngToast',
+    'ngToast'
 ]);
 
 businessOwners.config([
@@ -66,10 +66,10 @@ businessOwners.config([
 
 businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
     console.log("in businessOwnerCalls factory");
-    let env = 'http://localhost:3000';
-    let businessOwnersMasterService = {
+    var env = 'http://localhost:3000';
+    var businessOwnersMasterService = {
         detailBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/businessOwner/detail/' + req.id
             }).then(function (response) {
@@ -78,7 +78,7 @@ businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
             return promise;
         },
         getBusinessOwners: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/businessOwner/list',
                 params: req
@@ -89,7 +89,7 @@ businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
             return promise;
         },
         getBusinesses: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/business/list',
                 params: req
@@ -100,7 +100,7 @@ businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
             return promise;
         },
         newBusiness: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/business/create',
                 data: req
@@ -111,7 +111,7 @@ businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
             return promise;
         },
         searchBusinesses: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/business/search',
                 data: req
@@ -122,7 +122,7 @@ businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
             return promise;
         },
         updateBusiness: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/business/update',
                 data: req
@@ -133,7 +133,7 @@ businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
             return promise;
         },
         newBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/businessOwner/create',
                 data: req
@@ -144,7 +144,7 @@ businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
             return promise;
         },
         updateBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/businessOwner/update',
                 data: req
@@ -155,7 +155,7 @@ businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
             return promise;
         },
         deleteBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'DELETE',
                 url: env + '/businessOwner/delete/' + req.id
             }).then(function (response) {
@@ -186,7 +186,7 @@ businessOwners.factory('businessOwnersSettings', [
                     .then(
                         function (resp) {
                             if (methodCop.check([resp.data])) {
-                                let settings = {
+                                var settings = {
                                     name : resp.data.app[0].name // get name of app
                                 };
                                 angular.forEach(resp.data.app[0].settings, function (setting) {

@@ -1,4 +1,4 @@
-let coupons = angular.module('coupons',[
+var coupons = angular.module('coupons',[
     'angular-clipboard',
     'ngRoute',
     'ngMaterial',
@@ -64,10 +64,10 @@ coupons.config([
 
 coupons.factory('couponCalls', function($http, $routeParams) {
     console.log("in couponCalls factory");
-    let env = 'http://localhost:3000';
-    let couponsMasterService = {
+    var env = 'http://localhost:3000';
+    var couponsMasterService = {
         detailBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/businessOwner/detail/' + req.id
             }).then(function (response) {
@@ -76,7 +76,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             return promise;
         },
         getBusinessOwners: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/businessOwner/list',
                 params: req
@@ -87,7 +87,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             return promise;
         },
         getBusinesses: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/business/list',
                 params: req
@@ -98,7 +98,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             return promise;
         },
         newBusiness: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/business/create',
                 data: req
@@ -109,7 +109,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             return promise;
         },
         newCoupon: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/coupon/create',
                 data: req
@@ -120,7 +120,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             return promise;
         },
         searchCoupons: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/coupon/search',
                 data: req
@@ -131,7 +131,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             return promise;
         },
         updateBusiness: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/business/update',
                 data: req
@@ -142,7 +142,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             return promise;
         },
         newBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/businessOwner/create',
                 data: req
@@ -153,7 +153,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             return promise;
         },
         updateBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/businessOwner/update',
                 data: req
@@ -164,7 +164,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             return promise;
         },
         deleteBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'DELETE',
                 url: env + '/businessOwner/delete/' + req.id
             }).then(function (response) {
@@ -195,7 +195,7 @@ coupons.factory('couponsSettings', [
                     .then(
                         function (resp) {
                             if (methodCop.check([resp.data])) {
-                                let settings = {
+                                var settings = {
                                     name : resp.data.app[0].name // get name of app
                                 };
                                 angular.forEach(resp.data.app[0].settings, function (setting) {

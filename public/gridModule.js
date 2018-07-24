@@ -1,5 +1,5 @@
 'use strict';
-let grid = angular.module('grid',[
+var grid = angular.module('grid',[
     'ui.grid',
     'ui.grid.pagination',
     'ui.grid.exporter',

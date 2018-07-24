@@ -1,4 +1,4 @@
-let businesses = angular.module('businesses',[
+var businesses = angular.module('businesses',[
     'angular-clipboard',
     'ngRoute',
     'ngMaterial',
@@ -52,10 +52,10 @@ businesses.config([
 
 businesses.factory('businessesCalls', function($http, $routeParams) {
     console.log("in businessesCalls factory");
-    let env = 'http://localhost:3000';
-    let businessesMasterService = {
+    var env = 'http://localhost:3000';
+    var businessesMasterService = {
         detailBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/businessOwner/detail/' + req.id
             }).then(function (response) {
@@ -64,7 +64,7 @@ businesses.factory('businessesCalls', function($http, $routeParams) {
             return promise;
         },
         getBusinessOwners: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/businessOwner/list',
                 params: req
@@ -75,7 +75,7 @@ businesses.factory('businessesCalls', function($http, $routeParams) {
             return promise;
         },
         getBusinesses: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'GET',
                 url: env + '/business/list',
                 params: req
@@ -86,7 +86,7 @@ businesses.factory('businessesCalls', function($http, $routeParams) {
             return promise;
         },
         searchBusinesses: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/business/search',
                 data: req
@@ -97,7 +97,7 @@ businesses.factory('businessesCalls', function($http, $routeParams) {
             return promise;
         },
         newBusiness: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/business/create',
                 data: req
@@ -108,7 +108,7 @@ businesses.factory('businessesCalls', function($http, $routeParams) {
             return promise;
         },
         updateBusiness: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/business/update',
                 data: req
@@ -119,7 +119,7 @@ businesses.factory('businessesCalls', function($http, $routeParams) {
             return promise;
         },
         newBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/businessOwner/create',
                 data: req
@@ -130,7 +130,7 @@ businesses.factory('businessesCalls', function($http, $routeParams) {
             return promise;
         },
         updateBusinessOwner: function(req){
-            let promise = $http({
+            var promise = $http({
                 method: 'POST',
                 url: env + '/businessOwner/update',
                 data: req
@@ -140,8 +140,8 @@ businesses.factory('businessesCalls', function($http, $routeParams) {
             // Return the promise to the controller
             return promise;
         },
-        deleteBusinessOwner: function(req){
-            let promise = $http({
+        devareBusinessOwner: function(req){
+            var promise = $http({
                 method: 'DELETE',
                 url: env + '/businessOwner/delete/' + req.id
             }).then(function (response) {

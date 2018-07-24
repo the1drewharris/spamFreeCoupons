@@ -1,5 +1,5 @@
 'use strict';
-let app = angular.module('anonymousCoupons', [
+var app = angular.module('anonymousCoupons', [
     // Angular Plugins
     'ngRoute',
     'ngIdle',
@@ -38,9 +38,9 @@ app.controller('MainController', function (
     $scope.env = 'http://localhost:3000';
 
     //This block of code checks for the browser version, and if not IE9, injects Angular Material
-    let ua = window.navigator.userAgent;
-    let msie = ua.indexOf ( "MSIE " );
-    let IEVersion =  parseInt (ua.substring (msie+5, ua.indexOf (".", msie )));
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf ( "MSIE " );
+    var IEVersion =  parseInt (ua.substring (msie+5, ua.indexOf (".", msie )));
     if (IEVersion > 9){
         angular.module('anonymousCoupons').requires.push('ngMaterial');
     }

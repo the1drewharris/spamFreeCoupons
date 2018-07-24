@@ -1,5 +1,5 @@
 'use strict';
-let businessListing = angular.module('businessListing',[
+var businessListing = angular.module('businessListing',[
     'ui.grid',
     'ui.grid.pagination',
     'ui.grid.exporter',
@@ -54,7 +54,7 @@ businessListing.controller('businessListingsController',[
         $scope.env = 'http://localhost:3000';
         $scope.credentials = '';
 
-        let businesses = '';
+        var businesses = '';
 
         $scope.gridOptions = {
             rowHeight: 50,
@@ -93,7 +93,7 @@ businessListing.controller('businessListingsController',[
         $scope.refreshData = function (keyword) {
             $scope.gridOptions.data = $scope.businesses;
             while (keyword) {
-                let oSearchArray = keyword.split(' ');
+                var oSearchArray = keyword.split(' ');
                 $scope.gridOptions.data = $filter('filter')($scope.gridOptions.data, oSearchArray[0], undefined);
                 oSearchArray.shift();
                 keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';

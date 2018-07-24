@@ -40,7 +40,7 @@ exports.index = function (req, res) {
         });
     } else {
         //res.render('index');
-        res.render('signin');
+        res.render('signIn');
     }
     //  }
 
