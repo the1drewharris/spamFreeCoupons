@@ -49,12 +49,12 @@ businessListings.config([
 
 businessListings.factory('businessListingsCalls', function($http) {
     console.log("in businessListingsCalls factory");
-    var env = 'http://localhost:3000';
+    //var env = 'http://localhost:3000';
     var businessOwnersMasterService = {
         isAuth: function(req){
             var promise = $http({
                 method: 'GET',
-                url: env + '/authentication/authenticate',
+                url: '/authentication/authenticate',
                 params: req
             }).then(function (response) {
                 return response;
@@ -86,7 +86,7 @@ businessListings.factory('businessListingsCalls', function($http) {
         detailBusinessOwner: function(req){
             var promise = $http({
                 method: 'GET',
-                url: env + '/businessOwner/detail/' + req.id
+                url: '/businessOwner/detail/' + req.id
             }).then(function (response) {
                 return response;
             });
@@ -95,7 +95,7 @@ businessListings.factory('businessListingsCalls', function($http) {
         getBusinessOwners: function(req){
             var promise = $http({
                 method: 'GET',
-                url: env + '/businessOwner/list',
+                url: '/businessOwner/list',
                 params: req
             }).then(function (response) {
                 return response;
@@ -106,7 +106,7 @@ businessListings.factory('businessListingsCalls', function($http) {
         getBusinesses: function(req){
             var promise = $http({
                 method: 'GET',
-                url: env + '/business/list',
+                url: '/business/list',
                 params: req
             }).then(function (response) {
                 return response;
@@ -117,7 +117,7 @@ businessListings.factory('businessListingsCalls', function($http) {
         searchBusinesses: function(req){
             var promise = $http({
                 method: 'POST',
-                url: env + '/business/search',
+                url: '/business/search',
                 data: req
             }).then(function (response) {
                 return response;

@@ -2,7 +2,8 @@
     <div ng-controller="businessListingsController" ng-init="getUnclaimedBusinesses()">
         <h1>Claim Businesses</h1>
         <div ng-init="isAuth()">
-            <md-button ng-if="auth">Logout</md-button>
+            <md-button ng-if="auth" ng-click="logout()">Logout</md-button>
+            <md-button ng-if="auth == false" ng-click="openPage('signIn')">Sign In</md-button>
         </div>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>

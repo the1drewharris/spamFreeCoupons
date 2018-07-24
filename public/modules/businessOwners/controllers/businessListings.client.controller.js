@@ -29,6 +29,7 @@ businessListing.controller('businessListingsController',[
     'lodash',
     'uiGridConstants',
     '$filter',
+    '$window',
     function (
         businessListingsCalls,
         $scope,
@@ -43,7 +44,8 @@ businessListing.controller('businessListingsController',[
         $sce,
         lodash,
         uiGridConstants,
-        $filter
+        $filter,
+        $window
     ) {
 
         console.log('in businessListingsController');
@@ -84,7 +86,7 @@ businessListing.controller('businessListingsController',[
         };
 
         $scope.claimBusiness = function (business) {
-            businessListingsCalls.updateBusiness()
+            businessListingsCalls.updateBusiness();
             if (businessListingsCalls.isAuth()) {
 
             }
@@ -99,6 +101,7 @@ businessListing.controller('businessListingsController',[
                 keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';
             }
         };
+
         $scope.sendVerifyCode = function (business) {
             if ($scope.isAuth()) {
                 $http.post($scope.env + '/business/setCode', business)
@@ -115,6 +118,10 @@ businessListing.controller('businessListingsController',[
             } else {
                 //load Sign In page
             }
+        };
+
+        $scope.logout = function () {
+            $window.open('/businessOwner/signOut', "_self");
         };
 
         $scope.isAuth = function () {

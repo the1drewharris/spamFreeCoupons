@@ -64,12 +64,12 @@ coupons.config([
 
 coupons.factory('couponCalls', function($http, $routeParams) {
     console.log("in couponCalls factory");
-    var env = 'http://localhost:3000';
+    //var env = 'http://localhost:3000';
     var couponsMasterService = {
         detailBusinessOwner: function(req){
             var promise = $http({
                 method: 'GET',
-                url: env + '/businessOwner/detail/' + req.id
+                url: '/businessOwner/detail/' + req.id
             }).then(function (response) {
                 return response;
             });
@@ -78,7 +78,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
         getBusinessOwners: function(req){
             var promise = $http({
                 method: 'GET',
-                url: env + '/businessOwner/list',
+                url: '/businessOwner/list',
                 params: req
             }).then(function (response) {
                 return response;
@@ -89,7 +89,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
         getBusinesses: function(req){
             var promise = $http({
                 method: 'GET',
-                url: env + '/business/list',
+                url: '/business/list',
                 params: req
             }).then(function (response) {
                 return response;
@@ -100,7 +100,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
         newBusiness: function(req){
             var promise = $http({
                 method: 'POST',
-                url: env + '/business/create',
+                url: '/business/create',
                 data: req
             }).then(function (response) {
                 return response;
@@ -111,7 +111,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
         newCoupon: function(req){
             var promise = $http({
                 method: 'POST',
-                url: env + '/coupon/create',
+                url: '/coupon/create',
                 data: req
             }).then(function (response) {
                 return response;
@@ -122,7 +122,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
         searchCoupons: function(req){
             var promise = $http({
                 method: 'POST',
-                url: env + '/coupon/search',
+                url: '/coupon/search',
                 data: req
             }).then(function (response) {
                 return response;
@@ -133,7 +133,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
         updateBusiness: function(req){
             var promise = $http({
                 method: 'POST',
-                url: env + '/business/update',
+                url: '/business/update',
                 data: req
             }).then(function (response) {
                 return response;
@@ -144,7 +144,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
         newBusinessOwner: function(req){
             var promise = $http({
                 method: 'POST',
-                url: env + '/businessOwner/create',
+                url: '/businessOwner/create',
                 data: req
             }).then(function (response) {
                 return response;
@@ -155,7 +155,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
         updateBusinessOwner: function(req){
             var promise = $http({
                 method: 'POST',
-                url: env + '/businessOwner/update',
+                url: '/businessOwner/update',
                 data: req
             }).then(function (response) {
                 return response;
@@ -166,7 +166,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
         deleteBusinessOwner: function(req){
             var promise = $http({
                 method: 'DELETE',
-                url: env + '/businessOwner/delete/' + req.id
+                url: '/businessOwner/delete/' + req.id
             }).then(function (response) {
                 return response;
             });

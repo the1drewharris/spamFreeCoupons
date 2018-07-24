@@ -18,7 +18,7 @@ passport.serializeUser(function(user, done) {
 // Deserialize sessions
 passport.deserializeUser(function(id, done) {
     businessOwner.findOne({
-        _id: id
+        id: id
     }, '-salt -password', function(err, user) {
         done(err, user);
     });
@@ -48,7 +48,7 @@ exports.signIn = function(req, res){
                     user.save(function(err) {
                         if (err) {
                             return res.status(400).send({
-                                message: logger.log("ERROR", __function, err)
+                                message: err
                             });
                         } else {
                             // Remove sensitive data before login

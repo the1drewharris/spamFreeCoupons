@@ -19,7 +19,8 @@ router.get('/',core.index);
  * admin ROUTES
  * @type {exports|module.exports}
  */
-var admin = require('./controllers/admin.server.controller.js');
+/*
+var admin = require('./controllers/_admin.server.controller.js');
 router.get('/admin/list', admin.list);
 router.get('/admin/detail/:id', admin.detail);
 router.get('/admin/signOut',admin.signOut);
@@ -28,6 +29,7 @@ router.post('/admin/signIn',admin.signIn);
 router.post('/admin/create', admin.create);
 router.post('/admin/update', admin.update);
 router.delete('/admin/delete/:id', admin.delete);
+*/
 
 /*
  * business ROUTES
