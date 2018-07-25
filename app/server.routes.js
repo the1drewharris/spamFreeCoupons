@@ -38,7 +38,7 @@ router.delete('/admin/delete/:id', admin.delete);
 var business = require('./controllers/business.server.controller.js');
 router.get('/business/list', business.list);
 router.get('/business/detail/:id', business.detail);
-router.get('/sendCode/:id', business.sendCode);
+router.get('/business/sendCode/:id', business.sendCode);
 router.post('/business/search', business.search);
 router.post('/business/create', business.create);
 router.post('/business/update', business.update);

@@ -104,10 +104,10 @@ exports.signOut = function(req, res) {
 };
 
 exports.me = function(req,res){
-    if(req.businessOwner){
+    if(req.user){
         console.log('in auth.me');
-        console.dir(req.businessOwner.username);
-        res.status(200).send({user: req.businessOwner})
+        console.dir(req.user.username);
+        res.status(200).send({businessOwner: req.user})
     } else {
         res.status(400);
     }

@@ -61,10 +61,10 @@ businessListings.factory('businessListingsCalls', function($http) {
             });
             return promise;
         },
-        claimBusiness: function(req){
+        updateBusiness: function(req){
             var promise = $http({
                 method: 'POST',
-                url: '/:businessId',
+                url: '/business/update',
                 data: req
             }).then(function (response) {
                 return response;
@@ -72,10 +72,30 @@ businessListings.factory('businessListingsCalls', function($http) {
             // Return the promise to the controller
             return promise;
         },
-        updateBusiness: function(req){
+        setCode: function(req){
             var promise = $http({
                 method: 'POST',
-                url: '/:businessId',
+                url: '/business/setCode',
+                data: req
+            }).then(function (response) {
+                return response;
+            });
+            // Return the promise to the controller
+            return promise;
+        },
+        sendCode: function(req){
+            var promise = $http({
+                method: 'GET',
+                url: '/business/sendCode/' + req.id
+            }).then(function (response) {
+                return response;
+            });
+            return promise;
+        },
+        updateBusinessOwner: function(req){
+            var promise = $http({
+                method: 'POST',
+                url: '/businessOwner/update',
                 data: req
             }).then(function (response) {
                 return response;
@@ -90,6 +110,17 @@ businessListings.factory('businessListingsCalls', function($http) {
             }).then(function (response) {
                 return response;
             });
+            return promise;
+        },
+        getSignedInBusinessOwner: function(req){
+            var promise = $http({
+                method: 'GET',
+                url: '/businessOwner/me',
+                params: req
+            }).then(function (response) {
+                return response;
+            });
+            // Return the promise to the controller
             return promise;
         },
         getBusinessOwners: function(req){

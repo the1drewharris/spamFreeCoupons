@@ -30,6 +30,7 @@ businessListing.controller('businessListingsController',[
     'uiGridConstants',
     '$filter',
     '$window',
+
     function (
         businessListingsCalls,
         $scope,
@@ -48,7 +49,6 @@ businessListing.controller('businessListingsController',[
         $window
     ) {
 
-        console.log('in businessListingsController');
         $scope.appheader = 'businessOwners';
         $scope.businessOwnerEmail = '';
         $scope.businessOwnerPassword = '';
@@ -70,7 +70,7 @@ businessListing.controller('businessListingsController',[
                     name: 'claim',
                     displayName: 'Claim',
                     cellTemplate:
-                    '<md-button aria-label="Claim Business" class="btn btn-default" ng-click="claimBusiness(row.entity)">claim'
+                    '<md-button aria-label="Claim Business" class="btn btn-default" ng-click="grid.appScope.claimBusiness(row.entity)">claim'
                     + '</md-button>',
                     enableSorting: false,
                     resizable: false,
@@ -86,10 +86,88 @@ businessListing.controller('businessListingsController',[
         };
 
         $scope.claimBusiness = function (business) {
-            businessListingsCalls.updateBusiness();
-            if (businessListingsCalls.isAuth()) {
+            console.log('in claim business function');
+            console.dir(business);
+            async.series([
+                function(callback) {
+                    businessListingsCalls.getSignedInBusinessOwner().then(
+                        function (res) {
+                            $scope.signedInBusinessOwner = res.data;
+                            console.dir('SignedInBusinessOwner : ' + res.data);
+                        },
+                        function (err) {
+                            console.error('Error : ' + JSON.stringify(err.data.message));
+                        }
+                    );
+                    businessListingsCalls.isAuth().then(
+                        function (res) {
+                            console.dir('isAuth data: ' + res.data);
+                            $scope.auth = res.data;
+                        },
+                        function (err) {
+                            console.error('Error : ' + JSON.stringify(err.data.message));
+                        },
+                    callback()
+                    );
+                },
 
-            }
+                function (callback) {
+                    if ($scope.auth) {
+                        console.log('authorized');
+
+                        businessListingsCalls.updateBusinessOwner({
+                            id: $scope.signedInBusinessOwner.id,
+                            businessId: business.id
+                        }).then(
+                            function (res) {
+                                $scope.updatedBusinessOwner = res.data;
+                            },
+                            function (err) {
+                                console.error('Error updating business owner : ' + JSON.stringify(err.data.message));
+                            }
+                        );
+
+                        businessListingsCalls.updateBusiness({
+                            id: business.id,
+                            businessOwnerAttemptClaimId: $scope.signedInBusinessOwner.id
+                        }).then(
+                            function (res) {
+                                $scope.updatedBusiness = res.data;
+                            },
+                            function (err) {
+                                console.error('Error updating business : ' + JSON.stringify(err.data.message));
+                            }
+                        );
+
+                        businessListingsCalls.setCode({
+                            id: business.id
+                        }).then(
+                            function (res) {
+                                $scope.verifyCode = res.data.verifyCode;
+                            },
+                            function (err) {
+                                console.error('Error setting verifyCode for business : ' + business.id + JSON.stringify(err.data.message));
+                            },
+                        callback()
+                        )
+
+                    } else {
+                        $scope.openPage('signIn');
+                    }
+                },
+
+                function () {
+                    businessListingsCalls.sendCode(business).then(
+                        function (res) {
+                            console.log('sent code');
+                            $scope.sentCode = res.body;
+                        },
+                        function (err) {
+                            console.error('Error sending verifyCode for business : ' + business.id + JSON.stringify(err.data.message));
+                        }
+                    )
+                }
+            ]);
         };
 
         $scope.refreshData = function (keyword) {
@@ -99,24 +177,6 @@ businessListing.controller('businessListingsController',[
                 $scope.gridOptions.data = $filter('filter')($scope.gridOptions.data, oSearchArray[0], undefined);
                 oSearchArray.shift();
                 keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';
-            }
-        };
-
-        $scope.sendVerifyCode = function (business) {
-            if ($scope.isAuth()) {
-                $http.post($scope.env + '/business/setCode', business)
-                    .success(function(response) {
-                        $scope.code = response
-
-                    })
-                    .error(function(response) {
-                        console.dir(response);
-                    });
-                businessListingsCalls.claimBusiness({
-
-                })
-            } else {
-                //load Sign In page
             }
         };
 
@@ -137,17 +197,13 @@ businessListing.controller('businessListingsController',[
         };
 
         $scope.getUnclaimedBusinesses = function () {
-            console.log('in getUnclaimedBusinesses function');
             businessListingsCalls.searchBusinesses({
                 dateClaimed: undefined
             }).then(
                 function (res) {
                     businesses = angular.copy(res.data);
                     $scope.businesses = businesses;
-                    console.dir($scope.businesses);
-                    console.dir($scope.gridOptions.data);
                     $scope.gridOptions.data = res.data;
-                    console.dir($scope.gridOptions.data);
                 },
                 function (err) {
                     $scope.badBusinessOwner = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
