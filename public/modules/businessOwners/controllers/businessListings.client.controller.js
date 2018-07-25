@@ -92,8 +92,9 @@ businessListing.controller('businessListingsController',[
                 function(callback) {
                     businessListingsCalls.getSignedInBusinessOwner().then(
                         function (res) {
-                            $scope.signedInBusinessOwner = res.data;
-                            console.dir('SignedInBusinessOwner : ' + res.data);
+                            $scope.signedInBusinessOwner = res.data.businessOwner;
+                            console.log('SignedInBusinessOwner : ');
+                            console.dir(res.data.businessOwner)
                         },
                         function (err) {
                             console.error('Error : ' + JSON.stringify(err.data.message));
@@ -152,7 +153,9 @@ businessListing.controller('businessListingsController',[
                         )
 
                     } else {
-                        $scope.openPage('signIn');
+                        console.log('business id : ');
+                        console.dir(business.id);
+                        $scope.openPage('signIn/' + business.id);
                     }
                 },
 
@@ -161,6 +164,7 @@ businessListing.controller('businessListingsController',[
                         function (res) {
                             console.log('sent code');
                             $scope.sentCode = res.body;
+                            $scope.openPage('business/claim/' + business.id);
                         },
                         function (err) {
                             console.error('Error sending verifyCode for business : ' + business.id + JSON.stringify(err.data.message));

@@ -120,22 +120,6 @@ business.controller('businessesController',[
             $location.path(pageName.replace(/#/, ''));
         };
 
-        $scope.claimBusiness = function (verifyCode) {
-            businessesCalls.searchBusinesses({
-                businessOwnerId: businessOwnerId
-            }).then(
-                function (res) {
-                    businesses = angular.copy(res.data);
-                    $scope.businesses = businesses;
-                    $scope.gridOptions.data = res.data
-                },
-                function (err) {
-                    $scope.badBusiness = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
-                    console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
-                }
-            );
-        };
-
         $scope.getBusiness = function (id) {
             console.log(id);
             if(id && id !== undefined && id > 0 && !isNaN(id)) {

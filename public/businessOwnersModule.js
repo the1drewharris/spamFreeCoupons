@@ -35,12 +35,28 @@ businessOwners.config([
                                 name: 'businessOwnersController',
                                 files:[
                                     // Controllers
-                                    'modules/businessOwners/controllers/businessOwners.client.controller.js',
+                                    'modules/businessOwners/controllers/businessOwners.client.controller.js'
                                 ]
                             });
                         }]
                     }
-
+                })
+                .when('/createAccount/:businessId',{
+                    name: 'businessOwners create',
+                    templateUrl:'modules/businessOwners/views/createOwnerClaim.client.view.html',
+                    label: 'businessOwners create',
+                    controller: 'businessOwnersController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'businessOwnersController',
+                                files:[
+                                    // Controllers
+                                    'modules/businessOwners/controllers/businessOwners.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
                 })
                 .when('/',{
                     name: 'businessOwners signIn',
@@ -53,7 +69,7 @@ businessOwners.config([
                                 name: 'businessOwnersController',
                                 files:[
                                     // Controllers
-                                    'modules/businessOwners/controllers/businessOwners.client.controller.js',
+                                    'modules/businessOwners/controllers/businessOwners.client.controller.js'
                                 ]
                             });
                         }]
@@ -71,12 +87,28 @@ businessOwners.config([
                                 name: 'businessOwnersController',
                                 files:[
                                     // Controllers
-                                    'modules/businessOwners/controllers/businessOwners.client.controller.js',
+                                    'modules/businessOwners/controllers/businessOwners.client.controller.js'
                                 ]
                             });
                         }]
                     }
-
+                })
+                .when('/signIn/:businessId',{
+                    name: 'businessOwners signIn',
+                    templateUrl:'modules/businessOwners/views/signInClaim.client.view.html',
+                    label: 'businessOwners signIn',
+                    controller: 'businessOwnersController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'businessOwnersController',
+                                files:[
+                                    // Controllers
+                                    'modules/businessOwners/controllers/businessOwners.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
                 })
         }
     ]

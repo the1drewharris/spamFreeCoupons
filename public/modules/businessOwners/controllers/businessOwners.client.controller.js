@@ -139,6 +139,60 @@ businessOwner.controller('businessOwnersController',[
                 });
         };
 
+        $scope.signInClaim = function(credentials, businessId) {
+
+            async.series([
+                function(callback) {
+
+                    businessOwnerCalls.searchBusinesses({
+                        id: businessId
+                    }).then(
+                        function (res) {
+                            $scope.business = res.data;
+                            console.log('business : ');
+                            console.dir(res.data)
+                        },
+                        function (err) {
+                            console.error('Error : ' + JSON.stringify(err.data.message));
+                        },
+                        callback()
+                    )
+
+                },
+
+                function () {
+
+                    delete $scope.error;
+                    console.log('in signIn');
+                    console.dir(credentials);
+                    $http.post($scope.env + '/businessOwner/signIn', credentials)
+                        .success(function(response) {
+                            console.dir(response);
+                            if (response.businessId) {
+                                console.log('business claim screen for business: ' + response.businessId);
+                                $scope.openPage('/business/claim/' + response.businessId)
+                            } else if (response.businesses.length > 0) {
+                                if (response.businesses.length > 1) {
+                                    console.log('list businesses here');
+                                } else {
+                                    console.log('single business view');
+                                }
+                            } else {
+                                console.log('load claim');
+                                $scope.claimBusiness($scope.business);
+                            }
+                        })
+                        .error(function(response) {
+                            console.dir(response);
+                            $scope.createToast('Danger');
+                        });
+
+                }
+            ]);
+
+
+        };
+
         $scope.getUnclaimedBusinesses = function () {
             console.log('in getUnclaimedBusinesses function');
             businessOwnerCalls.searchBusinesses({
@@ -153,8 +207,8 @@ businessOwner.controller('businessOwnersController',[
                     console.dir($scope.gridOptions.data);
                 },
                 function (err) {
-                    $scope.badBusinessOwner = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
-                    console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
+                    $scope.badBusinessOwner = 'Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message);
+                    console.error('Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message));
                 }
             );
         };
@@ -209,24 +263,42 @@ businessOwner.controller('businessOwnersController',[
          * create new businessOwner
          * ===================================================================== */
         $scope.createBusinessOwner = function (newBusinessOwner) {
-            console.dir(newBusinessOwner);
-            businessOwnerCalls.newBusinessOwner({
-                name: newBusinessOwner.businessOwnerName,
-                email: newBusinessOwner.businessOwnerEmail,
-                password: newBusinessOwner.businessOwnerPassword,
-                free: false,
-                active: false
-            }).then(
-                function (res) {
-                    newBusinessOwner = angular.copy(res.data);
+
+            async.series([
+                function(callback) {
+
+                    console.dir(newBusinessOwner);
+                    businessOwnerCalls.newBusinessOwner({
+                        name: newBusinessOwner.businessOwnerName,
+                        email: newBusinessOwner.businessOwnerEmail,
+                        password: newBusinessOwner.businessOwnerPassword,
+                        free: false,
+                        active: false
+                    }).then(
+                        function (res) {
+                            newBusinessOwner = angular.copy(res.data);
+                            $scope.newBusinessOwner = newBusinessOwner;
+                        },
+                        function (err) {
+                            $scope.badBusinessOwner = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
+                            console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
+                        },
+                        callback()
+                    );
+
                 },
-                function (err) {
-                    $scope.badBusinessOwner = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
-                    console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
+
+                function () {
+
+                    console.log($scope.newBusinessOwner);
+                    $scope.signIn($scope.newBusinessOwner);
+                    $scope.openPage('listings');
+
                 }
-            );
-            //TODO: sign in with new business owner information
-            $scope.openPage('listings');
+            ]);
+
+
+
         };
 
     }
