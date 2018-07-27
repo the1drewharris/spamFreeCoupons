@@ -115,14 +115,10 @@ businessOwner.controller('businessOwnersController',[
         $scope.signIn = function(credentials) {
             delete $scope.error;
             console.log('in signIn');
-            console.dir(credentials);
             $http.post($scope.env + '/businessOwner/signIn', credentials)
                 .success(function(response) {
                     console.dir(response);
-                    if (response.businessId) {
-                        console.log('business claim screen for business: ' + response.businessId);
-                        $scope.openPage('/business/claim/' + response.businessId)
-                    } else if (response.businesses.length > 0) {
+                    if (response.businesses.length > 0) {
                         if (response.businesses.length > 1) {
                             console.log('list businesses here');
                         } else {
@@ -267,7 +263,6 @@ businessOwner.controller('businessOwnersController',[
             async.series([
                 function(callback) {
 
-                    console.dir(newBusinessOwner);
                     businessOwnerCalls.newBusinessOwner({
                         name: newBusinessOwner.businessOwnerName,
                         email: newBusinessOwner.businessOwnerEmail,
@@ -276,23 +271,27 @@ businessOwner.controller('businessOwnersController',[
                         active: false
                     }).then(
                         function (res) {
-                            newBusinessOwner = angular.copy(res.data);
-                            $scope.newBusinessOwner = newBusinessOwner;
+
+                            $scope.newBusinessOwner = {
+                                email: newBusinessOwner.businessOwnerEmail,
+                                password: newBusinessOwner.businessOwnerPassword
+                            };
+
+                            callback()
                         },
                         function (err) {
                             $scope.badBusinessOwner = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
                             console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
-                        },
-                        callback()
+                        }
+
                     );
 
                 },
 
                 function () {
 
-                    console.log($scope.newBusinessOwner);
+
                     $scope.signIn($scope.newBusinessOwner);
-                    $scope.openPage('listings');
 
                 }
             ]);
