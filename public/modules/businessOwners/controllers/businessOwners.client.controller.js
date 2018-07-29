@@ -209,17 +209,21 @@ businessOwner.controller('businessOwnersController',[
                         function (res) {
                             $scope.signedInBusinessOwner = res.data.businessOwner;
                             console.log('SignedInBusinessOwner : ');
-                            console.dir(res.data.businessOwner)
+                            console.dir(res.data.businessOwner);
+                            callback();
                         },
                         function (err) {
                             console.error('Error : ' + JSON.stringify(err.data.message));
                         }
                     );
+                },
+
+                function(callback) {
                     businessListingsCalls.isAuth().then(
                         function (res) {
                             console.dir('isAuth data: ' + res.data);
                             $scope.auth = res.data;
-                            callback()
+                            callback();
                         },
                         function (err) {
                             console.error('Error : ' + JSON.stringify(err.data.message));
@@ -231,10 +235,10 @@ businessOwner.controller('businessOwnersController',[
                 function (callback) {
                     if ($scope.auth) {
                         console.log('authorized');
-
+                        console.log($scope.signedInBusinessOwner);
                         businessListingsCalls.updateBusinessOwner({
                             id: $scope.signedInBusinessOwner.id,
-                            businessId: business.id
+                            businessId: business[0].id
                         }).then(
                             function (res) {
                                 $scope.updatedBusinessOwner = res.data;
@@ -245,7 +249,7 @@ businessOwner.controller('businessOwnersController',[
                         );
 
                         businessListingsCalls.updateBusiness({
-                            id: business.id,
+                            id: business[0].id,
                             businessOwnerAttemptClaimId: $scope.signedInBusinessOwner.id
                         }).then(
                             function (res) {
@@ -257,35 +261,35 @@ businessOwner.controller('businessOwnersController',[
                         );
 
                         businessListingsCalls.setCode({
-                            id: business.id
+                            id: business[0].id
                         }).then(
                             function (res) {
                                 $scope.verifyCode = res.data.verifyCode;
                                 callback()
                             },
                             function (err) {
-                                console.error('Error setting verifyCode for business : ' + business.id + JSON.stringify(err.data.message));
+                                console.error('Error setting verifyCode for business : ' + business[0].id + JSON.stringify(err.data.message));
                             }
 
                         )
 
                     } else {
                         console.log('business id : ');
-                        console.dir(business.id);
-                        $scope.openPage('signIn/business/' + business.id);
+                        console.dir(business[0].id);
+                        $scope.openPage('signIn/business/' + business[0].id);
                         console.log('open page sign in passed')
                     }
                 },
 
                 function () {
-                    businessListingsCalls.sendCode(business).then(
+                    businessListingsCalls.sendCode(business[0]).then(
                         function (res) {
                             console.log('sent code');
                             $scope.sentCode = res.body;
-                            $scope.openPage('business/claim/' + business.id);
+                            $scope.openPage('business/claim/' + business[0].id);
                         },
                         function (err) {
-                            console.error('Error sending verifyCode for business : ' + business.id + JSON.stringify(err.data.message));
+                            console.error('Error sending verifyCode for business : ' + business[0].id + JSON.stringify(err.data.message));
                         }
                     )
                 }

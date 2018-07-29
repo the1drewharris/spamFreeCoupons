@@ -97,7 +97,7 @@ businessListing.controller('businessListingsController',[
                             console.dir(res.data.businessOwner)
                         },
                         function (err) {
-                            console.error('Error : ' + JSON.stringify(err.data.message));
+                            console.error('Error : ' + JSON.stringify(err));
                         }
                     );
                     businessListingsCalls.isAuth().then(
