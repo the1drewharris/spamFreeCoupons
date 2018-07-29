@@ -22,13 +22,13 @@ businesses.config([
                                 name: 'businessesController',
                                 files:[
                                     // Controllers
-                                    'modules/businesses/controllers/businesses.client.controller.js',
+                                    'modules/businesses/controllers/businesses.client.controller.js'
                                 ]});
                         }]
                     }
 
                 })
-                .when('/business/claim/:id',{
+                .when('/business/claim/:testId',{
                     name: 'business claim',
                     templateUrl:'modules/businesses/views/claimBusiness.client.view.html',
                     label: 'business claim',
@@ -39,7 +39,7 @@ businesses.config([
                                 name: 'businessesController',
                                 files:[
                                     // Controllers
-                                    'modules/businesses/controllers/businesses.client.controller.js',
+                                    'modules/businesses/controllers/businesses.client.controller.js'
                                 ]});
                         }]
                     }

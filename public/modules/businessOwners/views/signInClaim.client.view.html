@@ -7,10 +7,10 @@
         <div>
             <input title="Password" placeholder="Password" type="password" ng-model="credentials.password" ng-required="true">
         </div>
-        <md-button type="submit" ng-click="signIn(credentials)">Sign In</md-button>
+        <md-button type="submit" ng-click="signInClaim(credentials)">Sign In</md-button>
     </form>
     <div>
         <md-button ng-click="">Forgot Password</md-button>
     </div>
-    <md-button ng-click="openPage('createAccount')">Create Account</md-button>
+    <md-button ng-click="showSignIn()">Create Account</md-button>
 </section>

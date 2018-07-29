@@ -15,7 +15,7 @@ var businessListings = angular.module('businessListings', [
     'angular-clipboard',
     'ngRoute',
     'oc.lazyLoad',
-    'ngToast',
+    'ngToast'
     ]);
 
 businessListings.config([
@@ -35,7 +35,7 @@ businessListings.config([
                                 name: 'businessListingsController',
                                 files:[
                                     // Controllers
-                                    'modules/businessOwners/controllers/businessListings.client.controller.js',
+                                    'modules/businessOwners/controllers/businessListings.client.controller.js'
                                 ]
                             });
                         }]

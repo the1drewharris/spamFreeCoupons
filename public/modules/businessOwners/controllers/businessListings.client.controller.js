@@ -104,11 +104,12 @@ businessListing.controller('businessListingsController',[
                         function (res) {
                             console.dir('isAuth data: ' + res.data);
                             $scope.auth = res.data;
+                            callback()
                         },
                         function (err) {
                             console.error('Error : ' + JSON.stringify(err.data.message));
-                        },
-                    callback()
+                        }
+
                     );
                 },
 
@@ -145,17 +146,19 @@ businessListing.controller('businessListingsController',[
                         }).then(
                             function (res) {
                                 $scope.verifyCode = res.data.verifyCode;
+                                callback()
                             },
                             function (err) {
                                 console.error('Error setting verifyCode for business : ' + business.id + JSON.stringify(err.data.message));
-                            },
-                        callback()
+                            }
+
                         )
 
                     } else {
                         console.log('business id : ');
                         console.dir(business.id);
-                        $scope.openPage('signIn/' + business.id);
+                        $scope.openPage('signIn/business/' + business.id);
+                        console.log('open page sign in passed')
                     }
                 },
 

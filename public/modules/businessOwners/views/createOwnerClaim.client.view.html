@@ -14,9 +14,9 @@
             <input title="Confirm Password" placeholder="Confirm Password" type="password" ng-model="businessOwnerConfirmPassword" ng-required="true" ng-pattern="form.businessOwnerPassword">
             <span ng-show="form.businessOwnerPassword != businessOwnerConfirmPassword">Your passwords must match.</span>
         </div>
-        <md-button type="submit" ng-disabled="form.businessOwnerPassword != businessOwnerConfirmPassword" ng-click="createBusinessOwner(form)">Create</md-button>
+        <md-button type="submit" ng-disabled="form.businessOwnerPassword != businessOwnerConfirmPassword" ng-click="createBusinessOwnerClaim(form)">Create</md-button>
     </form>
     <div>
-        <md-button ng-click="openPage('signIn')">Sign In</md-button>
+        <md-button ng-click="showCreateAccount()">Sign In</md-button>
     </div>
 </section>

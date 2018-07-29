@@ -41,7 +41,7 @@ businessOwners.config([
                         }]
                     }
                 })
-                .when('/createAccount/:businessId',{
+                .when('/createAccount/business/:id',{
                     name: 'businessOwners create',
                     templateUrl:'modules/businessOwners/views/createOwnerClaim.client.view.html',
                     label: 'businessOwners create',
@@ -93,10 +93,10 @@ businessOwners.config([
                         }]
                     }
                 })
-                .when('/signIn/:businessId',{
-                    name: 'businessOwners signIn',
+                .when('/signIn/business/:id',{
+                    name: 'businessOwners signInClaim',
                     templateUrl:'modules/businessOwners/views/signInClaim.client.view.html',
-                    label: 'businessOwners signIn',
+                    label: 'businessOwners signInClaim',
                     controller: 'businessOwnersController',
                     resolve: {
                         loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {

@@ -1,5 +1,5 @@
 <section>
-    <div ng-controller="businessesController" ng-init="getBusiness(id)">
+    <div ng-controller="businessesController" ng-init="getBusiness()">
         <h1>Business</h1>
         <div>
             Name: {{business.companyName}}<br>
@@ -16,7 +16,7 @@
         <div>
             <form>
                 <input placeholder="Verify Code" ng-model="form.submitCode"><br>
-                <md-button type="submit" ng-click="claimBusiness(form)">Submit</md-button>
+                <md-button type="submit" ng-click="claimBusiness(form.submitCode)">Submit</md-button>
             </form>
         </div>
     </div>

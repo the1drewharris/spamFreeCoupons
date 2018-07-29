@@ -120,25 +120,36 @@ business.controller('businessesController',[
             $location.path(pageName.replace(/#/, ''));
         };
 
-        $scope.getBusiness = function (id) {
-            console.log(id);
-            if(id && id !== undefined && id > 0 && !isNaN(id)) {
-                console.log(id);
+        $scope.init = function() {
+            var testId = $routeParams.testId;
+            console.log(testId);
+            if(testId && testId !== undefined) {
+                console.log(testId);
             } else {
                 console.log('undefined');
             }
-            businessesCalls.searchBusinesses({
-                id: id
-            }).then(
-                function (res) {
-                    business = angular.copy(res.data[0]);
-                    $scope.business = business;
-                },
-                function (err) {
-                    $scope.badBusiness = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
-                    console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
-                }
-            );
+        };
+
+        $scope.getBusiness = function () {
+            var testId = $routeParams.testId;
+            console.log(testId);
+            if(testId && testId !== undefined) {
+                businessesCalls.searchBusinesses({
+                    id: testId
+                }).then(
+                    function (res) {
+                        business = angular.copy(res.data[0]);
+                        $scope.business = business;
+                    },
+                    function (err) {
+                        $scope.badBusiness = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
+                        console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
+                    }
+                );
+            } else {
+                console.log('undefined');
+            }
+
         };
 
         $scope.refreshData = function (keyword) {
