@@ -140,10 +140,11 @@ businesses.factory('businessesCalls', function($http, $routeParams) {
             // Return the promise to the controller
             return promise;
         },
-        devareBusinessOwner: function(req){
+        getSignedInBusinessOwner: function(req){
             var promise = $http({
-                method: 'DELETE',
-                url: '/businessOwner/delete/' + req.id
+                method: 'GET',
+                url: '/businessOwner/me',
+                params: req
             }).then(function (response) {
                 return response;
             });

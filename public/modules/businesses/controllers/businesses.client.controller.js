@@ -120,22 +120,12 @@ business.controller('businessesController',[
             $location.path(pageName.replace(/#/, ''));
         };
 
-        $scope.init = function() {
-            var testId = $routeParams.testId;
-            console.log(testId);
-            if(testId && testId !== undefined) {
-                console.log(testId);
-            } else {
-                console.log('undefined');
-            }
-        };
-
         $scope.getBusiness = function () {
-            var testId = $routeParams.testId;
-            console.log(testId);
-            if(testId && testId !== undefined) {
+            var id = $routeParams.testId;
+            console.log(id);
+            if(id && id !== undefined) {
                 businessesCalls.searchBusinesses({
-                    id: testId
+                    id: id
                 }).then(
                     function (res) {
                         business = angular.copy(res.data[0]);
@@ -149,6 +139,72 @@ business.controller('businessesController',[
             } else {
                 console.log('undefined');
             }
+
+        };
+
+        $scope.finishClaimBusiness = function (verifyCode) {
+
+            var id = $routeParams.testId;
+            async.series([
+                function(callback) {
+
+                    if(id && id !== undefined) {
+
+                        businessesCalls.searchBusinesses({
+                            id: id
+                        }).then(
+                            function (res) {
+                                business = angular.copy(res.data[0]);
+                                $scope.business = business;
+                            },
+                            function (err) {
+                                $scope.badBusiness = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
+                                console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
+                            }
+                        );
+
+                        businessListingsCalls.getSignedInBusinessOwner().then(
+                            function (res) {
+                                $scope.signedInBusinessOwner = res.data.businessOwner;
+                                var businessIdObj = {id: id};
+                                $scope.signedInBusinessOwner.businesses.push(businessIdObj);
+                                callback();
+                            },
+                            function (err) {
+                                console.error('Error : ' + JSON.stringify(err.data.message));
+                            }
+                        );
+
+                    } else {
+                        console.log('undefined');
+                    }
+                },
+
+                function (callback) {
+
+                    if(verifyCode === $scope.business.verifyCode) {
+                        businessesCalls.updateBusinessOwner({
+                            id: $scope.signedInBusinessOwner.id,
+                            businesses: $scope.signedInBusinessOwner.businesses
+                        }).then(
+                           function (res) {
+                               $scope.updatedBusinessOwner = angular.copy(res.data);
+                               callback();
+                           },
+                           function (err) {
+                               $scope.badBusiness = 'Error updating businessOwner: ' + JSON.stringify(err.data.message);
+                               console.error('Error updating businessOwner: ' + JSON.stringify(err.data.message));
+                           }
+                       );
+                   } else {
+                       console.log('codes don\'t match')
+                   }
+
+                },
+                function() {
+                    $scope.claimBusiness($scope.business);
+                }
+            ]);
 
         };
 
