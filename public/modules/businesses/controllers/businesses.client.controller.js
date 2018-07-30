@@ -163,7 +163,7 @@ business.controller('businessesController',[
                             }
                         );
 
-                        businessListingsCalls.getSignedInBusinessOwner().then(
+                        businessesCalls.getSignedInBusinessOwner().then(
                             function (res) {
                                 $scope.signedInBusinessOwner = res.data.businessOwner;
                                 var businessIdObj = {id: id};
@@ -189,20 +189,34 @@ business.controller('businessesController',[
                         }).then(
                            function (res) {
                                $scope.updatedBusinessOwner = angular.copy(res.data);
-                               callback();
                            },
                            function (err) {
                                $scope.badBusiness = 'Error updating businessOwner: ' + JSON.stringify(err.data.message);
                                console.error('Error updating businessOwner: ' + JSON.stringify(err.data.message));
                            }
                        );
+
+                        businessesCalls.updateBusiness({
+                            id: id,
+                            businessOwnerId: $scope.signedInBusinessOwner.id
+                        }).then(
+                            function (res) {
+                                $scope.updatedBusiness = res.data;
+                                callback();
+                            },
+                            function (err) {
+                                console.error('Error updating business : ' + JSON.stringify(err.data.message));
+                            }
+                        );
+
                    } else {
                        console.log('codes don\'t match')
                    }
 
                 },
                 function() {
-                    $scope.claimBusiness($scope.business);
+                    console.log('Congrats it worked! hopefully. . .')
+                    //$scope.openPage('business/view/' + id);
                 }
             ]);
 

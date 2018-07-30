@@ -1,3 +1,19 @@
 <section>
-
+    <div ng-controller="businessesController" ng-init="getBusiness()">
+        <h1>Edit Business</h1>
+        <div>
+            <form>
+                Name: <input ng-model="business.companyName"><br>
+                Address: <input ng-model="business.address"><br>
+                City: <input ng-model="business.city"><br>
+                State: <input ng-model="business.state"><br>
+                Zip: <input ng-model="business.postalCode"><br>
+                Phone Number : <input ng-model="business.phone"><br>
+                Website URL: <input ng-model="business.websiteURL"><br>
+                Facebook: <input ng-model="business.facebook"><br>
+                Instagram: <input ng-model="business.instagram"><br>
+                Twitter: <input ng-model="business.twitter"><br>
+            </form>
+        </div>
+    </div>
 </section>

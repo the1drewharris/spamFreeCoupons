@@ -46,6 +46,24 @@ businesses.config([
 
                 })
 
+                .when('/business/view/:id',{
+                    name: 'business edit',
+                    templateUrl:'modules/businesses/views/updateBusiness.client.view.html',
+                    label: 'business edit',
+                    controller: 'businessesController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'businessesController',
+                                files:[
+                                    // Controllers
+                                    'modules/businesses/controllers/businesses.client.controller.js'
+                                ]});
+                        }]
+                    }
+
+                })
+
         }
     ]
 );
