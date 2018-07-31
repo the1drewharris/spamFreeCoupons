@@ -121,7 +121,7 @@ business.controller('businessesController',[
         };
 
         $scope.getBusiness = function () {
-            var id = $routeParams.testId;
+            var id = $routeParams.id;
             console.log(id);
             if(id && id !== undefined) {
                 businessesCalls.searchBusinesses({
@@ -220,6 +220,33 @@ business.controller('businessesController',[
                 }
             ]);
 
+        };
+        $scope.editBusiness = function (newBusiness) {
+
+            businessesCalls.updateBusiness({
+                id: newBusiness.id,
+                name: newBusiness.name,
+                Address1: newBusiness.Address1,
+
+                City: newBusiness.City,
+                state: newBusiness.state,
+                PostalCode: newBusiness.PostalCode,
+                Phone: newBusiness.Phone
+
+            }).then(
+                function (res) {
+                    updatedBusiness = angular.copy(res.data);
+                    $scope.updatedclient = updatedclient;
+                    $scope.getClients();
+
+                    //window.location.href ='#/clients';
+                    $scope.removeTab(detailedclient.id);
+                    $scope.createToast(detailedclient.Name, "updated", "success");
+                },
+                function (err) {
+                    console.error('Error updating client: ' + err.message);
+                }
+            );
         };
 
         $scope.refreshData = function (keyword) {

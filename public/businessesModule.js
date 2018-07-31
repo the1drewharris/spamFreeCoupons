@@ -70,7 +70,6 @@ businesses.config([
 
 businesses.factory('businessesCalls', function($http, $routeParams) {
     console.log("in businessesCalls factory");
-    //var env = 'http://localhost:3000';
     var businessesMasterService = {
         detailBusinessOwner: function(req){
             var promise = $http({
