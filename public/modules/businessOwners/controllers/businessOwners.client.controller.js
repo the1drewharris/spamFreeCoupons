@@ -198,20 +198,10 @@ businessOwner.controller('businessOwnersController',[
         $scope.claimBusiness = function (business) {
             async.series([
                 function(callback) {
-                    businessListingsCalls.getSignedInBusinessOwner().then(
-                        function (res) {
-                            $scope.signedInBusinessOwner = res.data.businessOwner;
-                            callback();
-                        },
-                        function (err) {
-                            console.error('Error : ' + JSON.stringify(err.data.message));
-                        }
-                    );
-                },
 
-                function(callback) {
                     businessListingsCalls.isAuth().then(
                         function (res) {
+                            console.dir('isAuth data: ' + res.data);
                             $scope.auth = res.data;
                             callback();
                         },
@@ -220,6 +210,31 @@ businessOwner.controller('businessOwnersController',[
                         }
 
                     );
+                },
+
+                function(callback) {
+                    console.dir('isAuth data: ' + $scope.auth);
+                    if ($scope.auth) {
+                        businessListingsCalls.getSignedInBusinessOwner().then(
+                            function (res) {
+                                $scope.signedInBusinessOwner = res.data.businessOwner;
+                                console.log('SignedInBusinessOwner : ');
+                                console.dir(res.data.businessOwner);
+                                var businessOwnerIdObj = {id: $scope.signedInBusinessOwner.id};
+                                business[0].businessOwnerAttemptClaimId.push(businessOwnerIdObj);
+                                callback();
+                            },
+                            function (err) {
+                                console.error('Error : ' + JSON.stringify(err));
+                            }
+                        );
+                    } else {
+                        console.log('business id : ');
+                        console.dir(business[0].id);
+                        $scope.openPage('signIn/business/' + business[0].id);
+                        console.log('open page sign in passed')
+                    }
+
                 },
 
                 function (callback) {
@@ -238,7 +253,7 @@ businessOwner.controller('businessOwnersController',[
 
                         businessListingsCalls.updateBusiness({
                             id: business[0].id,
-                            businessOwnerAttemptClaimId: $scope.signedInBusinessOwner.id
+                            businessOwnerAttemptClaimId: business[0].businessOwnerAttemptClaimId
                         }).then(
                             function (res) {
                                 $scope.updatedBusiness = res.data;

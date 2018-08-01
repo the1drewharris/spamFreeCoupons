@@ -49,8 +49,9 @@ business.controller('businessesController',[
         var businesses = "",
             newbusiness = '',
             employees = "",
-            businessTask = "";
+            updatedBusiness = "";
 
+        var now = (new Date()).valueOf().toString();
 
         $scope.myFieldset = {
             newitem : {},
@@ -198,7 +199,9 @@ business.controller('businessesController',[
 
                         businessesCalls.updateBusiness({
                             id: id,
-                            businessOwnerId: $scope.signedInBusinessOwner.id
+                            businessOwnerId: $scope.signedInBusinessOwner.id,
+                            dateClaimed: now,
+                            businessOwnerAttemptClaimId: []
                         }).then(
                             function (res) {
                                 $scope.updatedBusiness = res.data;
@@ -226,22 +229,19 @@ business.controller('businessesController',[
             businessesCalls.updateBusiness({
                 id: newBusiness.id,
                 name: newBusiness.name,
-                Address1: newBusiness.Address1,
+                address: newBusiness.address,
 
-                City: newBusiness.City,
+                city: newBusiness.city,
                 state: newBusiness.state,
-                PostalCode: newBusiness.PostalCode,
-                Phone: newBusiness.Phone
+                postalCode: newBusiness.postalCode,
+                phone: newBusiness.phone
 
             }).then(
                 function (res) {
                     updatedBusiness = angular.copy(res.data);
-                    $scope.updatedclient = updatedclient;
-                    $scope.getClients();
-
-                    //window.location.href ='#/clients';
-                    $scope.removeTab(detailedclient.id);
-                    $scope.createToast(detailedclient.Name, "updated", "success");
+                    $scope.updatedBusiness = updatedBusiness;
+                    $scope.removeTab(updatedBusiness.id);
+                    $scope.createToast(updatedBusiness.Name, "updated", "success");
                 },
                 function (err) {
                     console.error('Error updating client: ' + err.message);
