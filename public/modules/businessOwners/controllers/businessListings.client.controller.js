@@ -223,7 +223,7 @@ businessListing.controller('businessListingsController',[
 
         $scope.getUnclaimedBusinesses = function () {
             businessListingsCalls.searchBusinesses({
-                dateClaimed: undefined
+                dateClaimed: null
             }).then(
                 function (res) {
                     businesses = angular.copy(res.data);
@@ -231,8 +231,8 @@ businessListing.controller('businessListingsController',[
                     $scope.gridOptions.data = res.data;
                 },
                 function (err) {
-                    $scope.badBusinessOwner = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
-                    console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
+                    $scope.badBusinessOwner = 'Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message);
+                    console.error('Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message));
                 }
             );
         };

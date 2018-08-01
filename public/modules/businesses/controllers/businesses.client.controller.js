@@ -16,6 +16,7 @@ var business = angular.module('business',[
 
 business.controller('businessesController',[
     'businessesCalls',
+    'businessListingsCalls',
     '$scope',
     '$http',
     '$location',
@@ -30,6 +31,7 @@ business.controller('businessesController',[
     '$filter',
     function (
         businessesCalls,
+        businessListingsCalls,
         $scope,
         $http,
         $location,
@@ -94,31 +96,95 @@ business.controller('businessesController',[
         $scope.gridOptions = {
             enableSorting: true,
             columnDefs: [
+                { name:'Name', field: 'companyName'},
+                { name:'Address', field: 'address'},
+                { name:'City', field: 'city'},
+                { name:'State', field: 'state'},
                 {
-                    name: 'actions',
-                    displayName: '',
+                    name: 'edit',
+                    displayName: 'Edit',
                     cellTemplate:
-                    '<md-button aria-label="business Detail" class="btn btn-default" ng-click="grid.appScope.openNewItemTab(row.entity.id)">'
-                    + '<i class="glyphicon glyphicon-pencil"></i>'
-                    + '<md-tooltip>{{row.entity.Name}} Detail</md-tooltip>'
-                    + '</md-button>',
+                        '<md-button aria-label="Edit Business" class="fa fa-pencil" ng-click="grid.appScope.openPage(\'business/view/\' + row.entity.id)">edit'
+                        + '</md-button>',
                     enableSorting: false,
                     resizable: false,
-                    width: 50,
-                    height: 30,
+                    width: 70,
                     pinnable: false
-                },
-                { name:'Name', field: 'Name'},
-                { name: 'Type', field: 'Type'},
-                { name:'Address', field: 'Address1'},
-                { name:'Phone', field: 'Phone'},
-                { name: 'Email', field: 'Email'}
+                }
             ],
             data : []
         };
 
         $scope.openPage = function (pageName) {
             $location.path(pageName.replace(/#/, ''));
+        };
+
+        $scope.isAuth = function () {
+            businessListingsCalls.isAuth().then(
+                function (res) {
+                    console.dir('isAuth data: ' + res.data);
+                    $scope.auth = res.data;
+                },
+                function (err) {
+                    console.error('Error : ' + JSON.stringify(err.data.message));
+                }
+            )
+        };
+
+        $scope.getClaimedBusinesses = function () {
+            async.series([
+
+                function(callback) {
+
+                    businessListingsCalls.isAuth().then(
+                        function (res) {
+                            console.dir('isAuth data: ' + res.data);
+                            $scope.auth = res.data;
+                            callback();
+                        },
+                        function (err) {
+                            console.error('Error : ' + JSON.stringify(err.data.message));
+                        }
+
+                    );
+                },
+
+                function(callback) {
+                    if ($scope.auth) {
+                        businessListingsCalls.getSignedInBusinessOwner().then(
+                            function (res) {
+                                $scope.signedInBusinessOwner = res.data.businessOwner;
+                                console.log('SignedInBusinessOwner : ');
+                                console.dir(res.data.businessOwner);
+                                callback();
+                            },
+                            function (err) {
+                                console.error('Error : ' + JSON.stringify(err));
+                            }
+                        );
+                    } else {
+                        $scope.openPage('signIn');
+                    }
+
+                },
+
+
+                function () {
+                    businessListingsCalls.searchBusinesses({
+                        businessOwnerId: $scope.signedInBusinessOwner.id
+                    }).then(
+                        function (res) {
+                            businesses = angular.copy(res.data);
+                            $scope.businesses = businesses;
+                            $scope.gridOptions.data = res.data;
+                        },
+                        function (err) {
+                            $scope.badBusinessOwner = 'Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message);
+                            console.error('Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message));
+                        }
+                    );
+                }
+            ]);
         };
 
         $scope.getBusiness = function () {
@@ -145,7 +211,7 @@ business.controller('businessesController',[
 
         $scope.finishClaimBusiness = function (verifyCode) {
 
-            var id = $routeParams.testId;
+            var id = $routeParams.id;
             async.series([
                 function(callback) {
 
@@ -218,30 +284,31 @@ business.controller('businessesController',[
 
                 },
                 function() {
-                    console.log('Congrats it worked! hopefully. . .')
-                    //$scope.openPage('business/view/' + id);
+                    $scope.openPage('business/view/' + id);
                 }
             ]);
 
         };
         $scope.editBusiness = function (newBusiness) {
-
+            console.log(newBusiness);
             businessesCalls.updateBusiness({
                 id: newBusiness.id,
-                name: newBusiness.name,
+                companyName: newBusiness.companyName,
                 address: newBusiness.address,
-
                 city: newBusiness.city,
                 state: newBusiness.state,
                 postalCode: newBusiness.postalCode,
-                phone: newBusiness.phone
+                phone: newBusiness.phone,
+                websiteURL: newBusiness.websiteURL,
+                facebook: newBusiness.facebook,
+                instagram: newBusiness.instagram,
+                twitter: newBusiness.twitter
 
             }).then(
                 function (res) {
                     updatedBusiness = angular.copy(res.data);
                     $scope.updatedBusiness = updatedBusiness;
-                    $scope.removeTab(updatedBusiness.id);
-                    $scope.createToast(updatedBusiness.Name, "updated", "success");
+                    //$scope.createToast(updatedBusiness.Name, "updated", "success");
                 },
                 function (err) {
                     console.error('Error updating client: ' + err.message);
@@ -282,11 +349,21 @@ business.controller('businessesController',[
          * ===================================================================== */
         $scope.createBusiness = function (newBusiness) {
             businessesCalls.newBusiness({
-                email: newBusiness.email,
-                password: newBusiness.password
+                id: newBusiness.id,
+                companyName: newBusiness.companyName,
+                address: newBusiness.address,
+                city: newBusiness.city,
+                state: newBusiness.state,
+                postalCode: newBusiness.postalCode,
+                phone: newBusiness.phone,
+                websiteURL: newBusiness.websiteURL,
+                facebook: newBusiness.facebook,
+                instagram: newBusiness.instagram,
+                twitter: newBusiness.twitter
             }).then(
                 function (res) {
                     newBusiness = angular.copy(res.data);
+                    $scope.openPage('listings')
                 },
                 function (err) {
                     $scope.badBusiness = 'Error creating business: ' + JSON.stringify(err.data.message);

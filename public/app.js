@@ -65,11 +65,6 @@ app.controller('MainController', function (
         });
     };
 
-    $scope.checkBusinessId = function (businessOwner) {
-        if (businessOwner.businessId) {
-
-        }
-    };
 
 });
 

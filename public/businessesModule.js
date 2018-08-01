@@ -26,6 +26,22 @@ businesses.config([
                                 ]});
                         }]
                     }
+                })
+                .when('/view/businesses',{
+                    name: 'businesses',
+                    templateUrl:'modules/businesses/views/viewBusinesses.client.view.html',
+                    label: 'businesses',
+                    controller: 'businessesController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'businessesController',
+                                files:[
+                                    // Controllers
+                                    'modules/businesses/controllers/businesses.client.controller.js'
+                                ]});
+                        }]
+                    }
 
                 })
                 .when('/business/claim/:id',{
@@ -50,6 +66,23 @@ businesses.config([
                     name: 'business edit',
                     templateUrl:'modules/businesses/views/updateBusiness.client.view.html',
                     label: 'business edit',
+                    controller: 'businessesController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'businessesController',
+                                files:[
+                                    // Controllers
+                                    'modules/businesses/controllers/businesses.client.controller.js'
+                                ]});
+                        }]
+                    }
+
+                })
+                .when('/business/create',{
+                    name: 'business create',
+                    templateUrl:'modules/businesses/views/createBusiness.client.view.html',
+                    label: 'business create',
                     controller: 'businessesController',
                     resolve: {
                         loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
