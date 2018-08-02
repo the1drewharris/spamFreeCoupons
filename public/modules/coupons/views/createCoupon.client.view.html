@@ -2,4 +2,15 @@
     <div>
         <h1>Create Coupon</h1>
     </div>
+    <div>
+        <form>
+            Title: <input title="title" type="text" ng-model="coupon.title" ng-required="true"><br>
+            Description: <br><input name="description" ng-model="coupon.description" ng-required="true"><br> <!-- TODO: make a text area -->
+            Coupon Code: <input title="couponCode" type="text" ng-model="coupon.couponCode" ng-required="false"><br>
+            Category: <input title="category" type="text" ng-model="coupon.category" ng-required="true"><br>
+            Status: <input title="status" type="text" ng-model="coupon.status" ng-required="true"><br>
+            Repeat Frequency: <input title="repeatFrequency" type="text" ng-model="coupon.repeatFrequency" ng-required="false"><br>
+            <md-button type="submit" ng-click="createCoupon(coupon)">Create Coupon</md-button>
+        </form>
+    </div>
 </section>

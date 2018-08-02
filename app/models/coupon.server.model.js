@@ -30,9 +30,6 @@ var couponSchema = new Schema ({
     status: {
         type: String
     },
-    storeAvailability: {
-        type: Array
-    },
     couponCode: {
         type: String
     },
