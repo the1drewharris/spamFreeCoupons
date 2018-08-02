@@ -29,6 +29,7 @@ business.controller('businessesController',[
     'lodash',
     'uiGridConstants',
     '$filter',
+    '$window',
     function (
         businessesCalls,
         businessListingsCalls,
@@ -43,7 +44,8 @@ business.controller('businessesController',[
         $sce,
         lodash,
         uiGridConstants,
-        $filter
+        $filter,
+        $window
     ) {
 
         $scope.appheader = 'business';
@@ -117,6 +119,12 @@ business.controller('businessesController',[
 
         $scope.openPage = function (pageName) {
             $location.path(pageName.replace(/#/, ''));
+        };
+
+        $scope.showAddCoupon = function () {
+            var id = $routeParams.id;
+            console.log(id);
+            $scope.openPage('coupon/create/' + id)
         };
 
         $scope.isAuth = function () {
@@ -324,6 +332,10 @@ business.controller('businessesController',[
                 oSearchArray.shift();
                 keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';
             }
+        };
+
+        $scope.logout = function () {
+            $window.open('/businessOwner/signOut', "_self");
         };
 
         /* =====================================================================

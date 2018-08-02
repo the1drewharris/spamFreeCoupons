@@ -1,5 +1,5 @@
 'use strict';
-var coupons = angular.module('coupons',[
+var coupon = angular.module('coupon',[
     'ui.grid',
     'ui.grid.pagination',
     'ui.grid.exporter',
@@ -14,7 +14,7 @@ var coupons = angular.module('coupons',[
     'gm.typeaheadDropdown'
 ]);
 
-coupons.controller('couponsController',[
+coupon.controller('couponsController',[
     'couponCalls',
     '$scope',
     '$http',
@@ -26,7 +26,6 @@ coupons.controller('couponsController',[
     '$routeParams',
     '$sce',
     'lodash',
-    'methodCop',
     'uiGridConstants',
     '$filter',
     function (
@@ -41,7 +40,6 @@ coupons.controller('couponsController',[
         $routeParams,
         $sce,
         lodash,
-        methodCop,
         uiGridConstants,
         $filter
     ) {

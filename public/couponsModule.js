@@ -11,7 +11,7 @@ coupons.config([
             $routeProvider
         ) {
             $routeProvider
-                .when('/coupon/create',{
+                .when('/coupon/create/:id',{
                     name: 'coupons',
                     templateUrl:'modules/coupons/views/createCoupon.client.view.html',
                     label: 'coupons',
@@ -22,7 +22,7 @@ coupons.config([
                                 name: 'couponsController',
                                 files:[
                                     // Controllers
-                                    'modules/coupons/controllers/coupons.client.controller.js',
+                                    'modules/coupons/controllers/coupons.client.controller.js'
                                 ]});
                         }]
                     }
@@ -38,7 +38,7 @@ coupons.config([
                             return $ocLazyLoad.load({
                                 name: 'couponsController',
                                 files:[
-                                    'modules/coupons/controllers/coupons.client.controller.js',
+                                    'modules/coupons/controllers/coupons.client.controller.js'
                                 ]});
                         }]
                     }
@@ -54,7 +54,7 @@ coupons.config([
                                 name: 'couponsController',
                                 files:[
                                     // Controllers
-                                    'modules/coupons/controllers/coupons.client.controller.js',
+                                    'modules/coupons/controllers/coupons.client.controller.js'
                                 ]});
                         }]
                     }})

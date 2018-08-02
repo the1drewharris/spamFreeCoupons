@@ -130,6 +130,7 @@ businessOwner.controller('businessOwnersController',[
                     if (response.businesses.length > 0) {
                         if (response.businesses.length > 1) {
                             console.log('list businesses here');
+                            $scope.openPage('view/businesses');
                         } else {
                             console.log('single business view');
                         }

@@ -15,7 +15,8 @@ var app = angular.module('anonymousCoupons', [
     // anonymousCoupons Application Modules
     'businessListings',
     'businessOwners',
-    'businesses'
+    'businesses',
+    'coupons'
 
 ]);
 
@@ -40,7 +41,7 @@ app.controller('MainController', function (
     //This block of code checks for the browser version, and if not IE9, injects Angular Material
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf ( "MSIE " );
-    var IEVersion =  parseInt (ua.substring (msie+5, ua.indexOf (".", msie )));
+    var IEVersion = parseInt (ua.substring (msie+5, ua.indexOf (".", msie )));
     if (IEVersion > 9){
         angular.module('anonymousCoupons').requires.push('ngMaterial');
     }

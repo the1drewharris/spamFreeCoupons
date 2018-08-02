@@ -6,7 +6,7 @@
             <md-button ng-if="auth == false" ng-click="openPage('signIn')">Sign In</md-button>
         </div>
         <div>
-            <md-button ng-click="openPage('view/businesses')">Claimed Businesses</md-button>
+            <md-button ng-if="auth" ng-click="openPage('view/businesses')">Claimed Businesses</md-button>
         </div>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
