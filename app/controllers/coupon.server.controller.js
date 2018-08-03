@@ -45,8 +45,7 @@ exports.create = function (req, res) {
         repeatFrequency: req.body.repeatFrequency,
         category: req.body.category,
         status: req.body.status,
-        storeAvailability: req.body.storeAvailability,
-        couponCode: req.body.couponCode,    //TODO: make randomly generated unless manually typed in.
+        couponCode: req.body.couponCode,
         postalCode: req.body.postalCode,
         businessId: req.body.businessId,
         DateAdded: current_date

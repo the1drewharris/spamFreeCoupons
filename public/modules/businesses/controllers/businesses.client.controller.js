@@ -57,44 +57,6 @@ business.controller('businessesController',[
 
         var now = (new Date()).valueOf().toString();
 
-        $scope.myFieldset = {
-            newitem : {},
-            actionName: 'Create',
-            collectionName: 'business',
-            fields: [
-                { label:'Name', field: 'Name', required: true },
-                { label:'Type', field: 'Type', required: true},
-                { label:'Address 1', field: 'Address1', required: false},
-                { label:'Address 2', field: 'Address2', required: false},
-                { label:'City', field: 'City', required: false},
-                { label:'State / Province', field: 'StateProvince', required: false},
-                { label:'Postal Code', field: 'PostalCode', required: false},
-                { label:'Country', field: 'Country', required: false},
-                { label:'Phone', field: 'Phone', required: false},
-                { label:'Email', field: 'Email', required: false},
-                { label:'Responsible Employee', field: 'ResponsibleEmployee', required: false}
-            ]
-        };
-
-        $scope.myUpdateFieldset = {
-            myItem : {},
-            actionName: 'Update',
-            collectionName: 'business',
-            fields: [
-                { label:'Name', field: 'Name', required: true },
-                { label:'Type', field: 'Type', required: true},
-                { label:'Address 1', field: 'Address1', required: false},
-                { label:'Address 2', field: 'Address2', required: false},
-                { label:'City', field: 'City', required: false},
-                { label:'State / Province', field: 'StateProvince', required: false},
-                { label:'Postal Code', field: 'PostalCode', required: false},
-                { label:'Country', field: 'Country', required: false},
-                { label:'Phone', field: 'Phone', required: false},
-                { label:'Email', field: 'Email', required: false},
-                { label:'Responsible Employee', field: 'ResponsibleEmployee', required: false}
-            ]
-        };
-
         $scope.gridOptions = {
             enableSorting: true,
             columnDefs: [

@@ -46,47 +46,12 @@ coupon.controller('couponsController',[
 
         $scope.appheader = 'coupons';
 
+        $scope.items = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        $scope.selected = [];
+        $scope.category = ['Food','Beauty','Health','Automotive','Home Improvement','Entertainment','Legal'];
+
         var coupons = "",
             newCoupon = '';
-
-
-        $scope.myFieldset = {
-            newitem : {},
-            actionName: 'Create',
-            collectionName: 'coupon',
-            fields: [
-                { label:'Name', field: 'Name', required: true },
-                { label:'Type', field: 'Type', required: true},
-                { label:'Address 1', field: 'Address1', required: false},
-                { label:'Address 2', field: 'Address2', required: false},
-                { label:'City', field: 'City', required: false},
-                { label:'State / Province', field: 'StateProvince', required: false},
-                { label:'Postal Code', field: 'PostalCode', required: false},
-                { label:'Country', field: 'Country', required: false},
-                { label:'Phone', field: 'Phone', required: false},
-                { label:'Email', field: 'Email', required: false},
-                { label:'Responsible Employee', field: 'ResponsibleEmployee', required: false}
-            ]
-        };
-
-        $scope.myUpdateFieldset = {
-            myItem : {},
-            actionName: 'Update',
-            collectionName: 'coupon',
-            fields: [
-                { label:'Name', field: 'Name', required: true },
-                { label:'Type', field: 'Type', required: true},
-                { label:'Address 1', field: 'Address1', required: false},
-                { label:'Address 2', field: 'Address2', required: false},
-                { label:'City', field: 'City', required: false},
-                { label:'State / Province', field: 'StateProvince', required: false},
-                { label:'Postal Code', field: 'PostalCode', required: false},
-                { label:'Country', field: 'Country', required: false},
-                { label:'Phone', field: 'Phone', required: false},
-                { label:'Email', field: 'Email', required: false},
-                { label:'Responsible Employee', field: 'ResponsibleEmployee', required: false}
-            ]
-        };
 
         $scope.gridOptions = {
             enableSorting: true,
@@ -116,6 +81,87 @@ coupon.controller('couponsController',[
 
         $scope.openPage = function (pageName) {
             $location.path(pageName.replace(/#/, ''));
+        };
+
+        $scope.isChecked = function() {
+            return $scope.selected.length === $scope.items.length;
+        };
+
+        $scope.exists = function (item, list) {
+            return list.indexOf(item) > -1;
+        };
+
+        $scope.toggleAll = function() {
+            if ($scope.selected.length === $scope.items.length) {
+                $scope.selected = [];
+            } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
+                $scope.selected = $scope.items.slice(0);
+            }
+        };
+
+        $scope.toggle = function (item, list) {
+            var idx = list.indexOf(item);
+            if (idx > -1) {
+                list.splice(idx, 1);
+            }
+            else {
+                list.push(item);
+            }
+        };
+
+        $scope.loadCategories = function () {
+            var categories = [
+                {
+                    'name': 'Food'
+                },
+                {
+                    'name': 'Beauty'
+                },
+                {
+                    'name': 'Health'
+                },
+                {
+                    'name': 'Automotive'
+                },
+                {
+                    'name': 'Home Improvement'
+                },
+                {
+                    'name': 'Entertainment'
+                },
+                {
+                    'name': 'Legal'
+                }
+            ];
+
+            return categories.map(function (cat) {
+                cat.lowername = veg.name.toLowerCase();
+                return cat;
+            });
+        };
+
+        $scope.transformChip = function (chip) {
+            // If it is an object, it's already a known chip
+            if (angular.isObject(chip)) {
+                return chip;
+            }
+
+            // Otherwise, create a new one
+            return { name: chip, type: 'new' };
+        };
+
+        $scope.querySearch = function (query) {
+            var results = query ? $scope.category.filter($scope.createFilterFor(query)) : [];
+            return results;
+        };
+
+        $scope.createFilterFor = function (query) {
+            var lowercaseQuery = query.toLowerCase();
+
+            return function filterFn(category) {
+                return (category.indexOf(lowercaseQuery) === 0);
+            };
+
         };
 
         $scope.getCoupons = function (couponId) {
@@ -167,9 +213,16 @@ coupon.controller('couponsController',[
          * create new coupon
          * ===================================================================== */
         $scope.createCoupon = function (newCoupon) {
+            var id = $routeParams.id;
+            var category = [];
             couponCalls.newCoupon({
-                email: newCoupon.email,
-                password: newCoupon.password
+                title: newCoupon.title,
+                description: newCoupon.description,
+                couponCode: newCoupon.couponCode,
+                category: category,
+                status: newCoupon.status,
+                repeatFrequency: $scope.selected,
+                businessId: id
             }).then(
                 function (res) {
                     newCoupon = angular.copy(res.data);
