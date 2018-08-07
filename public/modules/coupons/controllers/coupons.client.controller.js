@@ -48,10 +48,17 @@ coupon.controller('couponsController',[
 
         $scope.items = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
         $scope.selected = [];
-        $scope.category = ['Food','Beauty','Health','Automotive','Home Improvement','Entertainment','Legal'];
+        $scope.categories = [];
+
 
         var coupons = "",
-            newCoupon = '';
+            newCoupon = '',
+            newBusiness = '';
+
+        var self = this;
+
+        self.categories = loadCategories();
+        self.selectedCategories = [];
 
         $scope.gridOptions = {
             enableSorting: true,
@@ -109,7 +116,7 @@ coupon.controller('couponsController',[
             }
         };
 
-        $scope.loadCategories = function () {
+        function loadCategories () {
             var categories = [
                 {
                     'name': 'Food'
@@ -134,24 +141,23 @@ coupon.controller('couponsController',[
                 }
             ];
 
+
             return categories.map(function (cat) {
-                cat.lowername = veg.name.toLowerCase();
+                cat.lowername = cat.name.toLowerCase();
                 return cat;
             });
-        };
+        }
 
         $scope.transformChip = function (chip) {
-            // If it is an object, it's already a known chip
-            if (angular.isObject(chip)) {
-                return chip;
-            }
+            $scope.selectedCategories = self.selectedCategories;
 
-            // Otherwise, create a new one
-            return { name: chip, type: 'new' };
+            console.dir($scope.selectedCategories);
+            console.dir(self.selectedCategories);
+            return chip;
         };
 
         $scope.querySearch = function (query) {
-            var results = query ? $scope.category.filter($scope.createFilterFor(query)) : [];
+            var results = query ? self.categories.filter($scope.createFilterFor(query)) : [];
             return results;
         };
 
@@ -159,7 +165,7 @@ coupon.controller('couponsController',[
             var lowercaseQuery = query.toLowerCase();
 
             return function filterFn(category) {
-                return (category.indexOf(lowercaseQuery) === 0);
+                return (category.lowername.indexOf(lowercaseQuery) === 0);
             };
 
         };
@@ -213,19 +219,28 @@ coupon.controller('couponsController',[
          * create new coupon
          * ===================================================================== */
         $scope.createCoupon = function (newCoupon) {
+            console.dir($scope.selectedCategories);
+            $scope.selectedCategories.forEach(function (item) {
+                $scope.categories.push(item.name);
+                console.dir(item)
+            });
+            console.dir($scope.categories);
+            console.dir($scope.selectedCategories);
+            console.dir(newCoupon);
             var id = $routeParams.id;
-            var category = [];
             couponCalls.newCoupon({
                 title: newCoupon.title,
                 description: newCoupon.description,
                 couponCode: newCoupon.couponCode,
-                category: category,
+                category: $scope.categories,
                 status: newCoupon.status,
                 repeatFrequency: $scope.selected,
                 businessId: id
             }).then(
                 function (res) {
                     newCoupon = angular.copy(res.data);
+                    $scope.newCoupon = newCoupon;
+                    $scope.openPage('business/view/' + id);
                 },
                 function (err) {
                     $scope.badCoupon = 'Error creating coupon: ' + JSON.stringify(err.data.message);
@@ -233,6 +248,19 @@ coupon.controller('couponsController',[
                 }
             );
         };
+        couponCalls.updateBusiness({
+            id: id,
+            coupons: $scope.coupons
+        }).then(
+            function (res) {
+                newBusiness = angular.copy(res.data);
+                $scope.openPage('business/view/' + id);
+            },
+            function (err) {
+                $scope.badBusiness = 'Error creating Business: ' + JSON.stringify(err.data.message);
+                console.error('Error creating Business: ' + JSON.stringify(err.data.message));
+            }
+        )
 
     }
 ]);
