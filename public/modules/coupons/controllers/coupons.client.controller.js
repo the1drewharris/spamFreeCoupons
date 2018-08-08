@@ -219,48 +219,85 @@ coupon.controller('couponsController',[
          * create new coupon
          * ===================================================================== */
         $scope.createCoupon = function (newCoupon) {
-            console.dir($scope.selectedCategories);
-            $scope.selectedCategories.forEach(function (item) {
-                $scope.categories.push(item.name);
-                console.dir(item)
-            });
-            console.dir($scope.categories);
-            console.dir($scope.selectedCategories);
-            console.dir(newCoupon);
             var id = $routeParams.id;
-            couponCalls.newCoupon({
-                title: newCoupon.title,
-                description: newCoupon.description,
-                couponCode: newCoupon.couponCode,
-                category: $scope.categories,
-                status: newCoupon.status,
-                repeatFrequency: $scope.selected,
-                businessId: id
-            }).then(
-                function (res) {
-                    newCoupon = angular.copy(res.data);
-                    $scope.newCoupon = newCoupon;
-                    $scope.openPage('business/view/' + id);
+
+
+            async.series([
+
+                function(callback) {
+
+                    console.dir($scope.selectedCategories);
+                    $scope.selectedCategories.forEach(function (item) {
+                        $scope.categories.push(item.name);
+                        console.dir(item)
+                    });
+                    console.dir($scope.categories);
+                    console.dir($scope.selectedCategories);
+                    console.dir(newCoupon);
+
+                    couponCalls.newCoupon({
+                        title: newCoupon.title,
+                        description: newCoupon.description,
+                        couponCode: newCoupon.couponCode,
+                        category: $scope.categories,
+                        status: newCoupon.status,
+                        repeatFrequency: $scope.selected,
+                        businessId: id
+                    }).then(
+                        function (res) {
+                            newCoupon = angular.copy(res.data);
+                            $scope.newCoupon = newCoupon;
+                            $scope.openPage('business/view/' + id);
+                            callback();
+                        },
+                        function (err) {
+                            $scope.badCoupon = 'Error creating coupon: ' + JSON.stringify(err.data.message);
+                            console.error('Error creating coupon: ' + JSON.stringify(err.data.message));
+                        }
+                    );
+
                 },
-                function (err) {
-                    $scope.badCoupon = 'Error creating coupon: ' + JSON.stringify(err.data.message);
-                    console.error('Error creating coupon: ' + JSON.stringify(err.data.message));
+
+                function(callback) {
+
+                    couponCalls.getBusiness(id).then(
+                        function (res) {
+                            $scope.business = res.data;
+                            var couponIdObj = {id: $scope.newCoupon.id};
+                            $scope.business.coupons.push(couponIdObj);
+                            callback();
+                        },
+                        function (err) {
+                            $scope.badCoupon = 'Error getting business: ' + JSON.stringify(err.data.message);
+                            console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                        }
+                    )
+
+                },
+
+                function() {
+
+                    couponCalls.updateBusiness({
+                        id: id,
+                        coupons: $scope.coupons
+                    }).then(
+                        function (res) {
+                            newBusiness = angular.copy(res.data);
+                            $scope.openPage('business/view/' + id);
+                        },
+                        function (err) {
+                            $scope.badBusiness = 'Error creating Business: ' + JSON.stringify(err.data.message);
+                            console.error('Error creating Business: ' + JSON.stringify(err.data.message));
+                        }
+                    )
+
                 }
-            );
+            ]);
+
+
+
         };
-        couponCalls.updateBusiness({
-            id: id,
-            coupons: $scope.coupons
-        }).then(
-            function (res) {
-                newBusiness = angular.copy(res.data);
-                $scope.openPage('business/view/' + id);
-            },
-            function (err) {
-                $scope.badBusiness = 'Error creating Business: ' + JSON.stringify(err.data.message);
-                console.error('Error creating Business: ' + JSON.stringify(err.data.message));
-            }
-        )
+
 
     }
 ]);

@@ -43,7 +43,7 @@ coupons.config([
                         }]
                     }
                 })
-                .when('/coupons/view',{
+                .when('/coupons/view/:id',{
                     name: 'coupons',
                     templateUrl:'modules/coupons/views/viewCoupons.client.view.html',
                     label: 'view coupons',
@@ -123,6 +123,17 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             var promise = $http({
                 method: 'POST',
                 url: '/coupon/search',
+                data: req
+            }).then(function (response) {
+                return response;
+            });
+            // Return the promise to the controller
+            return promise;
+        },
+        getBusiness: function(businessId){
+            var promise = $http({
+                method: 'POST',
+                url: '/business/detail/' + businessId,
                 data: req
             }).then(function (response) {
                 return response;

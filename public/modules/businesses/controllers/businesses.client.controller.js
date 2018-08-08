@@ -85,8 +85,12 @@ business.controller('businessesController',[
 
         $scope.showAddCoupon = function () {
             var id = $routeParams.id;
-            console.log(id);
             $scope.openPage('coupon/create/' + id)
+        };
+
+        $scope.showViewCoupon = function () {
+            var id = $routeParams.id;
+            $scope.openPage('coupons/view/' + id)
         };
 
         $scope.isAuth = function () {
