@@ -130,10 +130,10 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             // Return the promise to the controller
             return promise;
         },
-        getBusiness: function(businessId){
+        getBusiness: function(req){
             var promise = $http({
                 method: 'POST',
-                url: '/business/detail/' + businessId,
+                url: '/business/search',
                 data: req
             }).then(function (response) {
                 return response;

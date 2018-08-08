@@ -260,11 +260,14 @@ coupon.controller('couponsController',[
 
                 function(callback) {
 
-                    couponCalls.getBusiness(id).then(
+                    couponCalls.getBusiness({
+                        id: id
+                    }).then(
                         function (res) {
                             $scope.business = res.data;
+                            console.log($scope.business[0].coupons);
                             var couponIdObj = {id: $scope.newCoupon.id};
-                            $scope.business.coupons.push(couponIdObj);
+                            $scope.business[0].coupons.push(couponIdObj);
                             callback();
                         },
                         function (err) {
@@ -279,15 +282,15 @@ coupon.controller('couponsController',[
 
                     couponCalls.updateBusiness({
                         id: id,
-                        coupons: $scope.coupons
+                        coupons: $scope.business[0].coupons
                     }).then(
                         function (res) {
                             newBusiness = angular.copy(res.data);
                             $scope.openPage('business/view/' + id);
                         },
                         function (err) {
-                            $scope.badBusiness = 'Error creating Business: ' + JSON.stringify(err.data.message);
-                            console.error('Error creating Business: ' + JSON.stringify(err.data.message));
+                            $scope.badBusiness = 'Error updating Business: ' + JSON.stringify(err.data.message);
+                            console.error('Error updating Business: ' + JSON.stringify(err.data.message));
                         }
                     )
 
