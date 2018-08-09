@@ -52,7 +52,6 @@ coupon.controller('couponsController',[
 
 
         var coupons = "",
-            newCoupon = '',
             newBusiness = '';
 
         var self = this;
@@ -63,31 +62,49 @@ coupon.controller('couponsController',[
         $scope.gridOptions = {
             enableSorting: true,
             columnDefs: [
+                { name:'Title', field: 'title'},
+                { name: 'Description', field: 'description'},
+                { name:'Categories', field: 'category'},
                 {
-                    name: 'actions',
-                    displayName: '',
+                    name:'Status',
+                    field: 'status',
                     cellTemplate:
-                    '<md-button aria-label="coupon Detail" class="btn btn-default" ng-click="grid.appScope.openNewItemTab(row.entity.id)">'
-                    + '<i class="glyphicon glyphicon-pencil"></i>'
-                    + '<md-tooltip>{{row.entity.Name}} Detail</md-tooltip>'
-                    + '</md-button>',
-                    enableSorting: false,
-                    resizable: false,
-                    width: 50,
-                    height: 30,
-                    pinnable: false
+                        '<md-switch ng-model="row.entity.status" aria-label="Status" ng-true-value="\'active\'" ng-false-value="\'inactive\'">',
+                    width: 60
                 },
-                { name:'Name', field: 'Name'},
-                { name: 'Type', field: 'Type'},
-                { name:'Address', field: 'Address1'},
-                { name:'Phone', field: 'Phone'},
-                { name: 'Email', field: 'Email'}
+                { name: 'Repeat Frequency', field: 'repeatFrequency'},
+                { name:'Coupon Code', field: 'couponCode'},
+                {
+                    name: 'Edit',
+                    cellTemplate:
+                        '<div class="fa-pencil">' +
+                        '   <md-button class="btn-default" ng-click="grid.appScope.openPage(\'coupon/update/\' + row.entity.id)"></md-button>' +
+                        '</div>'
+                }
             ],
+            rowHeight: 45,
             data : []
         };
 
         $scope.openPage = function (pageName) {
             $location.path(pageName.replace(/#/, ''));
+        };
+
+        $scope.showBusiness = function () {
+            var id = $routeParams.id;
+            $scope.openPage('business/view/' + id)
+        };
+
+        $scope.isAuth = function () {
+            couponCalls.isAuth().then(
+                function (res) {
+                    console.dir('isAuth data: ' + res.data);
+                    $scope.auth = res.data;
+                },
+                function (err) {
+                    console.error('Error : ' + JSON.stringify(err.data.message));
+                }
+            )
         };
 
         $scope.isChecked = function() {
@@ -170,6 +187,24 @@ coupon.controller('couponsController',[
 
         };
 
+        $scope.getCoupon = function () {
+            var couponId = $routeParams.id;
+
+            couponCalls.searchCoupons({
+                couponId: couponId
+
+            }).then(
+                function (res) {
+                    coupon = angular.copy(res.data);
+                    $scope.coupon = coupon;
+                },
+                function (err) {
+                    $scope.badCoupon = 'Error getting coupon: ' + JSON.stringify(err.data.message);
+                    console.error('Error getting coupon: ' + JSON.stringify(err.data.message));
+                }
+            );
+        };
+
         $scope.getCoupons = function (couponId) {
             couponCalls.searchCoupons({
                 couponId: couponId
@@ -181,8 +216,8 @@ coupon.controller('couponsController',[
                     $scope.gridOptions.data = res.data
                 },
                 function (err) {
-                    $scope.badCoupon = 'Error creating coupon: ' + JSON.stringify(err.data.message);
-                    console.error('Error creating coupon: ' + JSON.stringify(err.data.message));
+                    $scope.badCoupon = 'Error getting coupon: ' + JSON.stringify(err.data.message);
+                    console.error('Error getting coupon: ' + JSON.stringify(err.data.message));
                 }
             );
         };
@@ -200,9 +235,11 @@ coupon.controller('couponsController',[
         /* =====================================================================
          * Get all coupons from Mongo database
          * ===================================================================== */
-        $scope.getCoupons = function () {
-
-            couponCalls.getCoupons({}).then(
+        $scope.getBusinessCoupons = function () {
+            var id = $routeParams.id;
+            couponCalls.searchCoupons({
+                businessId: id
+            }).then(
                 function (res) {
                     coupons = angular.copy(res.data);
                     $scope.coupons = coupons;
@@ -226,6 +263,23 @@ coupon.controller('couponsController',[
 
                 function(callback) {
 
+                    couponCalls.getBusiness({
+                        id: id
+                    }).then(
+                        function (res) {
+                            $scope.business = res.data;
+                            callback();
+                        },
+                        function (err) {
+                            $scope.badCoupon = 'Error getting business: ' + JSON.stringify(err.data.message);
+                            console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                        }
+                    )
+
+                },
+
+                function(callback) {
+
                     console.dir($scope.selectedCategories);
                     $scope.selectedCategories.forEach(function (item) {
                         $scope.categories.push(item.name);
@@ -242,7 +296,8 @@ coupon.controller('couponsController',[
                         category: $scope.categories,
                         status: newCoupon.status,
                         repeatFrequency: $scope.selected,
-                        businessId: id
+                        businessId: id,
+                        postalCode: $scope.business[0].postalCode
                     }).then(
                         function (res) {
                             newCoupon = angular.copy(res.data);
@@ -260,21 +315,9 @@ coupon.controller('couponsController',[
 
                 function(callback) {
 
-                    couponCalls.getBusiness({
-                        id: id
-                    }).then(
-                        function (res) {
-                            $scope.business = res.data;
-                            console.log($scope.business[0].coupons);
-                            var couponIdObj = {id: $scope.newCoupon.id};
-                            $scope.business[0].coupons.push(couponIdObj);
-                            callback();
-                        },
-                        function (err) {
-                            $scope.badCoupon = 'Error getting business: ' + JSON.stringify(err.data.message);
-                            console.error('Error getting business: ' + JSON.stringify(err.data.message));
-                        }
-                    )
+                    var couponIdObj = {id: $scope.newCoupon.id};
+                    $scope.business[0].coupons.push(couponIdObj);
+                    callback();
 
                 },
 

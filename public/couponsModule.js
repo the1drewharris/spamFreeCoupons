@@ -28,7 +28,7 @@ coupons.config([
                     }
 
                 })
-                .when('/coupon/update',{
+                .when('/coupon/update/:couponId',{
                     name: 'coupons',
                     templateUrl:'modules/coupons/views/updateCoupon.client.view.html',
                     label: 'update coupons',
@@ -128,6 +128,16 @@ coupons.factory('couponCalls', function($http, $routeParams) {
                 return response;
             });
             // Return the promise to the controller
+            return promise;
+        },
+        isAuth: function(req){
+            var promise = $http({
+                method: 'GET',
+                url: '/authentication/authenticate',
+                params: req
+            }).then(function (response) {
+                return response;
+            });
             return promise;
         },
         getBusiness: function(req){

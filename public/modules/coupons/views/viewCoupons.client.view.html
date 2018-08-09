@@ -1,15 +1,15 @@
 <section>
-    <div ng-controller="couponsController" ng-init="getCoupons()">
-        <h1>Claimed Businesses</h1>
+    <div ng-controller="couponsController" ng-init="getBusinessCoupons()">
+        <h1>Coupons</h1>
         <div ng-init="isAuth()">
             <md-button ng-if="auth" ng-click="logout()">Logout</md-button>
             <md-button ng-if="auth == false" ng-click="openPage('signIn')">Sign In</md-button>
         </div>
+        <md-button ng-click="showBusiness()">Business</md-button>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
             <input title="Search" ng-change="refreshData(search)" ng-model="search">
         </md-input-container>
         <div ui-grid="gridOptions" class="grid"></div>
-        <md-button class="btn btnContainer" ng-click="openPage('business/create')">Create Business</md-button>
     </div>
 </section>

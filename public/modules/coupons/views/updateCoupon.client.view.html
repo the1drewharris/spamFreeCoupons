@@ -1,0 +1,57 @@
+<section>
+    <div>
+        <h1>Create Coupon</h1>
+    </div>
+    <div ng-controller="couponsController as coupon" ng-init="getCoupon()">
+        <form>
+            Title*: <input title="title" type="text" ng-model="coupon.title" ng-required="true"><br>
+            Description*: <br><input name="description" ng-model="coupon.description" ng-required="true"><br> <!-- TODO: make a text area -->
+            Coupon Code: <input title="couponCode" type="text" ng-model="coupon.couponCode" ng-required="false"><br>
+
+
+            <div>
+                Category*:
+                <md-chips ng-model="coupon.selectedCategories" ng-required="true" md-autocomplete-snap
+                          md-transform-chip="transformChip($chip)"
+                          md-require-match="true">
+                    <md-autocomplete
+                            md-selected-item="selectedItem"
+                            md-search-text="searchText"
+                            md-items="item in querySearch(searchText)"
+                            md-item-text="item.name"
+                            placeholder="Search for a Category">
+                        <span md-highlight-text="searchText">{{item.name}}</span>
+                    </md-autocomplete>
+                    <md-chip-template>
+                    <span>
+                      <strong>{{$chip.name}}</strong>
+                    </span>
+                    </md-chip-template>
+                </md-chips>
+                <br>
+            </div>
+
+
+
+            Status: {{coupon.status}} <md-switch ng-model="coupon.status" ng-switch-default="true" aria-label="Status" ng-true-value="'active'" ng-false-value="'inactive'">
+
+        </md-switch>
+
+            Days Active*:
+            <div flex-xs flex="50">
+                <md-checkbox aria-label="Select All"
+                             ng-checked="isChecked()"
+                             ng-click="toggleAll()" ng-required="true">
+                    <span ng-if="isChecked()">Un-</span>Select All
+                </md-checkbox>
+            </div>
+            <div flex="100" ng-repeat="item in items">
+                <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                    {{ item }}
+                </md-checkbox>
+            </div>
+
+            <md-button type="submit" ng-click="createCoupon(coupon)">Create Coupon</md-button>
+        </form>
+    </div>
+</section>
