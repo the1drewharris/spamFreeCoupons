@@ -144,11 +144,13 @@ business.controller('businessesController',[
 
 
                 function () {
+                    console.log($scope.signedInBusinessOwner.id);
                     businessListingsCalls.searchBusinesses({
                         businessOwnerId: $scope.signedInBusinessOwner.id
                     }).then(
                         function (res) {
                             businesses = angular.copy(res.data);
+                            console.dir(res.data);
                             $scope.businesses = businesses;
                             $scope.gridOptions.data = res.data;
                         },

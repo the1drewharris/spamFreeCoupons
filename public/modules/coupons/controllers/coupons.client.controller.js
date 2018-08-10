@@ -79,7 +79,8 @@ coupon.controller('couponsController',[
                     cellTemplate:
                         '<div class="fa-pencil">' +
                         '   <md-button class="btn-default" ng-click="grid.appScope.openPage(\'coupon/update/\' + row.entity.id)"></md-button>' +
-                        '</div>'
+                        '</div>',
+                    width: 40
                 }
             ],
             rowHeight: 45,
@@ -131,6 +132,46 @@ coupon.controller('couponsController',[
             else {
                 list.push(item);
             }
+        };
+
+        $scope.selectItem = function (item, list) {
+            var id = $routeParams.couponId;
+
+
+            async.series([
+
+                function(callback) {
+
+                    couponCalls.searchCoupons({
+                        id: id
+                    }).then(
+                        function (res) {
+                            coupon = angular.copy(res.data);
+                            $scope.coupon = coupon[0];
+                            callback();
+                        },
+                        function (err) {
+                            $scope.badCoupon = 'Error getting coupon: ' + JSON.stringify(err.data.message);
+                            console.error('Error getting coupon: ' + JSON.stringify(err.data.message));
+                        }
+                    )
+
+                },
+
+                function() {
+
+                    $scope.coupon.repeatFrequency.forEach(
+                        function(currentValue) {
+                            if (currentValue === item) {
+                                list.push(item)
+                            }
+                        }
+                    )
+                }
+            ]);
+
+
+
         };
 
         function loadCategories () {
@@ -188,15 +229,17 @@ coupon.controller('couponsController',[
         };
 
         $scope.getCoupon = function () {
-            var couponId = $routeParams.id;
+            var couponId = $routeParams.couponId;
+            console.log(couponId);
 
             couponCalls.searchCoupons({
-                couponId: couponId
-
+                id: couponId
             }).then(
                 function (res) {
                     coupon = angular.copy(res.data);
-                    $scope.coupon = coupon;
+                    $scope.coupon = coupon[0];
+                    //$scope.selectedCategories = $scope.coupon.category;
+                    console.dir($scope.coupon);
                 },
                 function (err) {
                     $scope.badCoupon = 'Error getting coupon: ' + JSON.stringify(err.data.message);

@@ -18,13 +18,13 @@
                             md-selected-item="selectedItem"
                             md-search-text="searchText"
                             md-items="item in querySearch(searchText)"
-                            md-item-text="item.name"
+                            md-item-text="item"
                             placeholder="Search for a Category">
-                        <span md-highlight-text="searchText">{{item.name}}</span>
+                        <span md-highlight-text="searchText">{{item}}</span>
                     </md-autocomplete>
                     <md-chip-template>
                     <span>
-                      <strong>{{$chip.name}}</strong>
+                      <strong>{{$chip}}</strong>
                     </span>
                     </md-chip-template>
                 </md-chips>
@@ -33,7 +33,7 @@
 
 
 
-            Status: {{coupon.status}} <md-switch ng-model="coupon.status" ng-switch-default="true" aria-label="Status" ng-true-value="'active'" ng-false-value="'inactive'">
+            Status: {{coupon.status}} <md-switch ng-model="coupon.status" aria-label="Status" ng-true-value="'active'" ng-false-value="'inactive'">
 
             </md-switch>
 

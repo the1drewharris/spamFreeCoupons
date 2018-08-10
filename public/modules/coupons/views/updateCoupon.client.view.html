@@ -1,8 +1,8 @@
 <section>
     <div>
-        <h1>Create Coupon</h1>
+        <h1>Edit Coupon</h1>
     </div>
-    <div ng-controller="couponsController as coupon" ng-init="getCoupon()">
+    <div ng-controller="couponsController" ng-init="getCoupon()" style="padding: 15px">
         <form>
             Title*: <input title="title" type="text" ng-model="coupon.title" ng-required="true"><br>
             Description*: <br><input name="description" ng-model="coupon.description" ng-required="true"><br> <!-- TODO: make a text area -->
@@ -10,8 +10,8 @@
 
 
             <div>
-                Category*:
-                <md-chips ng-model="coupon.selectedCategories" ng-required="true" md-autocomplete-snap
+                Category*: {{coupon.category}}
+                <md-chips ng-model="coupon.category" ng-required="true" md-autocomplete-snap
                           md-transform-chip="transformChip($chip)"
                           md-require-match="true">
                     <md-autocomplete
@@ -24,7 +24,7 @@
                     </md-autocomplete>
                     <md-chip-template>
                     <span>
-                      <strong>{{$chip.name}}</strong>
+                      <strong>{{$chip}}</strong>
                     </span>
                     </md-chip-template>
                 </md-chips>
@@ -33,7 +33,7 @@
 
 
 
-            Status: {{coupon.status}} <md-switch ng-model="coupon.status" ng-switch-default="true" aria-label="Status" ng-true-value="'active'" ng-false-value="'inactive'">
+            Status: {{coupon.status}} <md-switch ng-model="coupon.status" aria-label="Status" ng-true-value="'active'" ng-false-value="'inactive'">
 
         </md-switch>
 
@@ -46,7 +46,7 @@
                 </md-checkbox>
             </div>
             <div flex="100" ng-repeat="item in items">
-                <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                <md-checkbox ng-checked="exists(item, selected)" ng-init="selectItem(item, selected)" ng-click="toggle(item, selected)">
                     {{ item }}
                 </md-checkbox>
             </div>
