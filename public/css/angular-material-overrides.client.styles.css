@@ -1,0 +1,595 @@
+/* ==============================================================================
+   Overrides for Angular Material
+   ============================================================================== */
+
+
+/* mdContent */
+md-content {
+    /*overflow: initial;*/
+}
+
+/* mdTabs */
+md-tab-item.md-tab {
+    background: rgba(245,245,245,0.91);
+    border-radius: 4px 4px 0 0;
+    margin: 0 2px;
+    padding: 9px 18px;
+    line-height: 18px;
+}
+
+    md-tab-item.md-tab.md-active {
+        background: rgba(255,255,255,1);
+    }
+
+md-tab-content div > h3.md-title {
+    background: #fff;
+    padding: 18px;
+    margin: 0;
+}
+
+md-pagination-wrapper {
+    height: 42px;
+    padding: 7px 3px;
+}
+
+md-tabs-canvas {
+    height: 42px;
+}
+
+md-tabs-wrapper {
+    padding: 0 9px;
+}
+
+md-tabs-content-wrapper,
+md-tabs[md-border-bottom]:not(.md-dynamic-height) md-tabs-content-wrapper{
+    top: 42px;
+}
+
+md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item {
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.14);
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.14);
+}
+
+md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item.md-active {
+    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.36);
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.36);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.36);
+}
+
+
+
+
+
+
+md-card,
+md-toolbar {
+    margin: 0 0 18px;
+}
+
+
+
+
+
+/* mdDialog */
+md-dialog md-dialog-content {
+    /*padding: 12px 24px 24px 24px;*/
+    padding: 48px 24px 0px 24px;
+}
+
+md-backdrop.md-dialog-backdrop,
+.md-dialog-container {
+    z-index: 9999;
+}
+
+
+
+
+
+
+/* mdTitle */
+.md-title {
+    font-weight: bold;
+}
+
+
+
+
+/* mdTOoltip */
+md-tooltip {
+    -webkit-box-shadow: 0 0 3px rgba(255, 255, 255, 0.93);
+    -moz-box-shadow: 0 0 3px rgba(255, 255, 255, 0.93);
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.93);
+    z-index: 9999;
+}
+
+
+
+
+
+/* button icons */
+button.md-button i {
+    vertical-align: middle;
+    margin: 0 3px 2px;
+}
+
+
+
+
+
+
+
+/* button icons reset to original value for fabs and icon buttons */
+button.md-fab.md-button i {
+    vertical-align: baseline;
+    margin: auto;
+}
+
+
+
+
+
+
+
+
+
+
+/* inputs */
+md-input-container {
+    margin: 32px 0 -8px;
+}
+
+md-input-container .md-input {
+    color: #000;
+}
+
+md-input-container textarea.md-input {
+    line-height: 12px;
+    min-height: 30px;
+    height: auto;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+md-input-container.editable-controls {
+    padding: 0;
+}
+
+md-input-container.editable-controls [ng-message] {
+    position: static;
+}
+
+md-list-item > md-input-container {
+    /*
+    margin: 0 7px 7px 0;
+    padding: 2px;
+    min-height: 52px;
+    */
+}
+
+md-select-value.md-select-placeholder > span,
+md-input-container label {
+    color: rgb(140,184,209) !important;
+}
+
+md-input-container label {
+    margin-bottom: 4px !important;
+}
+
+md-input-container.md-input-has-placeholder label {
+    font-size: 1.21em;
+}
+
+md-list-item > md-input-container > md-select {
+    margin: 0 0 2px;
+}
+
+md-input-container md-select-value.md-select-value {
+    min-height: 32px;
+    padding: 0 2px;
+}
+
+md-select md-select-value.md-select-value span, md-input-container label {
+    margin-bottom: 3px;
+}
+
+md-input-container.md-input-has-value md-select-value.md-select-value span:first-child {
+    color: rgba(0,0,0,1.0);
+    font-size: 1.21em;
+    font-weight: bold;
+}
+
+/* select placeholder and value */
+.md-select-value span,
+md-input-container label {
+    color: rgba(0,0,0,0.77);
+    font-weight: bold;
+    margin-bottom: 9px;
+}
+
+md-input-container.md-input-has-value label {
+    margin-bottom: 5px;
+}
+
+div.md-select-menu-container {
+    z-index: 9999;
+}
+
+md-input-container > md-select {
+    margin: -3px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+div.md-subheader {
+    border-bottom: 1px solid #ccc;
+    font-weight: normal;
+    font-size: 1.31em;
+    background: rgba(0,0,0,0.14);
+    color: #000;
+    text-transform: uppercase;
+    -webkit-box-shadow: 0 1px 7px rgba(0,0,0,0.21);
+    -moz-box-shadow: 0 1px 7px rgba(0,0,0,0.21);
+    box-shadow: 0 1px 7px rgba(0,0,0,0.21);
+}
+
+.md-subheader .md-subheader-inner {
+    padding: 9px 0 9px 9px;
+}
+
+md-input-container input {
+    font-weight: bold;
+}
+
+md-input-container.md-input-focused label,
+md-input-container.md-input-has-value label {
+    font-weight: normal;
+    font-size: 1.21em;
+    color: rgba(0,0,0,1.0);
+}
+
+
+
+
+
+
+
+
+/* mdListItem */
+md-list md-list-item {
+    /*border-bottom: 1px solid #ccc;*/
+    padding: 0 16px 0 16px;
+    min-height: 30px;
+}
+
+md-list-item:last-child {
+    margin: 0 0 21px;
+}
+
+md-list-item.md-no-proxy {
+    /* margin: 0 9px; */
+}
+
+/* md list items */
+md-list-item.md-2-line,
+md-list-item.md-2-line>.md-no-style,
+md-list-item.md-3-line,
+md-list-item.md-3-line>.md-no-style {
+    justify-content: flex-start;
+    height: auto;
+    margin: 0 0 9px;
+}
+
+
+
+
+
+
+/* mdToolbar */
+div.tab-pane md-toolbar:first-child {
+    margin: 0;
+}
+
+.md-toolbar-tools h1.md-title,
+.md-toolbar-tools h2.md-title,
+.md-toolbar-tools h3.md-title {
+    font-size: 1.61em;
+    font-weight: bold;
+}
+
+div.md-dialog-container md-dialog md-toolbar {
+    border-top: none;
+    border-bottom: none;
+}
+
+md-toolbar:not(.md-menu-toolbar) {
+    background-color: rgba(245,245,245,0.95);
+    border-top: 3px solid #ccc;
+    border-bottom: 3px solid #ccc;
+    font-size: 1.01em;
+    color: #333;
+    min-height: 40px;
+
+    -webkit-box-shadow: 0 0 7px rgba(0,0,0,0.21);
+    -moz-box-shadow: 0 0 7px rgba(0,0,0,0.21);
+    box-shadow: 0 0 7px rgba(0,0,0,0.21);
+}
+
+md-toolbar .md-toolbar-tools {
+    font-size: 1.01em;
+    height: 42px;
+    padding: 0 24px 0 16px;
+    overflow: hidden;
+}
+
+md-toolbar:not(.md-menu-toolbar) .md-button.md-primary {
+    color: rgba(255,255,255,0.87);
+}
+
+md-toolbar md-input-container {
+    padding: 2px 2px 30px;
+}
+
+/*** this is temporary until we can figure out its use ***/
+md-input-container .md-errors-spacer {
+    display: none;
+}
+
+md-menu-content.actionMenu {
+    padding: 32px 0 80px 0;
+}
+
+    md-menu-content.actionMenu md-menu-item.menuHeader,
+    md-menu-content.actionMenu md-menu-item:first-child,
+    md-menu-content.actionMenu md-menu-item.menuActions,
+    md-menu-content.actionMenu md-menu-item:last-child {
+        position: absolute;
+        background: rgba(245,245,245,0.92);
+        z-index: 10;
+        left: 0;
+        right: 16px;
+    }
+
+    md-menu-content.actionMenu md-menu-item.menuHeader,
+    md-menu-content.actionMenu md-menu-item:first-child {
+        top: 0;
+    }
+
+    md-menu-content.actionMenu md-menu-item.menuActions,
+    md-menu-content.actionMenu md-menu-item:last-child {
+        bottom: 0;
+    }
+
+
+
+
+
+
+/* mdFABSpeeddial */
+md-fab-speed-dial.fixed {
+    position: fixed;
+    margin-top: 0;
+    right: 24px;
+}
+
+div.md-fab-action-item {
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
+    -webkit-border-radius: 48px;
+    -moz-border-radius: 48px;
+    border-radius: 48px;
+}
+
+md-fab-trigger button.md-button.md-fab {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+}
+
+
+
+
+
+
+
+
+/******* mdButton styles *******/
+.md-button {
+    min-width: 24px;
+    margin: 3px;
+    line-height: 14px;
+    min-height: 24px;
+}
+
+button.md-button i.fa {
+    color: #777;
+}
+
+button.md-button.md-primary i.fa,
+button.md-button.md-warn i.fa,
+button.md-button:hover i.fa {
+    color: #fff;
+}
+
+button.md-button.md-primary:hover,
+button.md-button.md-warn:hover {
+    background-color: #dc860c !important;
+    color: #fff;
+}
+
+
+
+.btnGroup {
+    font-size: 16px;
+    margin: 12px 0;
+    padding: 3px 15px 3px 15px;
+    color: rgb(49, 46, 46);
+    background-color: rgba(224, 224, 224, 0.96);
+    text-transform: none;
+    font-weight: 400;
+}
+.md-button.left {
+    border-radius: 3px 0 0 3px;
+}
+.md-button.middle {
+    border-radius: 0;
+    border-left: 1px solid rgba(230, 230, 230, 0.96);
+    border-right: 1px solid rgba(230, 230, 230, 0.96);
+}
+.md-button.right {
+    border-radius: 0 3px 3px 0;
+}
+.md-button:not([disabled]):hover {
+    background-color: rgba(193, 193, 193, 0.96);
+    color: rgba(44, 65, 164, 0.96);
+    transition: 0.3s;
+}
+
+
+.md-button.md-icon-button {
+    margin: 0;
+}
+
+
+.md-button.md-success {
+    background-color : rgba(92,169,12,1);
+    color: #fff;
+}
+
+.md-button.md-success:hover {
+    color : rgba(92,169,12,1);
+    background-color: transparent;
+}
+
+
+
+
+
+
+
+
+
+/******* mdToast styles *******/
+.md-toast {
+    color: #fff;
+    margin: 8px;
+}
+
+.md-toast.error {
+    background-color: rgba(201,4,73,0.88);
+}
+
+.md-toast.success {
+    background-color: rgba(92,168,12,0.88);
+}
+
+
+
+
+
+
+/******* mdCheckbox styles *******/
+
+md-checkbox {
+    margin: 8px 0;
+}
+
+md-checkbox div.md-label {
+    margin: 3px 0 0 24px;
+}
+
+
+
+
+
+
+
+
+
+/* mdChips */
+md-chips {
+    margin: 24px 0 -8px;
+}
+
+    .md-chips .md-chip {
+        height: 24px;
+        line-height: 24px;
+    }
+
+        .md-chips .md-chip .md-chip-remove {
+            width: 24px;
+            height: 24px;
+        }
+
+        .md-chips .md-chip-input-container {
+            margin: -1px 0 0 0;
+        }
+
+        .md-chips .md-chip-input-container:not(:first-child) {
+            padding: 0 12px 0 2px;
+            margin: 0 8px 0 0;
+            line-height: 28px;
+        }
+
+        .md-chips .md-chip-input-container input:not([type]) {
+            font-size: 1.01em;
+            font-weight: bold;
+            height: 28px;
+            line-height: 28px;
+            padding: 0 4px;
+        }
+
+
+
+
+/* ngMessage */
+ng-message {
+    background: rgba(255,0,0,0.21);
+    padding: 3px;
+    margin: 1px 0;
+    display: block;
+}
+
+md-dialog.dtp md-dialog-content.dtp-content {
+    padding: 0;
+}
+
+md-dialog.dtp .table>thead>tr>th {
+    background-color: white;
+}
+
+md-dialog.dtp header {
+    height: auto;
+}
+
+input.dtp {
+    cursor: text;
+}
+
+md-input-container .chosen-container .chosen-single {
+    border: none;
+    box-shadow: none;
+    border-bottom: 2px solid #3ea1da;
+}
+
+
+
+
+
+
+md-autocomplete {
+    background: rgba(255,255,255,1);
+}

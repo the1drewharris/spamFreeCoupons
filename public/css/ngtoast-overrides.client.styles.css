@@ -1,0 +1,45 @@
+/* ===========================================================================
+ * ngToast overrides
+ ============================================================================= */
+.ng-toast__list .alert {
+    padding-left: 15px;
+    width: 300px;
+}
+
+.ng-toast__list .alert.alert-saving {
+    background-color: rgba(255,255,255,0.93);
+}
+
+.ng-toast__list .alert h6 {
+    margin: 0 0 7px;
+}
+
+.ng-toast__list .alert i.fa {
+    font-size: 1.51em;
+}
+
+.ng-toast.ng-toast--left .ng-toast__message {
+    margin-top: 18px;
+}
+
+.ng-toast .ng-toast__message .alert {
+    -webkit-box-shadow:
+            0 0 3px rgba(0, 0, 0, 0.21),
+            0 0 7px rgba(0, 0, 0, 0.14);
+    -moz-box-shadow:
+            0 0 3px rgba(0, 0, 0, 0.21),
+            0 0 7px rgba(0, 0, 0, 0.14);
+    box-shadow:
+            0 0 3px rgba(0, 0, 0, 0.21),
+            0 0 7px rgba(0, 0, 0, 0.14);
+}
+
+.ng-toast.ng-toast--bottom,
+.ng-toast.ng-toast--bottom .ng-toast__list {
+    top: auto;
+    bottom: 14px;
+}
+
+.alert {
+    border-radius: 0;
+}

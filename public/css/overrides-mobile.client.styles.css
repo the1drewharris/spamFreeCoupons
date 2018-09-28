@@ -1,0 +1,405 @@
+
+/* ===================================================================================================
+   ALL mobile devices
+   =================================================================================================== */
+@media
+only screen and (min-width: 360px) and (max-width: 640px), /* Galaxy/HTC */
+only screen and (min-width: 320px) and (max-width: 480px), /* iPhone 4 */
+only screen and (min-width: 320px) and (max-width: 569px), /* iPhone 5 */
+only screen and (min-width: 375px) and (max-width: 667px), /* iPhone 6 */
+only screen and (min-width: 414px) and (max-width: 736px), /* iPhone 6+ */
+only screen and (min-width: 320px) and (max-width: 1024px)
+
+{
+
+
+
+}
+
+
+
+
+
+/* tablets, port and land */
+@media only screen
+and (min-width : 320px)
+and (max-width : 1024px)  {
+
+
+
+}
+
+
+/* PHONES - Portrait and Landscape */
+@media
+    only screen and (min-width: 360px) and (max-width: 640px), /* Galaxy/HTC */
+    only screen and (min-width: 320px) and (max-width: 480px), /* iPhone 4 */
+    only screen and (min-width: 320px) and (max-width: 569px), /* iPhone 5 */
+    only screen and (min-width: 375px) and (max-width: 667px), /* iPhone 6 */
+    only screen and (min-width: 414px) and (max-width: 736px) /* iPhone 6+ */
+
+{
+
+    /*    Items to hide in this view   ================================================================  */
+
+    header div.container img,
+    header .navbar-brand,
+    .page-header {
+        display: none;
+    }
+
+    /*    Dropdown menu changes    =========================================================================  */
+
+    ul.navbar-nav li a[ng-class="tips"] {
+        background: none;
+    }
+
+    .navbar-nav .open .dropdown-menu > li > a,
+    .navbar-nav .open .dropdown-menu .dropdown-header {
+        padding: 3px 10px 3px 18px;
+    }
+
+    .dropdown-menu {
+        padding: 0;
+        font-size: 12px;
+    }
+
+    li i.glyphicon,
+    li i.fa {
+        margin: .3em .3em 0 .3em;
+    }
+
+    .navbar-inverse .navbar-nav > .open > a,
+    .navbar-inverse .navbar-nav > .open > a:hover,
+    .navbar-inverse .navbar-nav > .open > a:focus {
+        background: none;
+    }
+
+    .container > div.navbar-header {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    nav.mainmenu {
+        display: none;
+    }
+    
+    ul.navbar-nav {
+        margin: 0;
+        padding: 0 15px;
+    }
+
+    nav.pull-right {
+        float: none !important;
+    }
+    
+    ul.navbar-nav:first-child {
+        display: block !important;
+    }
+
+        ul.navbar-nav li {
+            border-bottom: 1px #aaa solid;
+            padding: 5px 0 0 0;
+        }
+
+            ul.navbar-nav li li {
+                padding: 5px 0;
+            }
+
+        ul.navbar-nav:last-child li,
+        ul.navbar-nav li:last-child{
+            border-bottom: none;
+        }
+
+            ul.navbar-nav li ul li {
+                background: #000;
+                background: rgba(0,0,0,0.33);
+            }
+
+    ul.navbar-nav > li > a {
+        padding: 7px;
+    }
+
+
+
+
+    button.navbar-toggle {
+        margin-right: 0;
+    }
+
+    div.content > section.container-fluid {
+        padding-left: 15px !important;
+    }
+
+    a.navbar-brand {
+        padding: 9px;
+        height: 33px;
+    }
+
+    ul.breadcrumbs {
+        margin: 12px 0;
+    }
+
+
+
+
+
+
+
+    button.navbar-toggle {
+        padding: 4px 10px;
+    }
+
+    div.tab-container {
+        margin: 0;
+        padding: 0;
+    }
+
+    div.tab-container ul.nav-tabs {
+       border-bottom: 1px solid #ccc;
+    }
+
+    div.tab-container div.tab-pane {
+        padding: 7px 0;
+    }
+
+
+    .pagination-sm > li > a,
+    .pagination-sm > li > span {
+        padding: 3px 7px;
+    }
+
+
+
+
+
+
+
+
+
+
+    /* for better responsive tables =========================================================== */
+
+    .table-responsive table,
+    .table-responsive thead,
+    .table-responsive tbody,
+    .table-responsive th,
+    .table-responsive td,
+    .table-responsive tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .table-responsive thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .table-responsive .table > tbody > tr > td {
+        /* Behave  like a "row" */
+        border: none;
+        border-top: none;
+        border-bottom: 1px solid #eee;
+        min-height: 32px;
+        position: relative;
+        padding: 7px 7px 7px 50% !important;
+        width: 100%;
+        white-space: normal;
+    }
+
+    .table-responsive .table > tbody > tr {
+         border-bottom: 7px solid #D0E7F7;
+     }
+
+    .table-responsive td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
+
+    /*
+	Label the data
+	*/
+    .table-responsive td:before {
+        content: attr(colIDtxt);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /* ====================================================================================
+       Tool tips adjustments
+       ==================================================================================== */
+
+    .tips::before,
+    [ng-class="tips"]::before {
+        content: normal;
+        background: none;
+        display: none;
+    }
+
+
+
+
+}
+
+
+
+
+
+/* ====================================================================================
+
+   PHONES - Landscape Only
+
+   ==================================================================================== */
+@media
+only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape), /* Galaxy/HTC */
+only screen and (min-width: 320px) and (max-width: 480px) and (orientation: landscape), /* iPhone 4 */
+only screen and (min-width: 320px) and (max-width: 569px) and (orientation: landscape), /* iPhone 5 */
+only screen and (min-width: 375px) and (max-width: 667px) and (orientation: landscape), /* iPhone 6 */
+only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape) /* iPhone 6+ */ {
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ====================================================================================
+
+   TABLETS - Portrait AND Landscape
+
+   ==================================================================================== */
+
+@media only screen
+       and (min-width : 768px)
+       and (max-width : 1024px) {
+
+
+
+    /* Search Results table grid =================================  */
+
+    div.resultsList {
+        margin: 0 0 14px;
+    }
+
+
+
+
+    .tab-container .tab-pane {
+        overflow-y: scroll;
+    }
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+/* ====================================================================================
+
+   TABLETS - Portrait Only
+
+   ==================================================================================== */
+
+@media only screen
+       and (min-width : 768px)
+       and (max-width : 1024px)
+       and (orientation : portrait) {
+
+
+
+
+    /* Search Results tabs */
+
+    div.tab-container {
+        width: 105%;
+        margin: 0 -15px;
+    }
+
+    div.tab-container .tab-pane:first-child {
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    div.tab-container .tab-pane {
+        max-height: 460px;
+        overflow-y: scroll;
+    }
+
+    .tab-container ul.nav-tabs {
+        border-bottom: 5px solid #f7f7f7;
+    }
+
+
+    div.resultsList {
+        max-height: 400px;
+    }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ====================================================================================
+
+   TABLETS - Landscape Only
+
+   ==================================================================================== */
+
+@media only screen
+       and (min-width : 768px)
+       and (max-width : 1024px)
+       and (orientation : landscape) {
+
+
+
+
+
+    /* Search Results table grid =================================  */
+
+
+
+
+
+}

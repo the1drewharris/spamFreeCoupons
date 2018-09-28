@@ -1,0 +1,102 @@
+/* ================================================================================
+   Bootstrap Overrides
+   ================================================================================ */
+
+div.panel,
+div.panel-group div.panel {
+    border-radius: 0;
+}
+
+div.panel.panel-default div.panel-heading {
+    background-color: #f2f2f2;
+    background-color: rgba(0,0,0,0.09);
+    color: #000;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.42);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.42);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.42);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    font-family: open_sansbold, Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.well {
+    background-color: #fafafa;
+    border-radius: 0;
+}
+
+button.btn {
+    border-radius: 3px;
+    padding: 3px 4px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.33);
+}
+
+.input-group-btn button.btn {
+    padding: 6px 12px;
+    box-shadow: none;
+}
+
+/* for Bootstrap alerts */
+
+.alert-dismissable .close,
+.alert-dismissible .close {
+    top: -4px;
+}
+
+.alert-danger,
+.alert-default,
+.alert-failure,
+.alert-success {
+    margin: 0 0 18px 0;
+}
+
+.alert-default .alert {
+    color: #000;
+}
+
+.alert-danger .alert,
+.alert-failure .alert,
+.alert-success .alert {
+    color: #fff;
+}
+
+.alert-danger .alert,
+.alert-default .alert,
+.alert-failure .alert,
+.alert-success .alert {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    line-height: 14px
+}
+
+.alert-failure .alert {
+    background-color: #e62b1e;
+}
+
+.alert-danger .alert {
+    background-color: #DC860C;
+}
+
+.alert-success .alert {
+    background-color: #5CA90C;
+}
+
+.alert-failure::before,
+.alert-default::before,
+.alert-danger::before,
+.alert-success::before {
+    content: '';
+}
+
+.alert-failure button,
+.alert-danger button,
+.alert-success button {
+    color: #fff;
+}
+
+
+
+
+td[id*=datepicker] button {
+    background-color: rgba(62,161,218,0.49);
+    border: 1px solid rgba(62,161,218,0.21);
+}

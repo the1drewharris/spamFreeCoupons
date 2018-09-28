@@ -1,0 +1,141 @@
+/* ================================================================================
+   UI Header
+   ================================================================================ */
+
+
+
+header {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7f7f7+0,ededed+100 */
+    background: #f7f7f7; /* Old browsers */
+    background: -moz-linear-gradient(top,  #f7f7f7 0%, #ededed 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f7f7f7), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #f7f7f7 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #f7f7f7 0%,#ededed 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #f7f7f7 0%,#ededed 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #f7f7f7 0%,#ededed 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+
+
+    height: 50px;
+    padding: 9px;
+}
+
+
+
+   header div.container.ng-scope {
+        width: 100%;
+    }
+
+    header.navbar {
+        border: none;
+        border-bottom: 1px solid #bbb;
+    }
+
+    header a.navbar-brand {
+        padding: 6px 15px;
+        height: auto;
+    }
+    header.navbar-inverse a.navbar-brand:focus,
+    header.navbar-inverse a.navbar-brand:hover {
+        color: #000;
+    }
+         header .navbar-nav > li > a {
+             font-size: 0.61em;
+             padding: 5px;
+         }
+
+        header.navbar .navbar-nav > li > a:hover {
+            color: #000;
+        }
+
+            header ul.nav i.fa {
+                font-size: 1.51em;
+            }
+
+header .btn.navBtn{
+    background-color: transparent;
+    color: darkgray;
+    border: none;
+}
+header .btn.navBtn:hover{
+    color: #fff;
+}
+
+[header] md-tooltip { font-size: 1.5em !important; }
+
+.modal-header.about-header {
+    background-size: cover;
+    height: 90px;
+    background: url("../images/background.jpg") top center no-repeat;
+    background-position-y: 10%;
+}
+
+@font-face {
+    font-family: 'Electrolize';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Electrolize'), local('Electrolize-Regular'), url(https://themes.googleusercontent.com/static/fonts/electrolize/v2/DDy9sgU2U7S4xAwH5thnJ4bN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
+.modal-header.about-header h3 {
+    color: transparent;
+    font-family: 'Electrolize';
+    line-height: 60px;
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+
+    -webkit-animation: blurFadeIn 1s ease-in 8s backwards;
+    -moz-animation: blurFadeIn 1s ease-in 8s backwards;
+    -ms-animation: blurFadeIn 1s ease-in 8s backwards;
+    animation: blurFadeIn 1s ease-in 8s backwards;
+
+    text-shadow: 0px 0px 1px #fff;
+    -webkit-animation-delay: 0.25s;
+    -moz-animation-delay: 0.25s;
+    -ms-animation-delay: 0.25s;
+    animation-delay: 0.25s;
+}
+
+@-webkit-keyframes blurFadeIn {
+    0% {
+        opacity: 0;
+        text-shadow: 0px 0px 40px #fff;
+        -webkit-transform: scale(2);
+    }
+    100% {
+        opacity: 1;
+        text-shadow: 0px 0px 1px #fff;
+        -webkit-transform: scale(1);
+    }
+}
+
+@-moz-keyframes blurFadeIn {
+    0% {
+        opacity: 0;
+        text-shadow: 0px 0px 40px #fff;
+        -moz-transform: scale(2);
+    }
+    100% {
+        opacity: 1;
+        text-shadow: 0px 0px 1px #fff;
+        -moz-transform: scale(1);
+    }
+}
+
+@keyframes blurFadeIn {
+    0% {
+        opacity: 0;
+        text-shadow: 0px 0px 40px #fff;
+        transform: scale(2);
+    }
+    100% {
+        opacity: 1;
+        text-shadow: 0px 0px 1px #fff;
+        transform: scale(1);
+    }
+}
+
+.oneHundred {
+    height: 100%;
+}

@@ -1,0 +1,321 @@
+/* ================================================================================
+   Content Pane
+   ================================================================================ */
+
+/* ALL CSS files are auto-imported in stack
+@import url('breadcrumbs.client.styles.css');  /* Breadcrumbs styles
+@import url('contentpane.client.styles.css');  /* Content Pane styles
+@import url('datagrids.client.styles.css');  /* Data Grids styles
+@import url('effects.client.styles.css');  /* Appearance Effects styles
+@import url('mainmenu.client.styles.css');  /* Main Menu styles
+@import url('search.client.styles.css');  /* Search Well styles
+@import url('tabsets.client.styles.css');  /* Tabsets styles
+@import url('tooltips.client.styles.css');  /* Tooltips styles
+@import url('typography.client.styles.css');  /* Typo styles
+*/
+
+
+
+/* Other general CSS
+ overrides to supercede all libs */
+
+
+body, html {
+    background: #eee;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+body.signin {
+    background: url("../images/newBackground.jpg") top center no-repeat;
+    background-attachment: fixed;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: 0;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    position: relative;
+}
+
+
+th.alignL,
+td.alignL {
+    text-align: left;
+}
+
+th.alignC,
+td.alignC {
+    text-align: center;
+}
+
+th.alignR,
+td.alignR {
+    text-align: right;
+}
+
+th {
+    background: #fff;
+    padding: 3px;
+}
+
+/*
+th:first-child {
+    -webkit-border-radius: 3px 0 0 0;
+    -moz-border-radius: 3px 0 0 0;
+    border-radius: 3px 0 0 0;
+}
+
+th:last-child {
+    -webkit-border-radius: 0 3px 0 0;
+    -moz-border-radius: 0 3px 0 0;
+    border-radius: 0 3px 0 0;
+}
+*/
+
+div.container.ng-scope,
+section.container {
+    width: 98%;
+}
+
+
+
+a.accordion-toggle {
+    cursor:  pointer;
+}
+
+
+form td {
+    padding: 3px 0;
+    text-align: left;
+}
+
+div.content ol li,
+div.content ul li {
+    overflow: hidden;
+}
+
+.page-header {
+    margin: 0 0 20px;
+}
+
+.form-control {
+    font-size: 12px;
+}
+
+div.editable-controls input.form-control {
+    height: 18px;
+    padding: 0 3px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    line-height: 1em;
+}
+
+
+.form-group select {
+    height: auto;
+    padding: 0 8px;
+    width: 100%;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+
+
+
+.fa.fa-refresh.fa-spin {
+    color: #fff;
+    text-shadow: 0 0 1px rgba(255,0,0,0.77), 0 0 7px rgba(255,0,0,0.63);
+}
+
+
+
+.editable-wrap {
+    display: block !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+div.navbar-header {
+    float: none;
+    padding: 0 0 0 15px;
+}
+
+div.page-header {
+    border-bottom: 1px solid #ccc;
+    border-radius: 0 0 7px 0;
+    padding: 0;
+    min-height: 49px;
+}
+
+
+
+
+
+
+
+.nopad {
+    padding: 0;
+}
+
+.no-float {
+    float: none !important;
+    margin: 0 auto;
+}
+
+
+
+.border-box {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+a.md-button.md-raised:not([disabled]):hover,
+.md-button.md-raised:not([disabled]):hover {
+    background-color: rgb(225,225,225);
+}
+
+
+table tbody tr.resultsLoader > td {
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* ================================================================================
+   Bootstrap Overrides
+   ================================================================================ */
+
+div.panel,
+div.panel-group div.panel {
+    border-radius: 0;
+}
+
+div.panel.panel-default div.panel-heading {
+    background-color: #f2f2f2;
+    background-color: rgba(0,0,0,0.09);
+    color: #000;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.42);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.42);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.42);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    font-family: open_sansbold, Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.well {
+    background-color: #fafafa;
+    border-radius: 0;
+}
+
+.btn {
+   border-radius: 0;
+}
+
+
+
+
+/* for Bootstrap alerts */
+
+.alert-dismissable .close,
+.alert-dismissible .close {
+    top: -4px;
+}
+
+.alert-danger,
+.alert-default,
+.alert-failure,
+.alert-success {
+    margin: 0 16px 18px 16px;
+}
+
+.alert-default .alert {
+    color: #000;
+}
+
+.alert-danger .alert,
+.alert-failure .alert,
+.alert-success .alert {
+    color: #fff;
+}
+
+.alert-danger .alert,
+.alert-default .alert,
+.alert-failure .alert,
+.alert-success .alert {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    line-height: 14px
+}
+
+.alert-failure .alert {
+    background-color: #e62b1e;
+}
+
+.alert-danger .alert {
+    background-color: #DC860C;
+}
+
+.alert-success .alert {
+    background-color: #5CA90C;
+}
+
+.alert-failure::before,
+.alert-default::before,
+.alert-danger::before,
+.alert-success::before {
+    content: '';
+}
+
+.alert-failure button,
+.alert-danger button,
+.alert-success button {
+    color: #fff;
+}
+
+
+
+
+td[id*=datepicker] button {
+    background-color: rgba(62,161,218,0.49);
+    border: 1px solid rgba(62,161,218,0.21);
+}
+
+
+
+
+/* BS badges */
+.badge {
+    background-color: #b9e0f5;
+    background-color: rgba(66, 154, 201, 0.21);
+    color: #213164;
+}
+
+
+
+/* global background colors
+ * these are per CHUI or L3 brand standards
+ * http://chui.level3.com/chui/#/html5
+ */
+
+.bg-verylightblue {
+    background-color: rgba(219,227,239,0.9);
+}

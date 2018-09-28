@@ -1,0 +1,202 @@
+/***************************** Required styles *****************************/
+
+/**
+ * For the correct positioning of the placeholder element, the dnd-list and
+ * it's children must have position: relative
+ */
+[dnd-list],
+[dnd-list] > md-list-item {
+    position: relative;
+}
+
+/***************************** Dropzone Styling *****************************/
+
+.dropzone {
+    background-color: #DBE3EF;
+    padding: 8px;
+}
+
+.dropzone > md-list {
+    padding: 0;
+}
+
+/**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+.dropzone [dnd-list] {
+    min-height: 42px;
+    margin: 0;
+    padding-left: 0;
+    background-color: #eee;
+}
+
+/**
+ * The dnd-lists's child elements currently MUST have
+ * position: relative. Otherwise we can not determine
+ * whether the mouse pointer is in the upper or lower
+ * half of the element we are dragging over. In other
+ * browsers we can use event.offsetY for this.
+ */
+.dropzone md-list-item {
+    background-color: #fff;
+    margin: 0 0 1px;
+    display: block;
+    padding: 0;
+}
+
+/**
+ * Reduce opacity of elements during the drag operation. This allows the user
+ * to see where he is dropping his element, even if the element is huge. The
+ * .dndDragging class is automatically set during the drag operation.
+ */
+.dropzone .dndDragging {
+    opacity: 0.7;
+}
+
+/**
+ * The dndDraggingSource class will be applied to the source element of a drag
+ * operation. It makes sense to hide it to give the user the feeling that he's
+ * actually moving it. Note that the source element has also .dndDragging class.
+ */
+.dropzone .dndDraggingSource {
+    display: none;
+}
+
+/**
+ * An element with .dndPlaceholder class will be added as child of the dnd-list
+ * while the user is dragging over it.
+ */
+.dropzone .dndPlaceholder {
+    border: 1px solid rgba(54,97,9,0.5);
+    background-color: rgba(92,169,12,0.5);
+    -webkit-box-shadow: inset 0 0 7px rgba(92,169,12,0.75);
+    -moz-box-shadow: inset 0 0 7px rgba(92,169,12,0.75);
+    box-shadow: inset 0 0 7px rgba(92,169,12,0.75);
+    min-height: 42px;
+    display: block;
+    position: relative;
+    padding: 16px;
+    font-size: 1.51em;
+    font-weight: normal;
+    color: #fff;
+}
+
+/***************************** Element Selection *****************************/
+
+.dropzone .selected .item {
+    color: #3c763d;
+    background-color: #dff0d8;
+}
+
+.dropzone .selected .box {
+    border-color: #d6e9c6;
+}
+
+.dropzone .selected .box > h3 {
+    color: #3c763d;
+    background-color: #dff0d8;
+    background-image: linear-gradient(to bottom,#dff0d8 0,#d0e9c6 100%);
+    border-color: #d6e9c6;
+}
+
+/***************************** Element type specific styles *****************************/
+
+.dropzone .item {
+    padding: 7px 8px;
+}
+
+.dropzone .rowContainer {
+    margin: 0;
+    width: 100%;
+}
+
+
+/***************************** Toolbox *****************************/
+
+.toolbox md-list {
+    list-style: none;
+    padding-left: 0;
+    cursor: move;
+}
+
+.toolbox md-button {
+    margin: 5px;
+    width: 123px;
+    opacity: 1.0;
+}
+
+.toolbox .dndDragging {
+    opacity: 0.5;
+}
+
+.toolbox .dndDraggingSource {
+    opacity: 1.0;
+}
+
+/***************************** Trashcan *****************************/
+
+.trashcan {
+    border: 1px solid #ccc;
+    /*
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    */
+    padding: 0;
+    min-height: 32px;
+
+    display: -webkit-flex; /* Safari */
+    -webkit-align-items: center; /* Safari 7.0+ */
+    display: flex;
+    align-items: center;
+}
+
+.trashcan button.md-button {
+    margin: 0 0 0 3px;
+    color: #000;
+    font-size: 1.71em;
+}
+
+.trashcan md-list,
+.trashcan md-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .trashcan md-list-item {
+        border: none;
+        background-color: #fff;
+        /*
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        */
+        margin: 0;
+        line-height: 22px;
+        padding: 3px 8px;
+    }
+
+    .trashcan md-list.trashedFields md-list-item {
+        background-color: #ddd;
+        margin: 3px;
+    }
+
+.trashcan img {
+    width: 100%;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.trashcan .dndDragover img {
+    width: 100%;
+    -webkit-filter: none;
+    -moz-filter: none;
+    filter: none;
+}
+
+.trashcan .dndPlaceholder {
+    display: none;
+}

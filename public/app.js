@@ -15,8 +15,8 @@ var app = angular.module('anonymousCoupons', [
     // anonymousCoupons Application Modules
     'businessListings',
     'businessOwners',
-    'businesses',
-    'coupons'
+    'businesses'
+    //FIXME: prevent injector error , 'coupons'
 
 ]);
 
