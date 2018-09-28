@@ -218,7 +218,7 @@ businessOwners.factory('businessOwnerCalls', function($http, $routeParams) {
     return businessOwnersMasterService;
 });
 
-
+/*
 // Get application settings from Mongo
 businessOwners.factory('businessOwnersSettings', [
     '$http',
@@ -254,3 +254,4 @@ businessOwners.factory('businessOwnersSettings', [
         }
     }
 ]);
+*/

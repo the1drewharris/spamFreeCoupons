@@ -1,8 +1,20 @@
 var coupons = angular.module('coupons',[
+    'ui.grid',
+    'ui.grid.pagination',
+    'ui.grid.exporter',
+    'ui.grid.resizeColumns',
+    'ui.grid.cellNav',
+    'ui.grid.autoResize',
+    'ngAnimate',
+    'ngLodash',
+    'ngMaterial',
+    'ngMaterialDatePicker',
+    'ui.bootstrap',
+    'gm.typeaheadDropdown',
     'angular-clipboard',
     'ngRoute',
-    'ngMaterial',
-    'oc.lazyLoad'
+    'oc.lazyLoad',
+    'ngToast'
 ]);
 
 coupons.config([
@@ -198,7 +210,7 @@ coupons.factory('couponCalls', function($http, $routeParams) {
     return couponsMasterService;
 });
 
-
+/*
 // Get application settings from Mongo
 coupons.factory('couponsSettings', [
     '$http',
@@ -234,3 +246,4 @@ coupons.factory('couponsSettings', [
         }
     }
 ]);
+*/
