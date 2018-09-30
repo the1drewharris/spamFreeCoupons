@@ -287,7 +287,7 @@ business.controller('businessesController',[
                     //$scope.createToast(updatedBusiness.Name, "updated", "success");
                 },
                 function (err) {
-                    console.error('Error updating client: ' + err.message);
+                    console.error('Error updating business: ' + err.message);
                 }
             );
         };

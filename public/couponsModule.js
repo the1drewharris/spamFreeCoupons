@@ -131,6 +131,17 @@ coupons.factory('couponCalls', function($http, $routeParams) {
             // Return the promise to the controller
             return promise;
         },
+        updateCoupon: function(req){
+            var promise = $http({
+                method: 'POST',
+                url: '/coupon/update',
+                data: req
+            }).then(function (response) {
+                return response;
+            });
+            // Return the promise to the controller
+            return promise;
+        },
         searchCoupons: function(req){
             var promise = $http({
                 method: 'POST',

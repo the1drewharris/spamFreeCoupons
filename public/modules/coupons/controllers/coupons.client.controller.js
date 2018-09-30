@@ -52,7 +52,8 @@ coupon.controller('couponsController',[
 
 
         var coupons = "",
-            newBusiness = '';
+            newBusiness = '',
+            updatedCoupon = '';
 
         var self = this;
 
@@ -69,10 +70,12 @@ coupon.controller('couponsController',[
                     name:'Status',
                     field: 'status',
                     cellTemplate:
-                        '<md-switch ng-model="row.entity.status" aria-label="Status" ng-true-value="\'active\'" ng-false-value="\'inactive\'">',
+                        '<md-switch ng-model="row.entity.status" ng-change="grid.appScope.switchChange(row.entity)" aria-label="Status" ng-true-value="\'active\'" ng-false-value="\'inactive\'">',
                     width: 60
                 },
-                { name: 'Repeat Frequency', field: 'repeatFrequency'},
+                {
+                    name: 'Repeat Frequency',
+                    field: 'repeatFrequency'},
                 { name:'Coupon Code', field: 'couponCode'},
                 {
                     name: 'Edit',
@@ -80,7 +83,7 @@ coupon.controller('couponsController',[
                         '<div class="fa-pencil">' +
                         '   <md-button class="btn-default" ng-click="grid.appScope.openPage(\'coupon/update/\' + row.entity.id)"></md-button>' +
                         '</div>',
-                    width: 40
+                    width: 50
                 }
             ],
             rowHeight: 45,
@@ -226,6 +229,21 @@ coupon.controller('couponsController',[
                 return (category.lowername.indexOf(lowercaseQuery) === 0);
             };
 
+        };
+
+        $scope.switchChange = function (coupon) {
+            couponCalls.updateCoupon({
+                id: coupon.id,
+                status: coupon.status
+            }).then(
+                function (res) {
+                    updatedCoupon = angular.copy(res.data);
+                    $scope.updatedCoupon = updatedCoupon;
+                },
+                function (err) {
+                    console.error('Error updating coupon: ' + err.message);
+                }
+            );
         };
 
         $scope.getCoupon = function () {
