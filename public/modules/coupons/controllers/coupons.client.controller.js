@@ -75,14 +75,23 @@ coupon.controller('couponsController',[
                 },
                 {
                     name: 'Repeat Frequency',
-                    field: 'repeatFrequency'},
+                    field: 'repeatFrequency',
+                    cellTemplate:
+                        '<md-button>S</md-button>' +
+                        '<md-button>M</md-button>' +
+                        '<md-button>T</md-button>' +
+                        '<md-button>W</md-button>' +
+                        '<md-button>T</md-button>' +
+                        '<md-button>F</md-button>' +
+                        '<md-button>S</md-button>'
+                },
                 { name:'Coupon Code', field: 'couponCode'},
                 {
                     name: 'Edit',
                     cellTemplate:
-                        '<div class="fa-pencil">' +
-                        '   <md-button class="btn-default" ng-click="grid.appScope.openPage(\'coupon/update/\' + row.entity.id)"></md-button>' +
-                        '</div>',
+                        '<md-button class="btn-default" ng-click="grid.appScope.openPage(\'coupon/update/\' + row.entity.id)">' +
+                        '   <i class="fas fa-pencil-alt fa-2x"></i>' +
+                        '</md-button>',
                     width: 50
                 }
             ],
