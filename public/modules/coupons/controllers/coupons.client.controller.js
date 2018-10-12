@@ -77,13 +77,27 @@ coupon.controller('couponsController',[
                     name: 'Repeat Frequency',
                     field: 'repeatFrequency',
                     cellTemplate:
-                        '<md-button>S</md-button>' +
-                        '<md-button>M</md-button>' +
-                        '<md-button>T</md-button>' +
-                        '<md-button>W</md-button>' +
-                        '<md-button>T</md-button>' +
-                        '<md-button>F</md-button>' +
-                        '<md-button>S</md-button>'
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Sunday\')" class="md-raised">S</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Sunday\')" class="md-raised md-primary">S</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Monday\')" class="md-raised">M</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Monday\')" class="md-raised md-primary">M</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Tuesday\')" class="md-raised">T</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Tuesday\')" class="md-raised md-primary">T</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Wednesday\')" class="md-raised">W</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Wednesday\')" class="md-raised md-primary">W</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Thursday\')" class="md-raised">T</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Thursday\')" class="md-raised md-primary">T</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Friday\')" class="md-raised">F</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Friday\')" class="md-raised md-primary">F</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Saturday\')" class="md-raised">S</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Saturday\')" class="md-raised md-primary">S</md-button>',
+                    width: 240
                 },
                 { name:'Coupon Code', field: 'couponCode'},
                 {
@@ -97,6 +111,28 @@ coupon.controller('couponsController',[
             ],
             rowHeight: 45,
             data : []
+        };
+
+        $scope.checkFrequency = function(repeatFrequency, day) {
+            var state = true;
+            repeatFrequency.forEach(foo);
+            function foo(item){
+                if (item === day) {
+                    state = false
+                }
+            }
+            return state
+        };
+
+        $scope.checkFrequencyMatch = function(repeatFrequency, day) {
+            var state = false;
+            repeatFrequency.forEach(foo);
+            function foo(item){
+                if (item === day) {
+                    state = true
+                }
+            }
+            return state
         };
 
         $scope.openPage = function (pageName) {
