@@ -2,7 +2,7 @@
     <div>
         <h1>Create Coupon</h1>
     </div>
-    <div ng-controller="couponsController as coupon">
+    <div ng-controller="couponsController as coupon" ng-init="checkAuth()">
         <form>
             Title*: <input title="title" type="text" ng-model="coupon.title" ng-required="true"><br>
             Description*: <br><input name="description" ng-model="coupon.description" ng-required="true"><br> <!-- TODO: make a text area -->

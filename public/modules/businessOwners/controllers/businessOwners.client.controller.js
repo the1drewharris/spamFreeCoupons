@@ -297,50 +297,47 @@ businessOwner.controller('businessOwnersController',[
         };
 
         $scope.getUnclaimedBusinesses = function () {
-            businessOwnerCalls.searchBusinesses({
-                dateClaimed: undefined
-            }).then(
-                function (res) {
-                    businesses = angular.copy(res.data);
-                    $scope.businesses = businesses;
-                    $scope.gridOptions.data = res.data;
+
+            async.series([
+
+                function(callback) {
+                    businessOwnerCalls.isAuth().then(
+                        function (res) {
+                            console.dir('isAuth data: ' + res.data);
+                            $scope.auth = res.data;
+                            callback();
+                        },
+                        function (err) {
+                            console.error('Error : ' + JSON.stringify(err.data.message));
+                        }
+                    )
                 },
-                function (err) {
-                    $scope.badBusinessOwner = 'Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message);
-                    console.error('Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message));
+
+                function() {
+                    if ($scope.auth) {
+                        businessOwnerCalls.searchBusinesses({
+                            dateClaimed: undefined
+                        }).then(
+                            function (res) {
+                                businesses = angular.copy(res.data);
+                                $scope.businesses = businesses;
+                                $scope.gridOptions.data = res.data;
+                            },
+                            function (err) {
+                                $scope.badBusinessOwner = 'Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message);
+                                console.error('Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message));
+                            }
+                        );
+                    } else {
+                        $scope.openPage('signIn');
+                    }
+
                 }
-            );
+
+            ]);
+
         };
 
-        /*$scope.updateItem = function (detailedclient) {
-            businessOwnerCalls.updateBusiness({
-                id: detailedclient.id,
-                Name: detailedclient.Name,
-                Address1: detailedclient.Address1,
-                Address2: detailedclient.Address2,
-                City: detailedclient.City,
-                StateProvince: detailedclient.StateProvince,
-                PostalCode: detailedclient.PostalCode,
-                Country: detailedclient.Country,
-                Phone: detailedclient.Phone,
-                Email: detailedclient.Email,
-                ResponsibleEmployee: detailedclient.ResponsibleEmployee,
-                Type: detailedclient.Type.type
-            }).then(
-                function (res) {
-                    updatedclient = angular.copy(res.data);
-                    $scope.updatedclient = updatedclient;
-                    $scope.getClients();
-
-                    //window.location.href ='#/clients';
-                    $scope.removeTab(detailedclient.id);
-                    $scope.createToast(detailedclient.Name, "updated", "success");
-                },
-                function (err) {
-                    console.error('Error updating client: ' + err.message);
-                }
-            );
-        };*/
 
         /* =====================================================================
          * Get all businessOwners from Mongo database

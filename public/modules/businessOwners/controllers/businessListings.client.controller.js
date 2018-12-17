@@ -222,19 +222,45 @@ businessListing.controller('businessListingsController',[
         };
 
         $scope.getUnclaimedBusinesses = function () {
-            businessListingsCalls.searchBusinesses({
-                dateClaimed: null
-            }).then(
-                function (res) {
-                    businesses = angular.copy(res.data);
-                    $scope.businesses = businesses;
-                    $scope.gridOptions.data = res.data;
+
+            async.series([
+
+                function(callback) {
+                    businessListingsCalls.isAuth().then(
+                        function (res) {
+                            console.dir('isAuth data: ' + res.data);
+                            $scope.auth = res.data;
+                            callback();
+                        },
+                        function (err) {
+                            console.error('Error : ' + JSON.stringify(err.data.message));
+                        }
+                    )
                 },
-                function (err) {
-                    $scope.badBusinessOwner = 'Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message);
-                    console.error('Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message));
+
+                function() {
+                    if ($scope.auth) {
+                        businessListingsCalls.searchBusinesses({
+                            dateClaimed: undefined
+                        }).then(
+                            function (res) {
+                                businesses = angular.copy(res.data);
+                                $scope.businesses = businesses;
+                                $scope.gridOptions.data = res.data;
+                            },
+                            function (err) {
+                                $scope.badBusinessOwner = 'Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message);
+                                console.error('Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message));
+                            }
+                        );
+                    } else {
+                        $scope.openPage('signIn');
+                    }
+
                 }
-            );
+
+            ]);
+
         };
     }
 ]);

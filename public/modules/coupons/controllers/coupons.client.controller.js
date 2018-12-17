@@ -149,6 +149,7 @@ coupon.controller('couponsController',[
                 function (res) {
                     console.dir('isAuth data: ' + res.data);
                     $scope.auth = res.data;
+                    callback();
                 },
                 function (err) {
                     console.error('Error : ' + JSON.stringify(err.data.message));
@@ -291,24 +292,68 @@ coupon.controller('couponsController',[
             );
         };
 
-        $scope.getCoupon = function () {
-            var couponId = $routeParams.couponId;
-            console.log(couponId);
-
-            couponCalls.searchCoupons({
-                id: couponId
-            }).then(
+        $scope.checkAuth = function () {
+            couponCalls.isAuth().then(
                 function (res) {
-                    coupon = angular.copy(res.data);
-                    $scope.coupon = coupon[0];
-                    //$scope.selectedCategories = $scope.coupon.category;
-                    console.dir($scope.coupon);
+                    console.dir('isAuth data: ' + res.data);
+                    $scope.auth = res.data;
                 },
                 function (err) {
-                    $scope.badCoupon = 'Error getting coupon: ' + JSON.stringify(err.data.message);
-                    console.error('Error getting coupon: ' + JSON.stringify(err.data.message));
+                    console.error('Error : ' + JSON.stringify(err.data.message));
                 }
             );
+            if (!$scope.auth) {
+                $scope.openPage('signIn');
+            }
+        };
+
+        $scope.getCoupon = function () {
+
+            async.series([
+
+                function(callback) {
+                    couponCalls.isAuth().then(
+                        function (res) {
+                            console.dir('isAuth data: ' + res.data);
+                            $scope.auth = res.data;
+                            callback();
+                        },
+                        function (err) {
+                            console.error('Error : ' + JSON.stringify(err.data.message));
+                        }
+                    )
+                },
+
+                function() {
+                    if ($scope.auth) {
+
+                        var couponId = $routeParams.couponId;
+                        console.log(couponId);
+
+                        couponCalls.searchCoupons({
+                            id: couponId
+                        }).then(
+                            function (res) {
+                                coupon = angular.copy(res.data);
+                                $scope.coupon = coupon[0];
+                                //$scope.selectedCategories = $scope.coupon.category;
+                                console.dir($scope.coupon);
+                            },
+                            function (err) {
+                                $scope.badCoupon = 'Error getting coupon: ' + JSON.stringify(err.data.message);
+                                console.error('Error getting coupon: ' + JSON.stringify(err.data.message));
+                            }
+                        );
+
+                    } else {
+                        $scope.openPage('signIn');
+                    }
+
+                }
+
+            ]);
+
+
         };
 
         $scope.getCoupons = function (couponId) {
@@ -342,20 +387,49 @@ coupon.controller('couponsController',[
          * Get all coupons from Mongo database
          * ===================================================================== */
         $scope.getBusinessCoupons = function () {
-            var id = $routeParams.id;
-            couponCalls.searchCoupons({
-                businessId: id
-            }).then(
-                function (res) {
-                    coupons = angular.copy(res.data);
-                    $scope.coupons = coupons;
-                    console.dir(coupons);
-                    $scope.gridOptions.data = coupons;
+
+            async.series([
+
+                function(callback) {
+                    couponCalls.isAuth().then(
+                        function (res) {
+                            console.dir('isAuth data: ' + res.data);
+                            $scope.auth = res.data;
+                            callback();
+                        },
+                        function (err) {
+                            console.error('Error : ' + JSON.stringify(err.data.message));
+                        }
+                    )
                 },
-                function (err) {
-                    console.error('Error getting coupons: ' + err.message);
+
+                function() {
+                    if ($scope.auth) {
+
+                        var id = $routeParams.id;
+                        couponCalls.searchCoupons({
+                            businessId: id
+                        }).then(
+                            function (res) {
+                                coupons = angular.copy(res.data);
+                                $scope.coupons = coupons;
+                                console.dir(coupons);
+                                $scope.gridOptions.data = coupons;
+                            },
+                            function (err) {
+                                console.error('Error getting coupons: ' + err.message);
+                            }
+                        );
+
+                    } else {
+                        $scope.openPage('signIn');
+                    }
+
                 }
-            );
+
+            ]);
+
+
         };
 
         /* =====================================================================

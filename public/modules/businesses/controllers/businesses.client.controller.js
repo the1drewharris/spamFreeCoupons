@@ -105,11 +105,25 @@ business.controller('businessesController',[
             )
         };
 
+        $scope.checkAuth = function () {
+            businessListingsCalls.isAuth().then(
+                function (res) {
+                    console.dir('isAuth data: ' + res.data);
+                    $scope.auth = res.data;
+                },
+                function (err) {
+                    console.error('Error : ' + JSON.stringify(err.data.message));
+                }
+            );
+            if (!$scope.auth) {
+                $scope.openPage('signIn');
+            }
+        };
+
         $scope.getClaimedBusinesses = function () {
             async.series([
 
                 function(callback) {
-
                     businessListingsCalls.isAuth().then(
                         function (res) {
                             console.dir('isAuth data: ' + res.data);
@@ -119,8 +133,7 @@ business.controller('businessesController',[
                         function (err) {
                             console.error('Error : ' + JSON.stringify(err.data.message));
                         }
-
-                    );
+                    )
                 },
 
                 function(callback) {
@@ -164,9 +177,52 @@ business.controller('businessesController',[
         };
 
         $scope.getBusiness = function () {
+
+            async.series([
+                function(callback) {
+                    businessListingsCalls.isAuth().then(
+                        function (res) {
+                            console.dir('isAuth data: ' + res.data);
+                            $scope.auth = res.data;
+                            callback();
+                        },
+                        function (err) {
+                            console.error('Error : ' + JSON.stringify(err.data.message));
+                        }
+                    )
+                },
+
+                function() {
+                    if ($scope.auth) {
+                        var id = $routeParams.id;
+                        console.log(id);
+                        if(id) {
+                            businessesCalls.searchBusinesses({
+                                id: id
+                            }).then(
+                                function (res) {
+                                    business = angular.copy(res.data[0]);
+                                    $scope.business = business;
+                                },
+                                function (err) {
+                                    $scope.badBusiness = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
+                                    console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
+                                }
+                            );
+                        } else {
+                            console.log('undefined');
+                        }
+                    } else {
+                        $scope.openPage('signIn');
+                    }
+
+                }
+            ]);
+
+
             var id = $routeParams.id;
             console.log(id);
-            if(id && id !== undefined) {
+            if(id) {
                 businessesCalls.searchBusinesses({
                     id: id
                 }).then(
