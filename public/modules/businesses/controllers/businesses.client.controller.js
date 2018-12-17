@@ -110,14 +110,15 @@ business.controller('businessesController',[
                 function (res) {
                     console.dir('isAuth data: ' + res.data);
                     $scope.auth = res.data;
+                    if (!$scope.auth) {
+                        $scope.openPage('signIn');
+                    }
                 },
                 function (err) {
                     console.error('Error : ' + JSON.stringify(err.data.message));
                 }
             );
-            if (!$scope.auth) {
-                $scope.openPage('signIn');
-            }
+
         };
 
         $scope.getClaimedBusinesses = function () {
