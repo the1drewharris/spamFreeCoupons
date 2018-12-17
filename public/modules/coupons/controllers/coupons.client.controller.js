@@ -65,7 +65,11 @@ coupon.controller('couponsController',[
             columnDefs: [
                 { name:'Title', field: 'title'},
                 { name: 'Description', field: 'description'},
-                { name:'Categories', field: 'category'},
+                {   name:'Categories',
+                    field: 'category',
+                    cellTemplate:
+                    '<md-chips ng-model="row.entity.category" readonly="true"></md-chips>'
+                },
                 {
                     name:'Status',
                     field: 'status',
@@ -257,9 +261,6 @@ coupon.controller('couponsController',[
 
         $scope.transformChip = function (chip) {
             $scope.selectedCategories = self.selectedCategories;
-
-            console.dir($scope.selectedCategories);
-            console.dir(self.selectedCategories);
             return chip;
         };
 
@@ -297,14 +298,15 @@ coupon.controller('couponsController',[
                 function (res) {
                     console.dir('isAuth data: ' + res.data);
                     $scope.auth = res.data;
+                    if (!$scope.auth) {
+                        $scope.openPage('signIn');
+                    }
                 },
                 function (err) {
                     console.error('Error : ' + JSON.stringify(err.data.message));
                 }
             );
-            if (!$scope.auth) {
-                $scope.openPage('signIn');
-            }
+
         };
 
         $scope.getCoupon = function () {

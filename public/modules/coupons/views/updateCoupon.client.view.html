@@ -10,7 +10,7 @@
 
 
             <div>
-                Category*: {{coupon.category}}
+                Category*:
                 <md-chips ng-model="coupon.category" ng-required="true" md-autocomplete-snap
                           md-transform-chip="transformChip($chip)"
                           md-require-match="true">
@@ -24,7 +24,8 @@
                     </md-autocomplete>
                     <md-chip-template>
                     <span>
-                      <strong>{{$chip}}</strong>
+                        <strong ng-if="$chip.name" >{{$chip.name}}</strong>
+                        <strong ng-if="$chip && !$chip.name" >{{$chip}}</strong>
                     </span>
                     </md-chip-template>
                 </md-chips>
@@ -51,7 +52,7 @@
                 </md-checkbox>
             </div>
 
-            <md-button type="submit" ng-click="createCoupon(coupon)">Create Coupon</md-button>
+            <md-button type="submit" ng-click="createCoupon(coupon)">Update Coupon</md-button>
         </form>
     </div>
 </section>
