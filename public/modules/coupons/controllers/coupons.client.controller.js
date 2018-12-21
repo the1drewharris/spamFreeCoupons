@@ -434,6 +434,33 @@ coupon.controller('couponsController',[
 
         };
 
+        $scope.editCoupon = function (updatedCoupon) {
+
+            console.dir(updatedCoupon);
+            couponCalls.updateCoupon({
+                id: updatedCoupon.id,
+                title: updatedCoupon.title,
+                description: updatedCoupon.description,
+                repeatFrequency: $scope.selected,
+                category: updatedCoupon.category,
+                status: updatedCoupon.status,
+                couponCode: updatedCoupon.couponCode,
+                postalCode: updatedCoupon.postalCode
+
+            }).then(
+                function (res) {
+                    updatedCoupon = angular.copy(res.data);
+                    $scope.updatedCoupon = updatedCoupon;
+                    //$scope.openPage('business/view/' + updatedCoupon.businessId);
+                    //$scope.createToast(updatedCoupon.Name, "updated", "success");
+                },
+                function (err) {
+                    console.error('Error updating coupon: ' + err.message);
+                }
+            );
+
+        };
+
         /* =====================================================================
          * create new coupon
          * ===================================================================== */

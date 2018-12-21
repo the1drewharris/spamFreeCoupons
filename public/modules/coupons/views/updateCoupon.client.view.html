@@ -2,7 +2,7 @@
     <div>
         <h1>Edit Coupon</h1>
     </div>
-    <div ng-controller="couponsController" ng-init="getCoupon()" style="padding: 15px">
+    <div ng-controller="couponsController as coupon" ng-init="getCoupon()" style="padding: 15px">
         <form>
             Title*: <input title="title" type="text" ng-model="coupon.title" ng-required="true"><br>
             Description*: <br><input name="description" ng-model="coupon.description" ng-required="true"><br> <!-- TODO: make a text area -->
@@ -52,7 +52,7 @@
                 </md-checkbox>
             </div>
 
-            <md-button type="submit" ng-click="createCoupon(coupon)">Update Coupon</md-button>
+            <md-button type="submit" ng-click="editCoupon(coupon)">Update Coupon</md-button>
         </form>
     </div>
 </section>
