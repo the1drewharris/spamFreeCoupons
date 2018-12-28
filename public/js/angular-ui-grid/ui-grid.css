@@ -16,6 +16,9 @@
 #ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:after {
   clear: both;
 }
+.category .ui-grid-cell {
+  overflow-y: auto;
+}
 .ui-grid {
   border: 1px solid #d4d4d4;
   box-sizing: content-box;
@@ -357,9 +360,11 @@ select.ui-grid-filter-select:hover {
 }
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
   background-color: #fdfdfd;
+  overflow-y: auto;
 }
 .ui-grid-row:nth-child(even) .ui-grid-cell {
   background-color: #f3f3f3;
+  overflow-y: auto;
 }
 .ui-grid-row:last-child .ui-grid-cell {
   border-bottom-color: #d4d4d4;

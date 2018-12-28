@@ -74,7 +74,7 @@ coupon.controller('couponsController',[
                     name:'Status',
                     field: 'status',
                     cellTemplate:
-                        '<md-switch ng-model="row.entity.status" ng-change="grid.appScope.switchChange(row.entity)" aria-label="Status" ng-true-value="\'active\'" ng-false-value="\'inactive\'">',
+                        '<md-switch ng-model="row.entity.status" class="category" ng-change="grid.appScope.switchChange(row.entity)" aria-label="Status" ng-true-value="\'active\'" ng-false-value="\'inactive\'">',
                     width: 60
                 },
                 {
@@ -436,22 +436,34 @@ coupon.controller('couponsController',[
 
         $scope.editCoupon = function (updatedCoupon) {
 
+            console.dir(updatedCoupon.category);
+            updatedCoupon.category.forEach(function (item) {
+                if (item.name) {
+                    $scope.categories.push(item.name);
+                }
+                else {
+                    $scope.categories.push(item);
+                }
+                console.dir(item)
+            });
+
             console.dir(updatedCoupon);
             couponCalls.updateCoupon({
                 id: updatedCoupon.id,
                 title: updatedCoupon.title,
                 description: updatedCoupon.description,
                 repeatFrequency: $scope.selected,
-                category: updatedCoupon.category,
+                category: $scope.categories,
                 status: updatedCoupon.status,
                 couponCode: updatedCoupon.couponCode,
                 postalCode: updatedCoupon.postalCode
 
             }).then(
                 function (res) {
-                    updatedCoupon = angular.copy(res.data);
+                    updatedCoupon = angular.copy(res.data.results);
                     $scope.updatedCoupon = updatedCoupon;
-                    //$scope.openPage('business/view/' + updatedCoupon.businessId);
+                    console.dir(updatedCoupon);
+                    $scope.openPage('business/view/' + updatedCoupon.businessId);
                     //$scope.createToast(updatedCoupon.Name, "updated", "success");
                 },
                 function (err) {
