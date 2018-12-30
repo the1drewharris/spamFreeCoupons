@@ -1,11 +1,8 @@
 <section>
     <div ng-controller="businessesController" ng-init="checkAuth()">
-        <div>
-            <i class="glyphicon-arrow-left"></i>
-            <md-button class="btn-default" ng-click="openPage('view/businesses')">businesses</md-button>
-        </div>
         <h1>Business</h1>
-        <md-button ng-click="logout()">Logout</md-button>
+        <md-button class="btn-default" ng-click="openPage('view/businesses')"><i class="fa fa-arrow-left"></i> businesses</md-button>
+        <md-button ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button>
         <div>
             <form>
                 <input title="Name" placeholder="Business Name" type="text" ng-model="business.companyName" ng-required="true"><br>
@@ -18,7 +15,7 @@
                 <input title="Facebook" placeholder="Facebook" type="text" ng-model="business.facebook" ng-required="false"><br>
                 <input title="Instagram" placeholder="Instagram" type="text" ng-model="business.instagram" ng-required="false"><br>
                 <input title="Twitter" placeholder="Twitter" type="text" ng-model="business.twitter" ng-required="false"><br>
-                <md-button type="submit" ng-click="createBusiness(business)">Create Business</md-button>
+                <md-button type="submit" ng-click="createBusiness(business)"><i class="fas fa-plus-square"></i> Create Business</md-button>
             </form>
         </div>
     </div>

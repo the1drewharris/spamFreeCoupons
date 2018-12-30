@@ -68,14 +68,13 @@ business.controller('businessesController',[
                     name: 'edit',
                     displayName: 'Edit',
                     cellTemplate:
-                        '<md-button aria-label="Edit Business" class="fa fa-pencil" ng-click="grid.appScope.openPage(\'business/view/\' + row.entity.id)">edit'
+                        '<md-button class="btn-default" ng-click="grid.appScope.openPage(\'business/view/\' + row.entity.id)">'
+                        + '<i class="fas fa-pencil-alt fa-2x"></i>'
                         + '</md-button>',
-                    enableSorting: false,
-                    resizable: false,
-                    width: 70,
-                    pinnable: false
+                    width: 50
                 }
             ],
+            rowHeight: 45,
             data : []
         };
 

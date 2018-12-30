@@ -70,11 +70,11 @@ businessListing.controller('businessListingsController',[
                     name: 'claim',
                     displayName: 'Claim',
                     cellTemplate:
-                    '<md-button aria-label="Claim Business" class="btn btn-default" ng-click="grid.appScope.claimBusiness(row.entity)">claim'
+                    '<md-button aria-label="Claim Business" class="btn btn-default" ng-click="grid.appScope.claimBusiness(row.entity)"><i class="fas fa-check-square fa-2x"></i>'
                     + '</md-button>',
                     enableSorting: false,
                     resizable: false,
-                    width: 70,
+                    width: 50,
                     pinnable: false
                 }
             ],

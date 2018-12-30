@@ -1,15 +1,16 @@
 <section>
     <div ng-controller="businessListingsController" ng-init="getUnclaimedBusinesses()">
-        <h1>Claim Businesses</h1>
-        <md-button ng-click="logout()">Logout</md-button>
+        <h1 ng-init="isAuth()">Claim Businesses</h1>
+        <md-button ng-if="auth" ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button>
+        <md-button ng-if="!auth" ng-click="openPage('/')">Sign In</md-button>
         <div>
-            <md-button ng-if="auth" ng-click="openPage('view/businesses')">Claimed Businesses</md-button>
+            <md-button ng-if="auth" ng-click="openPage('view/businesses')">Claimed Businesses <i class="fas fa-arrow-right"></i></md-button>
         </div>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
             <input title="Search" ng-change="refreshData(search)" ng-model="search">
         </md-input-container>
         <div ui-grid="gridOptions" class="grid"></div>
-        <md-button class="btn btnContainer">Create Business</md-button>
+        <md-button class="btn btnContainer"><i class="fas fa-plus-square"></i> Create Business</md-button>
     </div>
 </section>

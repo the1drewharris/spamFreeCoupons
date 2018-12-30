@@ -2,13 +2,14 @@
     <div ng-controller="businessesController" ng-init="getClaimedBusinesses()">
         <h1>Claimed Businesses</h1>
 
-        <md-button ng-click="logout()">Logout</md-button>
-        <md-button ng-click="openPage('listings')">claim a new business</md-button>
+
+        <md-button ng-click="openPage('listings')"><i class="fas fa-plus-square"></i> claim a new business</md-button>
+        <md-button ng-init="checkAuth()" ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
             <input title="Search" ng-change="refreshData(search)" ng-model="search">
         </md-input-container>
         <div ui-grid="gridOptions" class="grid"></div>
-        <md-button class="btn btnContainer" ng-click="openPage('business/create')">Create Business</md-button>
+        <md-button class="btn btnContainer" ng-click="openPage('business/create')"><i class="fas fa-plus-square"></i> Create Business</md-button>
     </div>
 </section>

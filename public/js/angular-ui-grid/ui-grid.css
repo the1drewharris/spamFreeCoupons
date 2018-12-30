@@ -364,7 +364,7 @@ select.ui-grid-filter-select:hover {
 }
 .ui-grid-row:nth-child(even) .ui-grid-cell {
   background-color: #f3f3f3;
-  overflow-y: auto;
+  overflow-y: auto;overflow-y: auto;
 }
 .ui-grid-row:last-child .ui-grid-cell {
   border-bottom-color: #d4d4d4;
@@ -429,11 +429,10 @@ select.ui-grid-filter-select:hover {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  white-space: nowrap;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow-y: auto;
   height: 100%;
 }
 .ui-grid-cell-contents-hidden {
