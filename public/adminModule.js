@@ -42,11 +42,29 @@ admins.config([
                     }
 
                 })
+                .when('/admin/view/businessOwners',{
+                    name: 'admin signIn',
+                    templateUrl:'modules/admin/views/viewBusinessOwners.client.view.html',
+                    label: 'business owner view',
+                    controller: 'adminController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'adminController',
+                                files:[
+                                    // Controllers
+                                    'modules/admin/controllers/admin.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+
+                })
         }
     ]
 );
 
-businessOwners.factory('adminCalls', function($http, $routeParams) {
+admins.factory('adminCalls', function($http, $routeParams) {
     console.log("in adminCalls factory");
     //var env = 'http://localhost:3000';
     var adminMasterService = {
@@ -147,5 +165,5 @@ businessOwners.factory('adminCalls', function($http, $routeParams) {
             return promise;
         }
     };
-    return businessOwnersMasterService;
+    return adminMasterService;
 });

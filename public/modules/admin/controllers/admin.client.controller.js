@@ -90,24 +90,14 @@ admin.controller('adminController',[
         $scope.signIn = function(credentials) {
             delete $scope.error;
             console.log('in signIn');
-            $http.post($scope.env + '/businessOwner/signIn', credentials)
+            $http.post($scope.env + '/admin/signIn', credentials)
                 .success(function(response) {
                     console.dir(response);
-                    if (response.businesses.length > 0) {
-                        if (response.businesses.length > 1) {
-                            console.log('list businesses here');
-                            $scope.openPage('view/businesses');
-                        } else {
-                            console.log('single business view');
-                        }
-                    } else {
-                        console.log('load listings');
-                        $scope.openPage('/listings');
-                    }
+                    $scope.openPage('/admin/view/businessOwners')
                 })
                 .error(function(response) {
                     console.dir(response);
-                    $scope.createToast('Danger');
+                    //$scope.createToast('Danger');
                 });
         };
 

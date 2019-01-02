@@ -16,7 +16,8 @@ var app = angular.module('anonymousCoupons', [
     'businessListings',
     'businessOwners',
     'businesses',
-    'coupons'
+    'coupons',
+    'admins'
 
 ]);
 
@@ -36,7 +37,8 @@ app.controller('MainController', function (
 ) {
 
     $rootScope.FOO = "hello world I am";
-    $scope.env = 'http://localhost:3000';
+    console.log($rootScope.FOO);
+    $scope.env = 'http://localhost:3001';
 
     //This block of code checks for the browser version, and if not IE9, injects Angular Material
     var ua = window.navigator.userAgent;
