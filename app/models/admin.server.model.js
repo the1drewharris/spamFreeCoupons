@@ -72,7 +72,7 @@ adminSchema.methods.authenticate = function(callback) {
     var hashedPassword = this.hashPassword(checkPassword).toString();
     //console.log('checkPassword: ' + checkPassword + ' hashPassword: ' + hashedPassword);
     //pull the hashed password for this user
-    this.model('businessOwner').findOne({email: this.email}).exec(function (err, foundUser){
+    this.model('admin').findOne({email: this.email}).exec(function (err, foundUser){
         //console.log('foundUser.password: ' + foundUser.password + ' hashPassword: ' + hashedPassword);
         //console.log('still in authenticate: ' + foundUser.password == hashedPassword);
         //this.auth = foundUser.password === hashedPassword;

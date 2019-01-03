@@ -87,9 +87,10 @@ admin.controller('adminController',[
             }
         };
 
-        $scope.signIn = function(credentials) {
+        $scope.adminSignIn = function(credentials) {
             delete $scope.error;
             console.log('in signIn');
+            console.dir(credentials);
             $http.post($scope.env + '/admin/signIn', credentials)
                 .success(function(response) {
                     console.dir(response);

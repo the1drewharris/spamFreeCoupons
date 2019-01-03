@@ -38,6 +38,7 @@ exports.signIn = function(req, res){
             var adminUser = new admin (foundUser);
 
             adminUser.password = req.body.password;
+            console.log(adminUser);
 
             adminUser.authenticate(function(passback){
                 if (passback) {
@@ -55,34 +56,18 @@ exports.signIn = function(req, res){
                             // Remove sensitive data before login
                             adminUser.password = undefined;
                             adminUser.salt = undefined;
-                            if (adminUser.free) {
-                                console.log('admin is free!');
-                                req.login(adminUser, function(err) {
-                                    if (err) {
-                                        res.status(400).send(err);
-                                    } else {
-                                        res.json(adminUser);
-                                    }
-                                });
-                            } else {
-                                console.log('check user.subscription.status == Active');
-                                if (adminUser.subscription.status == 'Active'){
-                                    console.log('admin has active subscription!');
-                                    req.login(adminUser, function(err) {
-                                        if (err) {
-                                            res.status(400).send(err);
-                                        } else {
-                                            res.json(adminUser);
-                                        }
-                                    });
+                            req.login(adminUser, function(err) {
+                                if (err) {
+                                    res.status(400).send(err);
                                 } else {
-                                    console.log('admin does NOT have active subscription');
-                                    res.status(400).send({message: 'Subscription is not Active.', checkout: true, adminUser: adminUser});
+                                    res.json(adminUser);
                                 }
-                            }
+                            });
+
                         }
                     });
                 } else {
+                    console.dir(passback);
                     res.status(400).send({message: 'incorrect password!', auth: adminUser.auth})
                 }
             });
@@ -143,7 +128,7 @@ exports.create = function (req, res) {
     var v = new admin({
         id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
         email: req.body.email,
-        password: req.body.password, //TODO: make password hash
+        password: req.body.password,
         dateCreated: current_date
     });
     v.save(function (err, admin) {
