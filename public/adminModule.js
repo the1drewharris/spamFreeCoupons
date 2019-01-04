@@ -58,6 +58,41 @@ admins.config([
                         }]
                     }
                 })
+                .when('/admin/create/business',{
+                    name: 'business create',
+                    templateUrl:'modules/admin/views/createBusiness.client.view.html',
+                    label: 'business create',
+                    controller: 'adminController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'adminController',
+                                files:[
+                                    // Controllers
+                                    'modules/admin/controllers/admin.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
+                .when('/admin/view/business/:id',{
+                    name: 'business edit',
+                    templateUrl:'modules/admin/views/editBusiness.client.view.html',
+                    label: 'business edit',
+                    controller: 'adminController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'adminController',
+                                files:[
+                                    // Controllers
+                                    'modules/businesses/controllers/businesses.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+
+                })
         }
     ]
 );

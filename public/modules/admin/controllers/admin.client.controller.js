@@ -61,14 +61,27 @@ admin.controller('adminController',[
                 { name:'Address', field: 'address'},
                 { name:'City', field: 'city'},
                 { name:'State', field: 'state'},
+                { name:'Verify Code', field: 'verifyCode'},
                 {
                     name: 'view',
                     displayName: 'View',
                     cellTemplate:
-                        '<md-button ng-click="grid.appScope.openPage(\'business/view/\' + row.entity.id)">'
+                        '<md-button ng-click="grid.appScope.openPage(\'admin/view/business/\' + row.entity.id)">'
                         + '<i class="fas fa-edit fa-2x"></i>'
                         + '</md-button>',
                     width: 50
+                },
+                {
+                    name: 'claimed',
+                    displayName: 'Claimed',
+                    cellTemplate:
+                        '<span  style="color: Green;">' +
+                        '   <i ng-if="row.entity.businessOwnerId" class="fas fa-check-square fa-3x"></i>' +
+                        '</span>' +
+                        '<span  style="color: Red;">' +
+                        '   <i ng-if="!row.entity.businessOwnerId" class="fas fa-times fa-3x"></i>' +
+                        '</span>',
+                    width: 60
                 }
             ],
             data : []
@@ -120,54 +133,27 @@ admin.controller('adminController',[
                 });
         };
 
-        $scope.signInClaim = function(credentials) {
+
+        $scope.getBusiness = function () {
+
             var id = $routeParams.id;
-            async.series([
-                function(callback) {
-
-                    businessOwnerCalls.searchBusinesses({
-                        id: id
-                    }).then(
-                        function (res) {
-                            $scope.business = res.data;
-                            callback();
-                        },
-                        function (err) {
-                            console.error('Error : ' + JSON.stringify(err.data.message));
-                        }
-                    )
-                },
-
-                function (callback) {
-
-                    delete $scope.error;
-                    $http.post($scope.env + '/businessOwner/signIn', credentials)
-                        .success(function(response) {
-
-                            if (id) {
-                                callback();
-                            } else if (response.businesses.length > 0) {
-                                if (response.businesses.length > 1) {
-                                    console.log('list businesses here');
-                                } else {
-                                    console.log('single business view');
-                                }
-                            } else {
-                                console.log('load claim');
-                                $scope.claimBusiness($scope.business);
-                            }
-                        })
-                        .error(function(response) {
-                            console.dir(response);
-                            $scope.createToast('Danger');
-                        });
-
-                },
-                function() {
-                    $scope.claimBusiness($scope.business);
-                }
-            ]);
-
+            console.log(id);
+            if(id) {
+                adminCalls.searchBusinesses({
+                    id: id
+                }).then(
+                    function (res) {
+                        business = angular.copy(res.data[0]);
+                        $scope.business = business;
+                    },
+                    function (err) {
+                        $scope.badBusiness = 'Error getting business: ' + JSON.stringify(err.data.message);
+                        console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                    }
+                );
+            } else {
+                console.log('id undefined');
+            }
 
         };
 
@@ -313,6 +299,30 @@ admin.controller('adminController',[
 
         };
 
+        $scope.createBusiness = function (newBusiness) {
+            adminCalls.newBusiness({
+                id: newBusiness.id,
+                companyName: newBusiness.companyName,
+                address: newBusiness.address,
+                city: newBusiness.city,
+                state: newBusiness.state,
+                postalCode: newBusiness.postalCode,
+                phone: newBusiness.phone,
+                websiteURL: newBusiness.websiteURL,
+                facebook: newBusiness.facebook,
+                instagram: newBusiness.instagram,
+                twitter: newBusiness.twitter
+            }).then(
+                function (res) {
+                    newBusiness = angular.copy(res.data);
+                    $scope.openPage('admin/view/businesses')
+                },
+                function (err) {
+                    $scope.badBusiness = 'Error creating business: ' + JSON.stringify(err.data.message);
+                    console.error('Error creating business: ' + JSON.stringify(err.data.message));
+                }
+            );
+        };
 
         /* =====================================================================
          * Get all businessOwners from Mongo database
