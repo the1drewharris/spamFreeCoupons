@@ -40,12 +40,11 @@ admins.config([
                             });
                         }]
                     }
-
                 })
-                .when('/admin/view/businessOwners',{
-                    name: 'admin signIn',
-                    templateUrl:'modules/admin/views/viewBusinessOwners.client.view.html',
-                    label: 'business owner view',
+                .when('/admin/view/businesses',{
+                    name: 'businesses view',
+                    templateUrl:'modules/admin/views/viewBusinesses.client.view.html',
+                    label: 'businesses view',
                     controller: 'adminController',
                     resolve: {
                         loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -58,7 +57,6 @@ admins.config([
                             });
                         }]
                     }
-
                 })
         }
     ]
@@ -68,6 +66,16 @@ admins.factory('adminCalls', function($http, $routeParams) {
     console.log("in adminCalls factory");
     //var env = 'http://localhost:3000';
     var adminMasterService = {
+        isAuth: function(req){
+            var promise = $http({
+                method: 'GET',
+                url: '/authentication/authenticate',
+                params: req
+            }).then(function (response) {
+                return response;
+            });
+            return promise;
+        },
         detailBusinessOwner: function(req){
             var promise = $http({
                 method: 'GET',

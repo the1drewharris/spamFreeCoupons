@@ -19,7 +19,7 @@ passport.serializeUser(function(user, done) {
 // Deserialize sessions
 passport.deserializeUser(function(id, done) {
     admin.findOne({
-        _id: id
+        id: id
     }, '-salt -password', function(err, user) {
         done(err, user);
     });
@@ -86,7 +86,7 @@ exports.signIn = function(req, res){
  */
 exports.signOut = function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('/#/admin/signIn');
 };
 
 

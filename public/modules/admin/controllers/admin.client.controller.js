@@ -29,6 +29,8 @@ admin.controller('adminController',[
     'lodash',
     'uiGridConstants',
     '$filter',
+    '$window',
+
     function (
         adminCalls,
         $scope,
@@ -43,7 +45,8 @@ admin.controller('adminController',[
         $sce,
         lodash,
         uiGridConstants,
-        $filter
+        $filter,
+        $window
     ) {
 
         $scope.appheader = 'admin';
@@ -59,15 +62,13 @@ admin.controller('adminController',[
                 { name:'City', field: 'city'},
                 { name:'State', field: 'state'},
                 {
-                    name: 'claim',
-                    displayName: 'Claim',
+                    name: 'view',
+                    displayName: 'View',
                     cellTemplate:
-                        '<md-button aria-label="Claim Business" class="btn btn-default">claim'
+                        '<md-button ng-click="grid.appScope.openPage(\'business/view/\' + row.entity.id)">'
+                        + '<i class="fas fa-edit fa-2x"></i>'
                         + '</md-button>',
-                    enableSorting: false,
-                    resizable: false,
-                    width: 70,
-                    pinnable: false
+                    width: 50
                 }
             ],
             data : []
@@ -75,6 +76,26 @@ admin.controller('adminController',[
 
         $scope.openPage = function (pageName) {
             $location.path(pageName.replace(/#/, ''));
+        };
+
+        $scope.checkAuth = function () {
+            adminCalls.isAuth().then(
+                function (res) {
+                    console.dir('isAuth data: ' + res.data);
+                    $scope.auth = res.data;
+                    if (!$scope.auth) {
+                        $scope.openPage('admin/signIn');
+                    }
+                },
+                function (err) {
+                    console.error('Error : ' + JSON.stringify(err.data.message));
+                }
+            );
+
+        };
+
+        $scope.logout = function () {
+            $window.open('/admin/signOut', "_self");
         };
 
         $scope.refreshData = function (keyword) {
@@ -89,12 +110,9 @@ admin.controller('adminController',[
 
         $scope.adminSignIn = function(credentials) {
             delete $scope.error;
-            console.log('in signIn');
-            console.dir(credentials);
             $http.post($scope.env + '/admin/signIn', credentials)
                 .success(function(response) {
-                    console.dir(response);
-                    $scope.openPage('/admin/view/businessOwners')
+                    $scope.openPage('/admin/view/businesses')
                 })
                 .error(function(response) {
                     console.dir(response);
@@ -305,6 +323,20 @@ admin.controller('adminController',[
                     businessOwners = angular.copy(res.data);
                     $scope.businessOwners = businessOwners;
                     console.dir(businessOwners);
+                },
+                function (err) {
+                    console.error('Error getting businessOwners: ' + err.message);
+                }
+            );
+        };
+
+        $scope.getBusinesses = function () {
+            adminCalls.getBusinesses({}).then(
+                function (res) {
+                    businesses = angular.copy(res.data);
+                    $scope.businesses = businesses;
+                    console.dir(businesses);
+                    $scope.gridOptions.data = res.data;
                 },
                 function (err) {
                     console.error('Error getting businessOwners: ' + err.message);
