@@ -9,5 +9,7 @@
         </md-input-container>
         <div ui-grid="gridOptions" class="grid"></div>
         <md-button class="btn btnContainer" ng-click="openPage('admin/create/business')"><i class="fas fa-plus-square"></i> Create Business</md-button>
+        <h4>Import CSV: </h4>
+        <input type="file" import-sheet-js="" multiple="false" callback-fn="createBusiness(newBusiness)">
     </div>
 </section>

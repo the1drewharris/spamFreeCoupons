@@ -1,26 +1,22 @@
 <section>
     <div ng-controller="adminController" ng-init="getBusiness()">
         <h1>Edit Business</h1>
-        <md-button class="btn-default" ng-click="openPage('view/businesses')"><i class="fa fa-arrow-left"></i> businesses</md-button>
+        <md-button class="btn-default" ng-click="openPage('admin/view/businesses')"><i class="fa fa-arrow-left"></i> businesses</md-button>
         <div ng-init="checkAuth()">
             <md-button ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button>
         </div>
         <div>
             <form>
-                Name: <input ng-model="business.companyName"><br>
-                Address: <input ng-model="business.address"><br>
-                City: <input ng-model="business.city"><br>
-                State: <input ng-model="business.state"><br>
-                Zip: <input ng-model="business.postalCode"><br>
-                Phone Number : <input ng-model="business.phone"><br>
-                Website URL: <input ng-model="business.websiteURL"><br>
-                Facebook: <input ng-model="business.facebook"><br>
-                Instagram: <input ng-model="business.instagram"><br>
-                Twitter: <input ng-model="business.twitter"><br>
-                <div>
-
-                    <md-button type="submit" class="btn-default" ng-click="editBusiness(business)"><i class="fas fa-pencil-alt"></i> update</md-button>
-                </div>
+                Name: <input ng-change="editBusiness(business)" ng-model="business.companyName"><br>
+                Address: <input ng-change="editBusiness(business)" ng-model="business.address"><br>
+                City: <input ng-change="editBusiness(business)" ng-model="business.city"><br>
+                State: <input ng-change="editBusiness(business)" ng-model="business.state"><br>
+                Zip: <input ng-change="editBusiness(business)" ng-model="business.postalCode"><br>
+                Phone Number : <input ng-change="editBusiness(business)" ng-model="business.phone"><br>
+                Website URL: <input ng-change="editBusiness(business)" ng-model="business.websiteURL"><br>
+                Facebook: <input ng-change="editBusiness(business)" ng-model="business.facebook"><br>
+                Instagram: <input ng-change="editBusiness(business)" ng-model="business.instagram"><br>
+                Twitter: <input ng-change="editBusiness(business)" ng-model="business.twitter"><br>
 
             </form>
         </div>

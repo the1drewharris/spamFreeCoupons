@@ -53,6 +53,19 @@ admin.controller('adminController',[
         $scope.env = 'http://localhost:3000';
         $scope.credentials = '';
 
+        $scope.businessOwnersGridOptions = {
+            rowHeight: 50,
+            enableSorting: true,
+            columnDefs: [
+                { name:'Name', field: 'companyName'},
+                { name:'Address', field: 'address'},
+                { name:'City', field: 'city'},
+                { name:'State', field: 'state'},
+                { name:'Verify Code', field: 'verifyCode'}
+            ],
+            data : []
+        };
+
         $scope.gridOptions = {
             rowHeight: 50,
             enableSorting: true,
@@ -155,6 +168,32 @@ admin.controller('adminController',[
                 console.log('id undefined');
             }
 
+        };
+
+        $scope.editBusiness = function (newBusiness) {
+            console.log(newBusiness);
+            adminCalls.updateBusiness({
+                id: newBusiness.id,
+                companyName: newBusiness.companyName,
+                address: newBusiness.address,
+                city: newBusiness.city,
+                state: newBusiness.state,
+                postalCode: newBusiness.postalCode,
+                phone: newBusiness.phone,
+                websiteURL: newBusiness.websiteURL,
+                facebook: newBusiness.facebook,
+                instagram: newBusiness.instagram,
+                twitter: newBusiness.twitter
+
+            }).then(
+                function (res) {
+                    $scope.updatedBusiness = angular.copy(res.data);
+                    //$scope.createToast(updatedBusiness.Name, "updated", "success");
+                },
+                function (err) {
+                    console.error('Error updating business: ' + err.message);
+                }
+            );
         };
 
         $scope.claimBusiness = function (business) {
@@ -300,6 +339,7 @@ admin.controller('adminController',[
         };
 
         $scope.createBusiness = function (newBusiness) {
+            console.dir(newBusiness);
             adminCalls.newBusiness({
                 id: newBusiness.id,
                 companyName: newBusiness.companyName,
@@ -315,7 +355,8 @@ admin.controller('adminController',[
             }).then(
                 function (res) {
                     newBusiness = angular.copy(res.data);
-                    $scope.openPage('admin/view/businesses')
+                    $scope.getBusinesses();
+                    $scope.openPage('admin/view/businesses');
                 },
                 function (err) {
                     $scope.badBusiness = 'Error creating business: ' + JSON.stringify(err.data.message);
@@ -439,3 +480,33 @@ admin.controller('adminController',[
 
     }
 ]);
+
+
+admin.directive("importSheetJs", [SheetJSImportDirective]);
+
+function SheetJSImportDirective() {
+    return {
+        scope: { opts: '=', createBusiness: '&callbackFn' },
+        link: function ($scope, $elm) {
+            $elm.on('change', function (changeEvent) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    /* read workbook */
+                    var bstr = e.target.result;
+                    var workbook = XLSX.read(bstr, {type:'binary'});
+                    var d = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+
+                    console.dir(d);
+
+                    d.forEach(function(element) {
+                        console.log(element);
+                        $scope.createBusiness({newBusiness: element});
+                    });
+                };
+
+                reader.readAsBinaryString(changeEvent.target.files[0]);
+            });
+        }
+    };
+}
