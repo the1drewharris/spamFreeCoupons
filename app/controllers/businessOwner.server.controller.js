@@ -26,6 +26,139 @@ passport.deserializeUser(function(id, done) {
 
 
 
+exports.adminSignIn = function(req, res){
+    //businessOwner.findOne with email
+    businessOwner.findOne({email: req.body.email}).exec(function (err, foundUser){
+        if (err) {
+            console.log('there was a problem checking email');
+        } else if (foundUser) {
+            console.log('found Business Owner with email');
+
+            var user = new businessOwner (foundUser);
+
+            user.password = req.body.password;
+
+            user.authenticate2(function(passback){
+                if (passback) {
+                    user.loginTime = Date.now();
+                    user.auth = passback;
+                    //console.log('user.auth: ');
+                    //console.dir(user.auth);
+                    // Then save the user
+                    user.save(function(err) {
+                        if (err) {
+                            return res.status(400).send({
+                                message: err
+                            });
+                        } else {
+                            // Remove sensitive data before login
+                            user.password = undefined;
+                            user.salt = undefined;
+                            if (user.free) {
+                                console.log('businessOwner is free!');
+                                req.login(user, function(err) {
+                                    if (err) {
+                                        res.status(400).send(err);
+                                    } else {
+                                        res.json(user);
+                                    }
+                                });
+                            } else {
+                                //console.log('check user.subscription.status == Active');
+                                //if (user.active === true){
+                                //console.log('Business Owner has active subscription!');
+                                req.login(user, function(err) {
+                                    if (err) {
+                                        res.status(400).send(err);
+                                    } else {
+                                        res.json(user);
+                                    }
+                                });
+                                /*} else {
+                                    console.log('Business Owner does NOT have active subscription');
+                                    res.status(400).send({message: 'Subscription is not Active.', checkout: true, user: user});
+                                }*/
+                            }
+                        }
+                    });
+                } else {
+                    res.status(400).send({message: 'incorrect password!', auth: user.auth})
+                }
+            });
+
+        } else if (!foundUser) {
+            console.log('did NOT find Business Owner with email');
+            return res.status(400).send({
+                message: 'Could not find a Business Owner with that email.'
+            })
+        }
+    });
+
+    /*//businessOwner.findOne with email
+    businessOwner.findOne({email: req.body.email}).exec(function (err, foundUser){
+        if (err) {
+            console.log('there was a problem checking email');
+        } else if (foundUser) {
+            console.log('found Business Owner with email');
+
+            var user = new businessOwner (foundUser);
+
+            user.password = req.body.password;
+
+            user.loginTime = Date.now();
+            user.auth = true;
+            //console.log('user.auth: ');
+            //console.dir(user.auth);
+            // Then save the user
+            user.save(function(err) {
+                if (err) {
+                    return res.status(400).send({
+                        message: err
+                    });
+                } else {
+                    // Remove sensitive data before login
+                    user.password = undefined;
+                    user.salt = undefined;
+
+                    if (user.free) {
+                        console.log('businessOwner is free!');
+                        req.login(user, function(err) {
+                            if (err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    } else {
+                        console.log('before login');
+                        console.dir(user);
+                        //console.log('check user.subscription.status == Active');
+                        //if (user.active === true){
+                        //console.log('Business Owner has active subscription!');
+                        req.login(user, function(err) {
+                            if (err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                        /*} else {
+                            console.log('Business Owner does NOT have active subscription');
+                            res.status(400).send({message: 'Subscription is not Active.', checkout: true, user: user});
+                        }
+                    }
+                }
+            });
+
+        } else if (!foundUser) {
+            console.log('did NOT find Business Owner with email');
+            return res.status(400).send({
+                message: 'Could not find a Business Owner with that email.'
+            })
+        }
+    });*/
+};
+
 exports.signIn = function(req, res){
     //businessOwner.findOne with email
     businessOwner.findOne({email: req.body.email}).exec(function (err, foundUser){

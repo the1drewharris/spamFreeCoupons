@@ -86,7 +86,25 @@ admins.config([
                                 name: 'adminController',
                                 files:[
                                     // Controllers
-                                    'modules/businesses/controllers/businesses.client.controller.js'
+                                    'modules/admin/controllers/admin.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+
+                })
+                .when('/admin/view/businessOwners',{
+                    name: 'businessOwners view',
+                    templateUrl:'modules/admin/views/viewBusinessOwners.client.view.html',
+                    label: 'businessOwners view',
+                    controller: 'adminController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'adminController',
+                                files:[
+                                    // Controllers
+                                    'modules/admin/controllers/admin.client.controller.js'
                                 ]
                             });
                         }]

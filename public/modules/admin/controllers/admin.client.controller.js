@@ -57,11 +57,20 @@ admin.controller('adminController',[
             rowHeight: 50,
             enableSorting: true,
             columnDefs: [
-                { name:'Name', field: 'companyName'},
-                { name:'Address', field: 'address'},
-                { name:'City', field: 'city'},
-                { name:'State', field: 'state'},
-                { name:'Verify Code', field: 'verifyCode'}
+                { name:'Name', field: 'name'},
+                { name:'Email', field: 'email'},
+                { name:'Password', field: 'password'},
+                { name:'Free', field: 'free'},
+                { name:'Active', field: 'active'},
+                {
+                    name: 'Impersonate',
+                    displayName: 'Impersonate',
+                    cellTemplate:
+                        '<md-button ng-click="grid.appScope.signIn(row.entity)">'
+                        + '<i class="fas fa-user fa-2x"></i>'
+                        + '</md-button>',
+                    width: 90
+                }
             ],
             data : []
         };
@@ -134,6 +143,31 @@ admin.controller('adminController',[
             }
         };
 
+        $scope.signIn = function(credentials) {
+            delete $scope.error;
+            console.log('in signIn');
+            console.dir(credentials);
+            $http.post($scope.env + '/businessOwner/SignIn', credentials)
+                .success(function(response) {
+                    console.dir(response);
+                    if (response.businesses.length > 0) {
+                        if (response.businesses.length > 1) {
+                            console.log('list businesses here');
+                            $scope.openPage('view/businesses');
+                        } else {
+                            console.log('single business view');
+                        }
+                    } else {
+                        console.log('load listings');
+                        $scope.openPage('/listings');
+                    }
+                })
+                .error(function(response) {
+                    console.dir(response);
+                    $scope.createToast('Danger');
+                });
+        };
+
         $scope.adminSignIn = function(credentials) {
             delete $scope.error;
             $http.post($scope.env + '/admin/signIn', credentials)
@@ -146,6 +180,22 @@ admin.controller('adminController',[
                 });
         };
 
+        /* =====================================================================
+         * Get all businessOwners from Mongo database
+         * ===================================================================== */
+        $scope.getBusinessOwners = function () {
+            adminCalls.getBusinessOwners({}).then(
+                function (res) {
+                    businessOwners = angular.copy(res.data);
+                    $scope.businessOwners = businessOwners;
+                    console.dir(businessOwners);
+                    $scope.businessOwnersGridOptions.data = res.data;
+                },
+                function (err) {
+                    console.error('Error getting businessOwners: ' + err.message);
+                }
+            );
+        };
 
         $scope.getBusiness = function () {
 
@@ -361,22 +411,6 @@ admin.controller('adminController',[
                 function (err) {
                     $scope.badBusiness = 'Error creating business: ' + JSON.stringify(err.data.message);
                     console.error('Error creating business: ' + JSON.stringify(err.data.message));
-                }
-            );
-        };
-
-        /* =====================================================================
-         * Get all businessOwners from Mongo database
-         * ===================================================================== */
-        $scope.getBusinessOwners = function () {
-            businessOwnerCalls.getBusinessOwners({}).then(
-                function (res) {
-                    businessOwners = angular.copy(res.data);
-                    $scope.businessOwners = businessOwners;
-                    console.dir(businessOwners);
-                },
-                function (err) {
-                    console.error('Error getting businessOwners: ' + err.message);
                 }
             );
         };

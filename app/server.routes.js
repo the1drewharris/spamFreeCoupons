@@ -46,6 +46,22 @@ router.delete('/business/delete/:id', business.delete);
 
 
 /*
+ * user ROUTES
+ * @type {exports|module.exports}
+ */
+var user = require('./controllers/user.server.controller.js');
+router.get('/user/list', user.list);
+router.get('/user/detail/:id', user.detail);
+router.get('/user/signOut',user.signOut);
+router.get('/user/me', user.me);
+router.post('/user/search', user.search);
+router.post('/user/signIn',user.signIn);
+router.post('/user/create', user.create);
+router.post('/user/update', user.update);
+router.delete('/user/delete/:id', user.delete);
+
+
+/*
  * businessOwner ROUTES
  * @type {exports|module.exports}
  */
@@ -55,6 +71,7 @@ router.get('/businessOwner/detail/:id', businessOwner.detail);
 router.get('/businessOwner/signOut',businessOwner.signOut);
 router.get('/businessOwner/me', businessOwner.me);
 router.post('/businessOwner/search', businessOwner.search);
+router.post('/businessOwner/adminSignIn', businessOwner.adminSignIn);
 router.post('/businessOwner/signIn',businessOwner.signIn);
 router.post('/businessOwner/create', businessOwner.create);
 router.post('/businessOwner/update', businessOwner.update);

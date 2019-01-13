@@ -9,10 +9,10 @@ var mongoose = require('mongoose'),
     foo = 'anonymousCoupons';
 
 
-var businessOwnerSchema = new Schema ({
+var userSchema = new Schema ({
     id: {
         type: String,
-        required: 'Must have an id for the coupon',
+        required: 'Must have an id for the user',
         unique: 'id must be unique'
     },
     name: {
@@ -49,7 +49,7 @@ var businessOwnerSchema = new Schema ({
 /**
  * Hook a pre save method to hash the password
  */
-businessOwnerSchema.pre('save', function(next) {
+userSchema.pre('save', function(next) {
     console.log('in pre save');
     if (this.password) {
         console.log('this.password: ' + this.password);
@@ -65,7 +65,7 @@ businessOwnerSchema.pre('save', function(next) {
 /**
  * Create instance method for hashing a password
  */
-businessOwnerSchema.methods.hashPassword = function(password) {
+userSchema.methods.hashPassword = function(password) {
     console.log('in hashPassword');
     if (foo && password) {
         console.log('foo && password: return hashed password using this.foo');
@@ -79,13 +79,13 @@ businessOwnerSchema.methods.hashPassword = function(password) {
 /**
  * Create instance method for authenticating user
  */
-businessOwnerSchema.methods.authenticate = function(callback) {
+userSchema.methods.authenticate = function(callback) {
     console.log('in authenticate');
     var checkPassword = this.password.toString();
     var hashedPassword = this.hashPassword(checkPassword).toString();
     //console.log('checkPassword: ' + checkPassword + ' hashPassword: ' + hashedPassword);
     //pull the hashed password for this user
-    this.model('businessOwner').findOne({email: this.email}).exec(function (err, foundUser){
+    this.model('user').findOne({email: this.email}).exec(function (err, foundUser){
         //console.log('foundUser.password: ' + foundUser.password + ' hashPassword: ' + hashedPassword);
         //console.log('still in authenticate: ' + foundUser.password == hashedPassword);
         //this.auth = foundUser.password === hashedPassword;
@@ -94,4 +94,4 @@ businessOwnerSchema.methods.authenticate = function(callback) {
 };
 
 
-mongoose.model('businessOwner', businessOwnerSchema);
+mongoose.model('user', userSchema);

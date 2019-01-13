@@ -1,13 +1,12 @@
 <section>
     <div ng-controller="adminController" ng-init="getBusinessOwners()">
-        <h1>Businesses</h1>
-        <md-button ng-click="openPage('admin/view/businessOwners')">Business Owners</md-button>
+        <h1>Business Owners</h1>
+        <md-button ng-click="openPage('admin/view/businesses')">Businesses</md-button>
         <md-button ng-init="checkAuth()" ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
             <input title="Search" ng-change="refreshData(search)" ng-model="search">
         </md-input-container>
-        <div ui-grid="gridOptions" class="grid"></div>
-        <md-button class="btn btnContainer" ng-click="openPage('admin/create/business')"><i class="fas fa-plus-square"></i> Create Business</md-button>
+        <div ui-grid="businessOwnersGridOptions" class="grid"></div>
     </div>
 </section>

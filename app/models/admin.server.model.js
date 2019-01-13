@@ -28,6 +28,10 @@ var adminSchema = new Schema ({
         type: String,
         required: 'password is required'
     },
+    roles: {
+        type: Array,
+        required: true
+    },
     dateCreated: {
         type: Date
     }
