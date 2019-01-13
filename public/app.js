@@ -13,11 +13,7 @@ var app = angular.module('anonymousCoupons', [
     'xeditable',
 
     // anonymousCoupons Application Modules
-    'businessListings',
-    'businessOwners',
-    'businesses',
-    'coupons',
-    'admins'
+    'cores'
 
 ]);
 

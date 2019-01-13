@@ -15,20 +15,6 @@ var router = express.Router();
 
 router.get('/',core.index);
 
-/*
- * admin ROUTES
- * @type {exports|module.exports}
- */
-var admin = require('./controllers/admin.server.controller.js');
-router.get('/admin/list', admin.list);
-router.get('/admin/detail/:id', admin.detail);
-router.get('/admin/signOut',admin.signOut);
-router.get('/admin/me', admin.me);
-router.post('/admin/signIn',admin.signIn);
-router.post('/admin/create', admin.create);
-router.post('/admin/update', admin.update);
-router.delete('/admin/delete/:id', admin.delete);
-
 
 /*
  * business ROUTES
@@ -60,22 +46,6 @@ router.post('/user/create', user.create);
 router.post('/user/update', user.update);
 router.delete('/user/delete/:id', user.delete);
 
-
-/*
- * businessOwner ROUTES
- * @type {exports|module.exports}
- */
-var businessOwner = require('./controllers/businessOwner.server.controller.js');
-router.get('/businessOwner/list', businessOwner.list);
-router.get('/businessOwner/detail/:id', businessOwner.detail);
-router.get('/businessOwner/signOut',businessOwner.signOut);
-router.get('/businessOwner/me', businessOwner.me);
-router.post('/businessOwner/search', businessOwner.search);
-router.post('/businessOwner/adminSignIn', businessOwner.adminSignIn);
-router.post('/businessOwner/signIn',businessOwner.signIn);
-router.post('/businessOwner/create', businessOwner.create);
-router.post('/businessOwner/update', businessOwner.update);
-router.delete('/businessOwner/delete/:id', businessOwner.delete);
 
 /*
  * coupon ROUTES

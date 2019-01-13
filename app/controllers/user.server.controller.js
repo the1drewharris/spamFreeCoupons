@@ -30,57 +30,40 @@ exports.signIn = function(req, res){
         if (err) {
             console.log('there was a problem checking email');
         } else if (foundUser) {
-            console.log('found Business Owner with email');
+            console.log('found user with email');
 
-            var user = new businessOwner (foundUser);
+            var newUser = new user (foundUser);
 
-            user.password = req.body.password;
+            newUser.password = req.body.password;
 
-            user.authenticate(function(passback){
+            newUser.authenticate(function(passback){
                 if (passback) {
-                    user.loginTime = Date.now();
-                    user.auth = passback;
+                    newUser.loginTime = Date.now();
+                    newUser.auth = passback;
                     //console.log('user.auth: ');
                     //console.dir(user.auth);
                     // Then save the user
-                    user.save(function(err) {
+                    newUser.save(function(err) {
                         if (err) {
                             return res.status(400).send({
                                 message: err
                             });
                         } else {
                             // Remove sensitive data before login
-                            user.password = undefined;
-                            user.salt = undefined;
-                            if (user.free) {
-                                console.log('businessOwner is free!');
-                                req.login(user, function(err) {
-                                    if (err) {
-                                        res.status(400).send(err);
-                                    } else {
-                                        res.json(user);
-                                    }
-                                });
-                            } else {
-                                //console.log('check user.subscription.status == Active');
-                                //if (user.active === true){
-                                //console.log('Business Owner has active subscription!');
-                                req.login(user, function(err) {
-                                    if (err) {
-                                        res.status(400).send(err);
-                                    } else {
-                                        res.json(user);
-                                    }
-                                });
-                                /*} else {
-                                    console.log('Business Owner does NOT have active subscription');
-                                    res.status(400).send({message: 'Subscription is not Active.', checkout: true, user: user});
-                                }*/
-                            }
+                            newUser.password = undefined;
+                            newUser.salt = undefined;
+                            req.login(newUser, function(err) {
+                                if (err) {
+                                    res.status(400).send(err);
+                                } else {
+                                    res.json(newUser);
+                                }
+                            });
+
                         }
                     });
                 } else {
-                    res.status(400).send({message: 'incorrect password!', auth: user.auth})
+                    res.status(400).send({message: 'incorrect password!', auth: newUser.auth})
                 }
             });
 

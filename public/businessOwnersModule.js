@@ -24,7 +24,7 @@ businessOwners.config([
             $routeProvider
         ) {
             $routeProvider
-                .when('/createAccount',{
+                /*.when('/createAccount',{
                     name: 'businessOwners create',
                     templateUrl:'modules/businessOwners/views/createOwner.client.view.html',
                     label: 'businessOwners create',
@@ -109,7 +109,7 @@ businessOwners.config([
                             });
                         }]
                     }
-                })
+                })*/
         }
     ]
 );

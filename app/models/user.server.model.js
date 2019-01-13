@@ -68,8 +68,8 @@ userSchema.pre('save', function(next) {
 userSchema.methods.hashPassword = function(password) {
     console.log('in hashPassword');
     if (foo && password) {
-        console.log('foo && password: return hashed password using this.foo');
-        console.log('this.foo: ' + foo);
+        //console.log('foo && password: return hashed password using this.foo');
+        //console.log('this.foo: ' + foo);
         return crypto.createHash('sha1').update(foo + password).digest('hex');
     } else {
         return password;
@@ -86,10 +86,10 @@ userSchema.methods.authenticate = function(callback) {
     //console.log('checkPassword: ' + checkPassword + ' hashPassword: ' + hashedPassword);
     //pull the hashed password for this user
     this.model('user').findOne({email: this.email}).exec(function (err, foundUser){
-        //console.log('foundUser.password: ' + foundUser.password + ' hashPassword: ' + hashedPassword);
-        //console.log('still in authenticate: ' + foundUser.password == hashedPassword);
+        console.log('foundUser.password: ' + foundUser.password + ' hashPassword: ' + hashedPassword);
+        console.log('still in authenticate: ' + foundUser.password === hashedPassword);
         //this.auth = foundUser.password === hashedPassword;
-        callback(foundUser.password == checkPassword);
+        callback(foundUser.password === checkPassword); //TODO: this is false when they match needs to be fixed
     });
 };
 
