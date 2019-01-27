@@ -50,7 +50,7 @@ app.controller('MainController', function (
     };
 
     // show toast indicating success
-    $rootScope.createToast = function(myClass) {
+    $rootScope.createToast = function(myClass) {  //FIXME: toast not working
         console.log("in create toast function");
         $scope.toast = ngToast.create({
             className: myClass,
@@ -67,6 +67,14 @@ app.controller('MainController', function (
 
 });
 
+app.config(['ngToastProvider', function(ngToastProvider) {
+    ngToastProvider.configure({
+        animation: 'slide', // or 'fade'
+        verticalPosition: 'top',
+        horizontalPosition: 'right'
+    });
+}]);
+
 /* ================================================================================
  Modal Controller for home/dashboard
  * ================================================================================ */
@@ -82,14 +90,6 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
     };
 
 });
-
-app.config(['ngToastProvider', function(ngToastProvider) {
-    ngToastProvider.configure({
-        animation: 'slide', // or 'fade'
-        verticalPosition: 'top',
-        horizontalPosition: 'right'
-    });
-}]);
 
 
 

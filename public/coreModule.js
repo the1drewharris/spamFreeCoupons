@@ -58,6 +58,7 @@ cores.config([
                         }]
                     }
                 })
+                // TESTED: passed testing
                 .when('/',{
                     name: 'user signIn',
                     templateUrl:'modules/core/views/signIn.client.view.html',
@@ -76,6 +77,7 @@ cores.config([
                     }
 
                 })
+                // TESTED: passed testing
                 .when('/signIn',{
                     name: 'user signIn',
                     templateUrl:'modules/core/views/signIn.client.view.html',

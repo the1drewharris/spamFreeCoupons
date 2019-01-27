@@ -1,44 +1,38 @@
 <!DOCTYPE html>
-<html id="ng-app" ng-app="anonymousCoupons">
+<html id="ng-app" ng-app="users">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"> <!-- force IE to use most recent standard mode -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign In - Anonymous Coupons</title>
+
     <script src="js/angular.min.js"></script> <!-- AngularJS Lib -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.client.styles.css" rel="stylesheet">
     <link href="css/ngToast.min.css" rel="stylesheet">
     <link href="css/ngToast-animations.min.css" rel="stylesheet">
-    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <link href="css/angular-material.min.css" rel="stylesheet">
     <link href="css/angular-material-overrides.client.styles.css" rel="stylesheet"> <!-- Angular Material overrides -->
     <link href="css/bootstrap-overrides.client.styles.css" rel="stylesheet"> <!-- Bootstrap overrides -->
-    <link href="css/core.client.styles.css" rel="stylesheet">
-    <link href="css/overrides.client.styles.css" rel="stylesheet">
-    <link href="css/ngtoast-overrides.client.styles.css" rel="stylesheet">
-    <link href="css/ng-animate.client.styles.css" rel="stylesheet">
-    <link href="css/overrides-mobile.client.styles.css" rel="stylesheet">
-    <link href="css/typography.client.styles.css" rel="stylesheet">
-    <link href="css/material-datetimepicker.min.css" rel="stylesheet">
-    <link href="css/core.css" rel="stylesheet">
 
-    <link href="css/header.client.styles.css" rel="stylesheet">
-    <link href="css/contentpane.client.styles.css" rel="stylesheet">
-    <!--<link href="modules/core/css/mainmenu.client.styles.css" rel="stylesheet">-->
+    <!-- Styles -->
+    <link href="/css/core.client.styles.css" rel="stylesheet">
+    <link href="/css/login.client.styles.css" rel="stylesheet">
+    <link href="/css/overrides.client.styles.css" rel="stylesheet">
+    <link href="/css/overrides-mobile.client.styles.css" rel="stylesheet">
+    <!--<link href="/css/typography.client.styles.css" rel="stylesheet">-->
+    <link href="/css/contentpane.client.styles.css" rel="stylesheet">
 
-    <link href="css/toggle.style.css" rel="stylesheet"> <!-- Toggle Switch styles : http://callmenick.com/post/css-toggle-switch-examples -->
-    <link href="js/angular-ui-grid/ui-grid.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/favicon.ico">
 
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <script src="/js/html5shiv.min.js"></script>
 
     <script src="js/es5-shim.min.js"></script> <!-- ES5 Shim to get Angular working with IE9 -->
     <script src="js/jquery.js"></script> <!-- JQuery Lib -->
     <script src="js/bootstrap.min.js"></script>
 
-    <!-- Other plugins and libs -->
-    <script src="js/CryptoJS/rollups/sha1.js"></script> <!-- CryptoJS MD5 Hasher -->
-    <script src="js/async.js"></script> <!-- Async -->
-
-    <!-- Angular Plugins -->
-    <script src="js/xeditable.js"></script> <!-- XEditable -->
     <script src="js/ui-bootstrap-tpls.min.js"></script> <!-- Bootstrap UI 0.13.4 -->
 
     <script src="js/angular-material.min.js"></script> <!-- Angular Material 1.0.7 -->
@@ -51,48 +45,65 @@
     <script src="js/ng-csv.min.js"></script> <!-- NG CSV -->
     <script src="js/angular-idle.min.js"></script>
 
-    <!--more Plugins-->
-    <script src="js/jstz.min.js"></script> <!-- jsTimezoneDetect -->
-    <script src="js/moment.js"></script> <!-- Angular Moment -->
-    <script src="js/angular-moment.min.js"></script> <!-- Angular Moment -->
-    <script src="js/moment-timezone-with-data-2010-2020.min.js"></script>
-    <script src="js/chosen.jquery.min.js"></script>
     <script src="js/ngToast.min.js"></script> <!-- ngToast -->
-    <script src="js/ocLazyLoad.js"></script>
-    <script src="js/line-chart.min.js"></script>
-    <script src="js/ui-iconpicker.min.js"></script>
-    <script src="js/underscore-min.js"></script>
-    <script src="js/underscore-to-lodash.shim.js"></script>
-    <script src="js/ng-lodash.min.js"></script> <!-- lodash -->
-    <script src="js/angular-ui-grid/ui-grid.js"></script> <!-- UI Grid -->
-    <script src="js/ui-grid-custom-select.js"></script> <!-- UI Grid -->
-    <script src="js/FileSaver.min.js"></script> <!-- Used for AppV file downloading -->
-    <script src="js/uuid.js"></script>
-    <script src="js/ua-parser.min.js"></script>
 
-    <!-- some more UI specific plugins (Angular Material) -->
-    <script src="js/angular-material-datetimepicker.js"></script>
-    <script src="js/angular-timezone-selector.min.js"></script>
-
-    <!--Type ahead dropdown plugin -->
-    <script src="js/gm.typeaheadDropdown.js"></script>
-
-    <script src="xlsx.full.min.js"></script>
-
-    <script src="app.js"></script>
-    <script src="/coreModule.js"></script>
-    <!--<script src="/adminModule.js"></script>
-    <script src="/businessOwnersModule.js"></script>
-    <script src="/businessListings.js"></script>
-    <script src="/businessesModule.js"></script>
-    <script src="/couponsModule.js"></script>-->
+    <script src="/modules/user/controllers/authentication.client.controller.js"></script>  <!-- need an authencitation controller for signin stuff-->
 
 </head>
 
-<body>
-{% raw %}
-<ng-view></ng-view>
-{% endraw %}
+
+<body class="signIn" layout layout-align="center start">
+<div
+        ng-controller="AuthenticationController"
+        ng-init="param = '{{param}}'"
+        layout="column"
+        layout-padding
+        flex-xs="90"
+        flex-sm="85"
+        flex-md="75"
+        flex-gt-md="40"
+>
+    <span flex="5"></span>
+    <p class="text-center">
+        Anonymous Coupons Logo Here<!--<img src="/images/CTL_Logo.png" width="250" height="59" alt="Anonymous Coupons" style="margin: 0 24px 8px 0">-->
+    </p>
+    <h3 class="text-center" style="margin: 49px 0;">Sign in to Anonymous Coupons</h3>
+
+    <div id="upgradewarn">
+
+    </div>
+
+    {% raw %}
+
+    <h4 ng-show="error" style="color:red;text-align: center">{{error}}</h4>
+    <form data-ng-submit="signIn()" class="signin form-horizontal" autocomplete="off" layout="row" layout-padding layout-align="center start">
+        <fieldset flex="75">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">email</span>
+                <input id="username" name="username" type="text" class="form-control" data-ng-model="credentials.email" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">password</span>
+                <input id="password" name="password" type="password" class="form-control" data-ng-model="credentials.password" aria-describedby="basic-addon1">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-default btn-block">Sign In</button>
+            </div>
+        </fieldset>
+    </form>
+
+    <div class="help-login text-center">
+        <p><em>Log in using your Anonymous Coupons Credentials</em></p>
+        <hr>
+        <p>Anonymous Coupons has been optimized for use with</p>
+        <p layout layout-align="center center">
+            <a href="https://www.google.com/chrome/" target="_blank" title="Download Google Chrome"
+               style="margin: 8px;"><i class="fab fa-chrome fa-2x"></i></a>
+        </p>
+    </div>
+
+    {% endraw %}
+</div>
 </body>
 
 </html>

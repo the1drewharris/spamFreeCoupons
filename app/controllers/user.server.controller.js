@@ -26,6 +26,7 @@ passport.deserializeUser(function(id, done) {
 
 exports.signIn = function(req, res){
     //businessOwner.findOne with email
+    console.dir(req.body);
     user.findOne({email: req.body.email}).exec(function (err, foundUser){
         if (err) {
             console.log('there was a problem checking email');

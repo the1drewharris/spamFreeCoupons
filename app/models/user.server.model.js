@@ -86,10 +86,12 @@ userSchema.methods.authenticate = function(callback) {
     //console.log('checkPassword: ' + checkPassword + ' hashPassword: ' + hashedPassword);
     //pull the hashed password for this user
     this.model('user').findOne({email: this.email}).exec(function (err, foundUser){
-        console.log('foundUser.password: ' + foundUser.password + ' hashPassword: ' + hashedPassword);
-        console.log('still in authenticate: ' + foundUser.password === hashedPassword);
+        //console.log('foundUser.password: ' + foundUser.password + ' hashPassword: ' + hashedPassword);
+        //console.log('still in authenticate: ' + foundUser.password == hashedPassword);
+        //console.log(typeof hashedPassword);
+        //console.log('found User' + typeof foundUser.password);
         //this.auth = foundUser.password === hashedPassword;
-        callback(foundUser.password === checkPassword); //TODO: this is false when they match needs to be fixed
+        callback(foundUser.password == hashedPassword); //TODO: this is false when they match needs to be fixed
     });
 };
 

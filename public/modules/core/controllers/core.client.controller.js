@@ -83,6 +83,10 @@ core.controller('coreController',[
             data : []
         };
 
+
+        ///////   GENERAL USEFULL  APP FUNCTIONS    //////////////////
+        //////////////////////////////////////////////////////////////
+
         $scope.openPage = function (pageName) {
             $location.path(pageName.replace(/#/, ''));
         };
@@ -123,12 +127,14 @@ core.controller('coreController',[
             });
         };
 
+        ///// AUTHENICATION FUNCTIONS ///////////////
         $scope.signIn = function(credentials) {
             delete $scope.error;
             console.log('in signIn');
             $http.post($scope.env + '/user/signIn', credentials)
                 .success(function(response) {
                     console.dir(response);
+                    // CHECK ROLES //
                     response.roles.forEach(function(role) {
                         if (role === "admin") {
                             $scope.openPage('/admin/home')
