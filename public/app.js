@@ -75,6 +75,20 @@ app.config(['ngToastProvider', function(ngToastProvider) {
     });
 }]);
 
+app.controller('headerController', function($scope, $window) {
+
+    console.log('in headerController');
+
+    $scope.logout = function () {
+        $window.open('/user/signOut', "_self");
+    };
+
+});
+
+app.controller('navController', function() {
+
+});
+
 /* ================================================================================
  Modal Controller for home/dashboard
  * ================================================================================ */

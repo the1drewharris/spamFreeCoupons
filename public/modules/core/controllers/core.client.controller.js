@@ -31,6 +31,7 @@ core.controller('coreController',[
     'lodash',
     'uiGridConstants',
     '$filter',
+    '$window',
     function (
         userCalls,
         couponCalls,
@@ -47,7 +48,8 @@ core.controller('coreController',[
         $sce,
         lodash,
         uiGridConstants,
-        $filter
+        $filter,
+        $window
     ) {
 
         $scope.appheader = 'businessOwners';
@@ -125,79 +127,6 @@ core.controller('coreController',[
                 dismissOnTimeout: true,
                 timeout: 3 * 1000
             });
-        };
-
-        ///// AUTHENICATION FUNCTIONS ///////////////
-        $scope.signIn = function(credentials) {
-            delete $scope.error;
-            console.log('in signIn');
-            $http.post($scope.env + '/user/signIn', credentials)
-                .success(function(response) {
-                    console.dir(response);
-                    // CHECK ROLES //
-                    response.roles.forEach(function(role) {
-                        if (role === "admin") {
-                            $scope.openPage('/admin/home')
-                        } else if (role === "business owner") {
-                            $scope.openPage('/businessOwner/home')
-                        }
-                    })
-                })
-                .error(function(response) {
-                    console.dir(response);
-                    $scope.createToast('Danger');
-                });
-        };
-
-        $scope.signInClaim = function(credentials) {
-            var id = $routeParams.id;
-            async.series([
-                function(callback) {
-
-                    businessOwnerCalls.searchBusinesses({
-                        id: id
-                    }).then(
-                        function (res) {
-                            $scope.business = res.data;
-                            callback();
-                        },
-                        function (err) {
-                            console.error('Error : ' + JSON.stringify(err.data.message));
-                        }
-                    )
-                },
-
-                function (callback) {
-
-                    delete $scope.error;
-                    $http.post($scope.env + '/businessOwner/signIn', credentials)
-                        .success(function(response) {
-
-                            if (id) {
-                                callback();
-                            } else if (response.businesses.length > 0) {
-                                if (response.businesses.length > 1) {
-                                    console.log('list businesses here');
-                                } else {
-                                    console.log('single business view');
-                                }
-                            } else {
-                                console.log('load claim');
-                                $scope.claimBusiness($scope.business);
-                            }
-                        })
-                        .error(function(response) {
-                            console.dir(response);
-                            $scope.createToast('Danger');
-                        });
-
-                },
-                function() {
-                    $scope.claimBusiness($scope.business);
-                }
-            ]);
-
-
         };
 
         $scope.claimBusiness = function (business) {
@@ -300,6 +229,10 @@ core.controller('coreController',[
             ]);
         };
 
+        ///// AUTHENICATION FUNCTIONS ///////////////
+
+
+
         $scope.getUnclaimedBusinesses = function () {
 
             async.series([
@@ -338,106 +271,6 @@ core.controller('coreController',[
 
                 }
 
-            ]);
-
-        };
-
-
-        /* =====================================================================
-         * Get all businessOwners from Mongo database
-         * ===================================================================== */
-        $scope.getBusinessOwners = function () {
-            businessOwnerCalls.getBusinessOwners({}).then(
-                function (res) {
-                    businessOwners = angular.copy(res.data);
-                    $scope.businessOwners = businessOwners;
-                    console.dir(businessOwners);
-                },
-                function (err) {
-                    console.error('Error getting businessOwners: ' + err.message);
-                }
-            );
-        };
-
-        /* =====================================================================
-         * create new businessOwner
-         * ===================================================================== */
-        $scope.createBusinessOwner = function (newBusinessOwner) {
-
-            async.series([
-                function(callback) {
-
-                    businessOwnerCalls.newBusinessOwner({
-                        name: newBusinessOwner.businessOwnerName,
-                        email: newBusinessOwner.businessOwnerEmail,
-                        password: newBusinessOwner.businessOwnerPassword,
-                        free: false,
-                        active: false
-                    }).then(
-                        function (res) {
-
-                            $scope.newBusinessOwner = {
-                                email: newBusinessOwner.businessOwnerEmail,
-                                password: newBusinessOwner.businessOwnerPassword
-                            };
-
-                            callback()
-                        },
-                        function (err) {
-                            $scope.badBusinessOwner = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
-                            console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
-                        }
-
-                    );
-
-                },
-
-                function () {
-
-
-                    $scope.signIn($scope.newBusinessOwner);
-
-                }
-            ]);
-
-        };
-
-        $scope.createBusinessOwnerClaim = function (newBusinessOwner) {
-
-            async.series([
-                function(callback) {
-
-                    businessOwnerCalls.newBusinessOwner({
-                        name: newBusinessOwner.businessOwnerName,
-                        email: newBusinessOwner.businessOwnerEmail,
-                        password: newBusinessOwner.businessOwnerPassword,
-                        free: false,
-                        active: false
-                    }).then(
-                        function (res) {
-
-                            $scope.newBusinessOwner = {
-                                email: newBusinessOwner.businessOwnerEmail,
-                                password: newBusinessOwner.businessOwnerPassword
-                            };
-
-                            callback()
-                        },
-                        function (err) {
-                            $scope.badBusinessOwner = 'Error creating businessOwner: ' + JSON.stringify(err.data.message);
-                            console.error('Error creating businessOwner: ' + JSON.stringify(err.data.message));
-                        }
-
-                    );
-
-                },
-
-                function () {
-
-
-                    $scope.signInClaim($scope.newBusinessOwner);
-
-                }
             ]);
 
         };

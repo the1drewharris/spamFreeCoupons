@@ -1,0 +1,20 @@
+<div ng-controller="headerController">
+
+    <h3 class="header">Anonymous Coupons</h3>
+
+    <md-menu class="dropDown">
+        <md-button aria-label="Open menu with custom trigger" ng-click="$mdOpenMenu()">
+            <i class="fas fa-user"></i>
+        </md-button>
+        <md-menu-content width="flex" ng-mouseleave="$mdMenu.close()">
+
+            <md-menu-item>
+                <md-button ng-click="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    logout
+                </md-button>
+            </md-menu-item>
+
+        </md-menu-content>
+    </md-menu>
+</div>

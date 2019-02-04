@@ -58,43 +58,6 @@ cores.config([
                         }]
                     }
                 })
-                // TESTED: passed testing
-                .when('/',{
-                    name: 'user signIn',
-                    templateUrl:'modules/core/views/signIn.client.view.html',
-                    label: 'user signIn',
-                    controller: 'coreController',
-                    resolve: {
-                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'coreController',
-                                files:[
-                                    // Controllers
-                                    'modules/core/controllers/core.client.controller.js'
-                                ]
-                            });
-                        }]
-                    }
-
-                })
-                // TESTED: passed testing
-                .when('/signIn',{
-                    name: 'user signIn',
-                    templateUrl:'modules/core/views/signIn.client.view.html',
-                    label: 'user signIn',
-                    controller: 'coreController',
-                    resolve: {
-                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'coreController',
-                                files:[
-                                    // Controllers
-                                    'modules/core/controllers/core.client.controller.js'
-                                ]
-                            });
-                        }]
-                    }
-                })
                 .when('/signIn/business/:id',{
                     name: 'businessOwners signInClaim',
                     templateUrl:'modules/businessOwners/views/signInClaim.client.view.html',
@@ -149,87 +112,6 @@ cores.config([
         }
     ]
 );
-
-/*businesses.config([
-        '$routeProvider',
-        function (
-            $routeProvider
-        ) {
-            $routeProvider
-                .when('/business/create',{
-                    name: 'businesses',
-                    templateUrl:'modules/businesses/views/createBusiness.client.view.html',
-                    label: 'businesses',
-                    controller: 'businessesController',
-                    resolve: {
-                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'businessesController',
-                                files:[
-                                    // Controllers
-                                    'modules/businesses/controllers/businesses.client.controller.js'
-                                ]});
-                        }]
-                    }
-                })
-                .when('/view/businesses',{
-                    name: 'businesses',
-                    templateUrl:'modules/businesses/views/viewBusinesses.client.view.html',
-                    label: 'businesses',
-                    controller: 'businessesController',
-                    resolve: {
-                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'businessesController',
-                                files:[
-                                    // Controllers
-                                    'modules/businesses/controllers/businesses.client.controller.js'
-                                ]});
-                        }]
-                    }
-
-                })
-                .when('/business/claim/:id',{
-                    name: 'business claim',
-                    templateUrl:'modules/businesses/views/claimBusiness.client.view.html',
-                    label: 'business claim',
-                    controller: 'businessesController',
-                    resolve: {
-                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'businessesController',
-                                files:[
-                                    // Controllers
-                                    'modules/businesses/controllers/businesses.client.controller.js'
-                                ]});
-                        }]
-                    }
-
-                })
-
-                .when('/business/view/:id',{
-                    name: 'business edit',
-                    templateUrl:'modules/businesses/views/updateBusiness.client.view.html',
-                    label: 'business edit',
-                    controller: 'businessesController',
-                    resolve: {
-                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'businessesController',
-                                files:[
-                                    // Controllers
-                                    'modules/businesses/controllers/businesses.client.controller.js'
-                                ]
-                            });
-                        }]
-                    }
-
-                })
-
-
-        }
-    ]
-);*/
 
 cores.factory('userCalls', function($http, $routeParams) {
     console.log("in userCalls factory");

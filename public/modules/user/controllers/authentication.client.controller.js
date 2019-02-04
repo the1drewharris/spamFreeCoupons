@@ -70,18 +70,18 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
                         window.location.href ='/';
                     } else {
                         window.location.href = window.location.href;
-//reload here to bring up deep link screen after sign in
+                        //reload here to bring up deep link screen after sign in
                         location.reload();
                     }
 
                     // CHECK ROLES //
-                    /*response.roles.forEach(function(role) {
+                    response.roles.forEach(function(role) {
                         if (role === "admin") {
                             $scope.openPage('/admin/home')
                         } else if (role === "business owner") {
                             $scope.openPage('/businessOwner/home')
                         }
-                    })*/
+                    })
                 })
                 .error(function(response) {
                     console.dir("error: " + response);
