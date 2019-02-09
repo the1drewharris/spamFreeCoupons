@@ -59,10 +59,32 @@ core.controller('coreController',[
         $scope.env = 'http://localhost:3000';
         $scope.credentials = '';
 
-        var businessOwners = "",
+        var businessOwners = [],
             businesses = '';
 
-        $scope.gridOptions = {
+        $scope.businessOwnersGridOptions = {
+            rowHeight: 50,
+            enableSorting: true,
+            columnDefs: [
+                { name:'Name', field: 'name'},
+                { name:'Email', field: 'email'},
+                //{ name:'Password', field: 'password'},
+                { name:'Free', field: 'free'},
+                { name:'Active', field: 'active'},
+                {
+                    name: 'Impersonate',
+                    displayName: 'Impersonate',
+                    cellTemplate:
+                        '<md-button ng-click="grid.appScope.signIn(row.entity)">'
+                        + '<i class="fas fa-user fa-2x"></i>'
+                        + '</md-button>',
+                    width: 90
+                }
+            ],
+            data : []
+        };
+
+        $scope.businessGridOptions = {
             rowHeight: 50,
             enableSorting: true,
             columnDefs: [
@@ -70,16 +92,27 @@ core.controller('coreController',[
                 { name:'Address', field: 'address'},
                 { name:'City', field: 'city'},
                 { name:'State', field: 'state'},
-                {
-                    name: 'claim',
-                    displayName: 'Claim',
+                { name:'Verify Code', field: 'verifyCode'},
+                /*{
+                    name: 'view',
+                    displayName: 'View',
                     cellTemplate:
-                        '<md-button aria-label="Claim Business" class="btn btn-default">claim'
+                        '<md-button ng-click="grid.appScope.openPage(\'admin/view/business/\' + row.entity.id)">'
+                        + '<i class="fas fa-edit fa-2x"></i>'
                         + '</md-button>',
-                    enableSorting: false,
-                    resizable: false,
-                    width: 70,
-                    pinnable: false
+                    width: 50
+                },*/
+                {
+                    name: 'claimed',
+                    displayName: 'Claimed',
+                    cellTemplate:
+                        '<span  style="color: Green;">' +
+                        '   <i ng-if="row.entity.businessOwnerId" class="fas fa-check-square fa-3x"></i>' +
+                        '</span>' +
+                        '<span  style="color: Red;">' +
+                        '   <i ng-if="!row.entity.businessOwnerId" class="fas fa-times fa-3x"></i>' +
+                        '</span>',
+                    width: 60
                 }
             ],
             data : []
@@ -127,6 +160,22 @@ core.controller('coreController',[
                 dismissOnTimeout: true,
                 timeout: 3 * 1000
             });
+        };
+
+        ///// Business FUNCTIONS ///////////////
+
+        $scope.getBusinesses = function () {
+            businessesCalls.getBusinesses({}).then(
+                function (res) {
+                    businesses = angular.copy(res.data);
+                    $scope.businesses = businesses;
+                    console.dir(businesses);
+                    $scope.businessGridOptions.data = businesses;
+                },
+                function (err) {
+                    console.error('Error getting businessOwners: ' + err.message);
+                }
+            );
         };
 
         $scope.claimBusiness = function (business) {
@@ -233,6 +282,33 @@ core.controller('coreController',[
 
 
 
+        ///// Business Owner FUNCTIONS ///////////////
+
+        /* =====================================================================
+         * Get all businessOwners from Mongo database
+         * ===================================================================== */
+        $scope.getBusinessOwners = function () {
+            userCalls.getUsers({}).then(
+                function (res) {
+
+                    angular.copy(res.data).forEach(function (user) {
+                        user.roles.forEach(function (role) {
+                            if (role == "businessOwner") {
+                                businessOwners.push(user);
+                            }
+                        })
+                    });
+
+                    $scope.businessOwners = businessOwners;
+                    console.dir(businessOwners);
+                    $scope.businessOwnersGridOptions.data = businessOwners;
+                },
+                function (err) {
+                    console.error('Error getting businessOwners: ' + err.message);
+                }
+            );
+        };
+
         $scope.getUnclaimedBusinesses = function () {
 
             async.series([
@@ -274,6 +350,10 @@ core.controller('coreController',[
             ]);
 
         };
+
+
+
+
 
     }
 ]);

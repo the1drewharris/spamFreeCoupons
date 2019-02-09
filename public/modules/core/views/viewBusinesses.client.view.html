@@ -1,0 +1,29 @@
+<header
+        data-ng-include="'modules/core/views/header.client.view.html'"
+        class="navbar"
+        flex-order="1"
+        flex-gt-md="100"
+        flex
+></header>
+
+<nav
+        class="mainmenu show"
+        ng-include="'modules/core/views/nav.client.view.html'"
+        flex="none"
+        flex-order="2"
+></nav>
+<section>
+    <div ng-controller="coreController" ng-init="getBusinesses()">
+        <h1>Businesses</h1>
+        <!--<md-button ng-click="openPage('admin/view/businessOwners')">Business Owners</md-button>
+        <md-button ng-init="checkAuth()" ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button>-->
+        <md-input-container flex>
+            <label><i class="fa fa-search"></i>Search</label>
+            <input title="Search" ng-change="refreshData(search)" ng-model="search">
+        </md-input-container>
+        <div ui-grid="businessGridOptions" class="grid"></div>
+        <!--<md-button class="btn btnContainer" ng-click="openPage('admin/create/business')"><i class="fas fa-plus-square"></i> Create Business</md-button>
+        <h4>Import CSV: </h4>
+        <input type="file" import-sheet-js="" multiple="false" callback-fn="createBusiness(newBusiness)">-->
+    </div>
+</section>

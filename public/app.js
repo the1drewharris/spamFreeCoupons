@@ -85,7 +85,11 @@ app.controller('headerController', function($scope, $window) {
 
 });
 
-app.controller('navController', function() {
+app.controller('navController', function($scope, $location) {
+
+    $scope.openPage = function (pageName) {
+        $location.path(pageName.replace(/#/, ''));
+    };
 
 });
 

@@ -109,6 +109,23 @@ cores.config([
                         }]
                     }
                 })
+                .when('/admin/viewBusinesses',{
+                    name: 'admin viewBusinesses',
+                    templateUrl:'modules/core/views/viewBusinesses.client.view.html',
+                    label: 'admin viewBusinesses',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
         }
     ]
 );

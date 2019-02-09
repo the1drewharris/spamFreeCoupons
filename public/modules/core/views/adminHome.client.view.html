@@ -13,6 +13,15 @@
         flex-order="2"
 ></nav>
 <section>
-    Admin Home Page
+    <div ng-controller="coreController" ng-init="getBusinessOwners()">
+        <h1>Business Owners</h1>
+        <!--<md-button ng-click="openPage('admin/view/businesses')">Businesses</md-button>
+        <md-button ng-init="checkAuth()" ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button> -->
+        <md-input-container flex>
+            <label><i class="fa fa-search"></i>Search</label>
+            <input title="Search" ng-change="refreshData(search)" ng-model="search">
+        </md-input-container>
+        <div ui-grid="businessOwnersGridOptions" class="grid"></div>
+    </div>
 </section>
 
