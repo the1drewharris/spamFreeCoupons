@@ -60,7 +60,8 @@ core.controller('coreController',[
         $scope.credentials = '';
 
         var businessOwners = [],
-            businesses = '';
+            businesses = '',
+            business = '';
 
         $scope.businessOwnersGridOptions = {
             rowHeight: 50,
@@ -93,15 +94,15 @@ core.controller('coreController',[
                 { name:'City', field: 'city'},
                 { name:'State', field: 'state'},
                 { name:'Verify Code', field: 'verifyCode'},
-                /*{
+                {
                     name: 'view',
                     displayName: 'View',
                     cellTemplate:
-                        '<md-button ng-click="grid.appScope.openPage(\'admin/view/business/\' + row.entity.id)">'
+                        '<md-button ng-click="grid.appScope.openPage(\'admin/editBusiness/\' + row.entity.id)">'
                         + '<i class="fas fa-edit fa-2x"></i>'
                         + '</md-button>',
                     width: 50
-                },*/
+                },
                 {
                     name: 'claimed',
                     displayName: 'Claimed',
@@ -115,6 +116,63 @@ core.controller('coreController',[
                     width: 60
                 }
             ],
+            data : []
+        };
+
+        $scope.couponGridOptions = {
+            enableSorting: true,
+            columnDefs: [
+                { name:'Title', field: 'title'},
+                { name: 'Description', field: 'description'},
+                {   name:'Categories',
+                    field: 'category',
+                    cellTemplate:
+                        '<md-chips ng-model="row.entity.category" readonly="true"></md-chips>'
+                },
+                {
+                    name:'Status',
+                    field: 'status',
+                    cellTemplate:
+                        '<md-switch ng-model="row.entity.status" class="category" ng-change="grid.appScope.switchChange(row.entity)" aria-label="Status" ng-true-value="\'active\'" ng-false-value="\'inactive\'">',
+                    width: 60
+                },
+                {
+                    name: 'Repeat Frequency',
+                    field: 'repeatFrequency',
+                    cellTemplate:
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Sunday\')" class="md-raised">S</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Sunday\')" class="md-raised md-primary">S</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Monday\')" class="md-raised">M</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Monday\')" class="md-raised md-primary">M</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Tuesday\')" class="md-raised">T</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Tuesday\')" class="md-raised md-primary">T</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Wednesday\')" class="md-raised">W</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Wednesday\')" class="md-raised md-primary">W</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Thursday\')" class="md-raised">T</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Thursday\')" class="md-raised md-primary">T</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Friday\')" class="md-raised">F</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Friday\')" class="md-raised md-primary">F</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Saturday\')" class="md-raised">S</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Saturday\')" class="md-raised md-primary">S</md-button>',
+                    width: 240
+                },
+                { name:'Coupon Code', field: 'couponCode'},
+                {
+                    name: 'Edit',
+                    cellTemplate:
+                        '<md-button class="btn-default" ng-click="grid.appScope.openPage(\'coupon/update/\' + row.entity.id)">' +
+                        '   <i class="fas fa-pencil-alt fa-2x"></i>' +
+                        '</md-button>',
+                    width: 50
+                }
+            ],
+            rowHeight: 45,
             data : []
         };
 
@@ -164,6 +222,29 @@ core.controller('coreController',[
 
         ///// Business FUNCTIONS ///////////////
 
+        $scope.getBusiness = function () {
+
+            var id = $routeParams.id;
+            console.log(id);
+            if(id) {
+                businessesCalls.searchBusinesses({
+                    id: id
+                }).then(
+                    function (res) {
+                        business = angular.copy(res.data[0]);
+                        $scope.business = business;
+                    },
+                    function (err) {
+                        $scope.badBusiness = 'Error getting business: ' + JSON.stringify(err.data.message);
+                        console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                    }
+                );
+            } else {
+                console.log('id undefined');
+            }
+
+        };
+
         $scope.getBusinesses = function () {
             businessesCalls.getBusinesses({}).then(
                 function (res) {
@@ -174,6 +255,32 @@ core.controller('coreController',[
                 },
                 function (err) {
                     console.error('Error getting businessOwners: ' + err.message);
+                }
+            );
+        };
+
+        $scope.editBusiness = function (newBusiness) {
+            console.log(newBusiness);
+            businessesCalls.updateBusiness({
+                id: newBusiness.id,
+                companyName: newBusiness.companyName,
+                address: newBusiness.address,
+                city: newBusiness.city,
+                state: newBusiness.state,
+                postalCode: newBusiness.postalCode,
+                phone: newBusiness.phone,
+                websiteURL: newBusiness.websiteURL,
+                facebook: newBusiness.facebook,
+                instagram: newBusiness.instagram,
+                twitter: newBusiness.twitter
+
+            }).then(
+                function (res) {
+                    $scope.updatedBusiness = angular.copy(res.data);
+                    //$scope.createToast(updatedBusiness.Name, "updated", "success");
+                },
+                function (err) {
+                    console.error('Error updating business: ' + err.message);
                 }
             );
         };

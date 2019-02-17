@@ -1,0 +1,27 @@
+<header
+        data-ng-include="'modules/core/views/header.client.view.html'"
+        class="navbar"
+        flex-order="1"
+        flex-gt-md="100"
+        flex
+></header>
+
+<nav
+        class="mainmenu show"
+        ng-include="'modules/core/views/nav.client.view.html'"
+        flex="none"
+        flex-order="2"
+></nav>
+
+<section>
+    <div ng-controller="couponsController" ng-init="getBusinessCoupons()">
+        <h1>Coupons</h1>
+        <md-button ng-click="showBusiness()"><i class="fa fa-arrow-left"></i> Business</md-button>
+        <md-button ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button>
+        <md-input-container flex>
+            <label><i class="fa fa-search"></i>Search</label>
+            <input title="Search" ng-change="refreshData(search)" ng-model="search">
+        </md-input-container>
+        <div ui-grid="couponGridOptions" class="grid"></div>
+    </div>
+</section>

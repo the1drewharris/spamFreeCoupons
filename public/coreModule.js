@@ -126,6 +126,23 @@ cores.config([
                         }]
                     }
                 })
+                .when('/admin/editBusiness/:id',{
+                    name: 'admin editBusiness',
+                    templateUrl:'modules/core/views/editBusiness.client.view.html',
+                    label: 'admin editBusiness',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
         }
     ]
 );

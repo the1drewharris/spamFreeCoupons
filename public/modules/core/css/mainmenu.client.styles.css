@@ -64,6 +64,7 @@ nav.mainmenu a:hover {
 
 nav.mainmenu.show {
     width: 200px;
+    display:inline-block;
 }
 
 nav.mainmenu i {

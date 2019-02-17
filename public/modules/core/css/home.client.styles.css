@@ -7,3 +7,7 @@ section[ttDashboard] {
 section[ttDashboard] div.panel-group {
     box-shadow: 4px 4px 5px #888;
 }
+
+.mainBody {
+    display:inline-block;
+}
