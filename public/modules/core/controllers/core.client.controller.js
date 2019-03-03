@@ -58,10 +58,19 @@ core.controller('coreController',[
         $scope.businessOwnerConfirmPassword = '';
         $scope.env = 'http://localhost:3000';
         $scope.credentials = '';
+        $scope.items = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        $scope.selected = [];
+        $scope.categories = [];
+
+        var self = this;
+
+        self.categories = loadCategories();
+        self.selectedCategories = [];
 
         var businessOwners = [],
             businesses = '',
-            business = '';
+            business = '',
+            coupons = "";
 
         $scope.businessOwnersGridOptions = {
             rowHeight: 50,
@@ -119,7 +128,7 @@ core.controller('coreController',[
             data : []
         };
 
-        $scope.couponGridOptions = {
+        $scope.allCouponsGridOptions = {
             enableSorting: true,
             columnDefs: [
                 { name:'Title', field: 'title'},
@@ -384,6 +393,243 @@ core.controller('coreController',[
                 }
             ]);
         };
+
+        ///// Coupon FUNCTIONS ///////////////
+
+        $scope.getCoupons = function () {
+            couponCalls.getCoupons().then(
+                function (res) {
+                    coupons = angular.copy(res.data);
+                    $scope.coupons = coupons;
+                    $scope.allCouponsGridOptions.data = res.data
+                },
+                function (err) {
+                    $scope.badCoupon = 'Error getting coupon: ' + JSON.stringify(err.data.message);
+                    console.error('Error getting coupon: ' + JSON.stringify(err.data.message));
+                }
+            );
+        };
+
+
+        $scope.createCoupon = function (newCoupon) {
+            var id = $routeParams.id;
+
+
+            async.series([
+
+                function(callback) {
+
+                    couponCalls.getBusiness({
+                        id: id
+                    }).then(
+                        function (res) {
+                            $scope.business = res.data;
+                            callback();
+                        },
+                        function (err) {
+                            $scope.badCoupon = 'Error getting business: ' + JSON.stringify(err.data.message);
+                            console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                        }
+                    )
+
+                },
+
+                function(callback) {
+
+                    console.dir($scope.selectedCategories);
+                    $scope.selectedCategories.forEach(function (item) {
+                        $scope.categories.push(item.name);
+                        console.dir(item)
+                    });
+                    console.dir($scope.categories);
+                    console.dir($scope.selectedCategories);
+                    console.dir(newCoupon);
+
+                    couponCalls.newCoupon({
+                        title: newCoupon.title,
+                        description: newCoupon.description,
+                        couponCode: newCoupon.couponCode,
+                        category: $scope.categories,
+                        status: newCoupon.status,
+                        repeatFrequency: $scope.selected,
+                        businessId: id,
+                        postalCode: $scope.business[0].postalCode
+                    }).then(
+                        function (res) {
+                            newCoupon = angular.copy(res.data);
+                            $scope.newCoupon = newCoupon;
+                            $scope.openPage('business/view/' + id);
+                            callback();
+                        },
+                        function (err) {
+                            $scope.badCoupon = 'Error creating coupon: ' + JSON.stringify(err.data.message);
+                            console.error('Error creating coupon: ' + JSON.stringify(err.data.message));
+                        }
+                    );
+
+                },
+
+                function(callback) {
+
+                    var couponIdObj = {id: $scope.newCoupon.id};
+                    $scope.business[0].coupons.push(couponIdObj);
+                    callback();
+
+                },
+
+                function() {
+
+                    couponCalls.updateBusiness({
+                        id: id,
+                        coupons: $scope.business[0].coupons
+                    }).then(
+                        function (res) {
+                            $scope.newBusiness = angular.copy(res.data);
+                            $scope.openPage('business/view/' + id);
+                        },
+                        function (err) {
+                            $scope.badBusiness = 'Error updating Business: ' + JSON.stringify(err.data.message);
+                            console.error('Error updating Business: ' + JSON.stringify(err.data.message));
+                        }
+                    )
+
+                }
+            ]);
+
+
+
+        };
+
+
+        $scope.isChecked = function() {
+            return $scope.selected.length === $scope.items.length;
+        };
+
+        $scope.exists = function (item, list) {
+            return list.indexOf(item) > -1;
+        };
+
+        $scope.toggleAll = function() {
+            if ($scope.selected.length === $scope.items.length) {
+                $scope.selected = [];
+            } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
+                $scope.selected = $scope.items.slice(0);
+            }
+        };
+
+        $scope.toggle = function (item, list) {
+            var idx = list.indexOf(item);
+            if (idx > -1) {
+                list.splice(idx, 1);
+            }
+            else {
+                list.push(item);
+            }
+        };
+
+        $scope.selectItem = function (item, list) {
+            var id = $routeParams.couponId;
+            async.series([
+
+                function(callback) {
+
+                    couponCalls.searchCoupons({
+                        id: id
+                    }).then(
+                        function (res) {
+                            coupon = angular.copy(res.data);
+                            $scope.coupon = coupon[0];
+                            callback();
+                        },
+                        function (err) {
+                            $scope.badCoupon = 'Error getting coupon: ' + JSON.stringify(err.data.message);
+                            console.error('Error getting coupon: ' + JSON.stringify(err.data.message));
+                        }
+                    )
+
+                },
+
+                function() {
+
+                    $scope.coupon.repeatFrequency.forEach(
+                        function(currentValue) {
+                            if (currentValue === item) {
+                                list.push(item)
+                            }
+                        }
+                    )
+                }
+            ]);
+
+
+
+        };
+
+        function loadCategories () {
+            var categories = [
+                {
+                    'name': 'Food'
+                },
+                {
+                    'name': 'Beauty'
+                },
+                {
+                    'name': 'Health'
+                },
+                {
+                    'name': 'Automotive'
+                },
+                {
+                    'name': 'Home Improvement'
+                },
+                {
+                    'name': 'Entertainment'
+                },
+                {
+                    'name': 'Legal'
+                }
+            ];
+
+
+            return categories.map(function (cat) {
+                cat.lowername = cat.name.toLowerCase();
+                return cat;
+            });
+        }
+
+        $scope.transformChip = function (chip) {
+            $scope.selectedCategories = self.selectedCategories;
+            return chip;
+        };
+
+        $scope.querySearch = function (query) {
+            var results = query ? self.categories.filter($scope.createFilterFor(query)) : [];
+            return results;
+        };
+
+        $scope.createFilterFor = function (query) {
+            var lowercaseQuery = query.toLowerCase();
+
+            return function filterFn(category) {
+                return (category.lowername.indexOf(lowercaseQuery) === 0);
+            };
+
+        };
+
+        $scope.switchChange = function (coupon) {
+            couponCalls.updateCoupon({
+                id: coupon.id,
+                status: coupon.status
+            }).then(
+                function (res) {
+                    $scope.updatedCoupon = angular.copy(res.data);
+                },
+                function (err) {
+                    console.error('Error updating coupon: ' + err.message);
+                }
+            );
+        };
+
 
         ///// AUTHENICATION FUNCTIONS ///////////////
 

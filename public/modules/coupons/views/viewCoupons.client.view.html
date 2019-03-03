@@ -1,12 +1,10 @@
 <section>
-    <div ng-controller="couponsController" ng-init="getBusinessCoupons()">
+    <div ng-controller="coreController" ng-init="getCoupons()">
         <h1>Coupons</h1>
-        <md-button ng-click="showBusiness()"><i class="fa fa-arrow-left"></i> Business</md-button>
-        <md-button ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
             <input title="Search" ng-change="refreshData(search)" ng-model="search">
         </md-input-container>
-        <div ui-grid="gridOptions" class="grid"></div>
+        <div ui-grid="allCouponsGridOptions" class="grid"></div>
     </div>
 </section>

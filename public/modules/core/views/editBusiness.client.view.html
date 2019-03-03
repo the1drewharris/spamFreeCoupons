@@ -16,10 +16,6 @@
 <section>
     <div ng-controller="coreController" ng-init="getBusiness()">
         <h1>Edit Business</h1>
-        <!--<md-button class="btn-default" ng-click="openPage('admin/view/businesses')"><i class="fa fa-arrow-left"></i> businesses</md-button>
-        <div ng-init="checkAuth()">
-            <md-button ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button>
-        </div>-->
         <div>
             <form>
                 Name: <input ng-change="editBusiness(business)" ng-model="business.companyName"><br>
@@ -35,7 +31,7 @@
 
             </form>
         </div>
-        <md-button ng-click="showAddCoupon()"><i class="fas fa-plus-square"></i> add coupon</md-button>
+        <md-button ng-click="openPage('/admin/addCoupon')"><i class="fas fa-plus-square"></i> add coupon</md-button>
         <md-button ng-click="showViewCoupon()"><i class="fas fa-bars"></i> view coupons</md-button>
     </div>
 </section>
