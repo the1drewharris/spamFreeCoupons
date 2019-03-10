@@ -396,6 +396,21 @@ core.controller('coreController',[
 
         ///// Coupon FUNCTIONS ///////////////
 
+        $scope.showBusiness = function () {
+            var id = $routeParams.id;
+            $scope.openPage('admin/editBusiness/' + id)
+        };
+
+        $scope.showAddCoupon = function () {
+            var id = $routeParams.id;
+            $scope.openPage('admin/addCoupon/' + id)
+        };
+
+        $scope.showViewCoupon = function () {
+            var id = $routeParams.id;
+            $scope.openPage('admin/business/viewCoupons/' + id)
+        };
+
         $scope.getCoupons = function () {
             couponCalls.getCoupons().then(
                 function (res) {
@@ -419,7 +434,7 @@ core.controller('coreController',[
 
                 function(callback) {
 
-                    couponCalls.getBusiness({
+                    businessesCalls.getBusiness({
                         id: id
                     }).then(
                         function (res) {
@@ -479,13 +494,13 @@ core.controller('coreController',[
 
                 function() {
 
-                    couponCalls.updateBusiness({
+                    businessesCalls.updateBusiness({
                         id: id,
                         coupons: $scope.business[0].coupons
                     }).then(
                         function (res) {
                             $scope.newBusiness = angular.copy(res.data);
-                            $scope.openPage('business/view/' + id);
+                            $scope.openPage('admin/editBusiness/' + id);
                         },
                         function (err) {
                             $scope.badBusiness = 'Error updating Business: ' + JSON.stringify(err.data.message);

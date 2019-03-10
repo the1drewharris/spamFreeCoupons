@@ -143,7 +143,24 @@ cores.config([
                         }]
                     }
                 })
-                .when('/admin/addCoupon',{
+                .when('/admin/business/viewCoupons/:id',{
+                    name: 'admin viewCoupons',
+                    templateUrl:'modules/core/views/viewCoupons.client.view.html',
+                    label: 'admin viewCoupons',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
+                .when('/admin/addCoupon/:id',{
                     name: 'admin addCoupon',
                     templateUrl:'modules/core/views/createCoupon.client.view.html',
                     label: 'admin addCoupon',
@@ -392,6 +409,17 @@ cores.factory('businessesCalls', function($http, $routeParams) {
             var promise = $http({
                 method: 'DELETE',
                 url: '/business/delete/' + req.id
+            }).then(function (response) {
+                return response;
+            });
+            // Return the promise to the controller
+            return promise;
+        },
+        getBusiness: function(req){
+            var promise = $http({
+                method: 'POST',
+                url: '/business/search',
+                data: req
             }).then(function (response) {
                 return response;
             });
