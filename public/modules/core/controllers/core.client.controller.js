@@ -70,7 +70,8 @@ core.controller('coreController',[
         var businessOwners = [],
             businesses = '',
             business = '',
-            coupons = "";
+            coupons = "",
+            coupon;
 
         $scope.businessOwnersGridOptions = {
             rowHeight: 50,
@@ -175,7 +176,7 @@ core.controller('coreController',[
                 {
                     name: 'Edit',
                     cellTemplate:
-                        '<md-button class="btn-default" ng-click="grid.appScope.openPage(\'coupon/update/\' + row.entity.id)">' +
+                        '<md-button class="btn-default" ng-click="grid.appScope.openPage(\'admin/editCoupon/\' + row.entity.id)">' +
                         '   <i class="fas fa-pencil-alt fa-2x"></i>' +
                         '</md-button>',
                     width: 50
@@ -411,6 +412,28 @@ core.controller('coreController',[
             $scope.openPage('admin/business/viewCoupons/' + id)
         };
 
+        $scope.checkFrequency = function(repeatFrequency, day) {
+            var state = true;
+            repeatFrequency.forEach(foo);
+            function foo(item){
+                if (item === day) {
+                    state = false
+                }
+            }
+            return state
+        };
+
+        $scope.checkFrequencyMatch = function(repeatFrequency, day) {
+            var state = false;
+            repeatFrequency.forEach(foo);
+            function foo(item){
+                if (item === day) {
+                    state = true
+                }
+            }
+            return state
+        };
+
         $scope.getCoupons = function () {
             couponCalls.getCoupons().then(
                 function (res) {
@@ -423,6 +446,63 @@ core.controller('coreController',[
                     console.error('Error getting coupon: ' + JSON.stringify(err.data.message));
                 }
             );
+        };
+
+        $scope.getBusinessCoupons = function () {
+
+            var id = $routeParams.id;
+            couponCalls.searchCoupons({
+                businessId: id
+            }).then(
+                function (res) {
+                    coupons = angular.copy(res.data);
+                    $scope.coupons = coupons;
+                    $scope.allCouponsGridOptions.data = coupons;
+                },
+                function (err) {
+                    console.error('Error getting coupons: ' + err.message);
+                }
+            );
+
+        };
+
+        $scope.editCoupon = function (updatedCoupon) {
+
+            console.dir(updatedCoupon.category);
+            updatedCoupon.category.forEach(function (item) {
+                if (item.name) {
+                    $scope.categories.push(item.name);
+                }
+                else {
+                    $scope.categories.push(item);
+                }
+                console.dir(item)
+            });
+
+            console.dir(updatedCoupon);
+            couponCalls.updateCoupon({
+                id: updatedCoupon.id,
+                title: updatedCoupon.title,
+                description: updatedCoupon.description,
+                repeatFrequency: $scope.selected,
+                category: $scope.categories,
+                status: updatedCoupon.status,
+                couponCode: updatedCoupon.couponCode,
+                postalCode: updatedCoupon.postalCode
+
+            }).then(
+                function (res) {
+                    updatedCoupon = angular.copy(res.data.results);
+                    $scope.updatedCoupon = updatedCoupon;
+                    console.dir(updatedCoupon);
+                    $scope.openPage('admin/business/viewCoupons/' + updatedCoupon.businessId);
+                    //$scope.createToast(updatedCoupon.Name, "updated", "success");
+                },
+                function (err) {
+                    console.error('Error updating coupon: ' + err.message);
+                }
+            );
+
         };
 
 

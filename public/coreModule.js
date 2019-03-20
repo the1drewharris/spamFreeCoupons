@@ -145,7 +145,7 @@ cores.config([
                 })
                 .when('/admin/business/viewCoupons/:id',{
                     name: 'admin viewCoupons',
-                    templateUrl:'modules/core/views/viewCoupons.client.view.html',
+                    templateUrl:'modules/core/views/viewBusinessCoupon.client.view.html',
                     label: 'admin viewCoupons',
                     controller: 'coreController',
                     resolve: {
@@ -181,6 +181,23 @@ cores.config([
                     name: 'admin editBusiness',
                     templateUrl:'modules/core/views/editBusiness.client.view.html',
                     label: 'admin editBusiness',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
+                .when('/admin/editCoupon/:id',{
+                    name: 'admin editCoupon',
+                    templateUrl:'modules/core/views/editCoupon.client.view.html',
+                    label: 'admin editCoupon',
                     controller: 'coreController',
                     resolve: {
                         loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
