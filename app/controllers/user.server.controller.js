@@ -35,38 +35,43 @@ exports.signIn = function(req, res){
 
             var newUser = new user (foundUser);
 
-            newUser.password = req.body.password;
+            if (req.body.password && req.body.password != null && req.body.password != '') {
+                newUser.password = req.body.password;
 
-            newUser.authenticate(function(passback){
-                if (passback) {
-                    newUser.loginTime = Date.now();
-                    newUser.auth = passback;
-                    //console.log('user.auth: ');
-                    //console.dir(user.auth);
-                    // Then save the user
-                    newUser.save(function(err) {
-                        if (err) {
-                            return res.status(400).send({
-                                message: err
-                            });
-                        } else {
-                            // Remove sensitive data before login
-                            newUser.password = undefined;
-                            newUser.salt = undefined;
-                            req.login(newUser, function(err) {
-                                if (err) {
-                                    res.status(400).send(err);
-                                } else {
-                                    res.json(newUser);
-                                }
-                            });
 
-                        }
-                    });
-                } else {
-                    res.status(400).send({message: 'incorrect password!', auth: newUser.auth})
-                }
-            });
+                newUser.authenticate(function(passback){
+                    if (passback) {
+                        newUser.loginTime = Date.now();
+                        newUser.auth = passback;
+                        //console.log('user.auth: ');
+                        //console.dir(user.auth);
+                        // Then save the user
+                        newUser.save(function(err) {
+                            if (err) {
+                                return res.status(400).send({
+                                    message: err
+                                });
+                            } else {
+                                // Remove sensitive data before login
+                                newUser.password = undefined;
+                                newUser.salt = undefined;
+                                req.login(newUser, function(err) {
+                                    if (err) {
+                                        res.status(400).send(err);
+                                    } else {
+                                        res.json(newUser);
+                                    }
+                                });
+
+                            }
+                        });
+                    } else {
+                        res.status(400).send({message: 'incorrect password!', auth: newUser.auth})
+                    }
+                });
+            } else {
+                res.status(400).send({message: 'password required', auth: newUser.auth})
+            }
 
         } else if (!foundUser) {
             console.log('did NOT find user with email');
@@ -89,7 +94,7 @@ exports.me = function(req,res){
     if(req.user){
         console.log('in auth.me');
         console.dir(req.user.username);
-        res.status(200).send({businessOwner: req.user})
+        res.status(200).send({user: req.user})
     } else {
         res.status(400);
     }

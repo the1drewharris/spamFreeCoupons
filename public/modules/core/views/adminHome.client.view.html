@@ -13,7 +13,8 @@
         flex-order="2"
 ></nav>
 <section>
-    <div ng-controller="coreController" ng-init="getBusinessOwners()">
+    <div ng-controller="coreController" ng-init="checkRoles('admin', isAuth)"></div>
+    <div ng-init="getBusinessOwners()">
         <h1>Business Owners</h1>
         <!--<md-button ng-click="openPage('admin/view/businesses')">Businesses</md-button>
         <md-button ng-init="checkAuth()" ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button> -->

@@ -91,7 +91,7 @@ userSchema.methods.authenticate = function(callback) {
         //console.log(typeof hashedPassword);
         //console.log('found User' + typeof foundUser.password);
         //this.auth = foundUser.password === hashedPassword;
-        callback(foundUser.password == hashedPassword); //TODO: this is false when they match needs to be fixed
+        callback(foundUser.password == hashedPassword);
     });
 };
 

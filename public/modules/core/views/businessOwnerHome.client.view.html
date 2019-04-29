@@ -1,7 +1,20 @@
-business Owner home page
+<header
+        data-ng-include="'modules/core/views/header.client.view.html'"
+        class="navbar"
+        flex-order="1"
+        flex-gt-md="100"
+        flex
+></header>
+
+<nav
+        class="mainmenu show"
+        ng-include="'modules/core/views/nav.client.view.html'"
+        flex="none"
+        flex-order="2"
+></nav>
 
 <section>
-    <md-button>
-        Logout
-    </md-button>
+    Business Owner Home
+    <div ng-controller="coreController" ng-init="checkRoles('businessOwner', isAuth)"></div>
+
 </section>

@@ -190,11 +190,11 @@ exports.update = function (req, res) {
 };
 
 /**
- * @api {delete} /coupon/:coupon
+ * @api {delete} /bCoupon/:bCoupon
  * @apiName delete
- * @apiGroup business
+ * @apiGroup coupon
  *
- * @apiParam {couponid} couponid
+ * @apiParam {businessId} businessId
  *
  * @apiSuccessExample Success-Response:
  * 200 OK
@@ -205,6 +205,37 @@ exports.update = function (req, res) {
  *  {
 *  "message": "error of some kind"
 *     }
+ */
+exports.bDelete = function (req, res) {
+    var query = {businessId: req.params.businessId};
+    coupon.remove(query, function (err, doc) {
+        if (err) {
+            return res.status(400).send({
+                message: err
+            });
+        } else {
+            res.status(200).send({results: doc});
+        }
+
+    })
+};
+
+/**
+ * @api {delete} /coupon/:coupon
+ * @apiName delete
+ * @apiGroup coupon
+ *
+ * @apiParam {couponid} couponid
+ *
+ * @apiSuccessExample Success-Response:
+ * 200 OK
+ *  {results: doc}
+ *
+ * @apiErrorExample Error-Response:
+ *  400 Bad Request
+ *  {
+ *  "message": "error of some kind"
+ *     }
  */
 exports.delete = function (req, res) {
     var query = {id: req.params.id};

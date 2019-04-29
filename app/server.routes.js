@@ -58,6 +58,8 @@ router.get('/coupon/detail/:id', coupon.detail);
 router.post('/coupon/search', coupon.search);
 router.post('/coupon/update', coupon.update);
 router.delete('/coupon/delete/:id', coupon.delete);
+router.delete('/coupon/bDelete/:businessId', coupon.bDelete);
+
 
 var authentication = require('./controllers/authentication.server.controller.js');
 router.get('/authentication/authenticate', authentication.authenticate);

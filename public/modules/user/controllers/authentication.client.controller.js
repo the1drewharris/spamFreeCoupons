@@ -78,7 +78,7 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
                     response.roles.forEach(function(role) {
                         if (role === "admin") {
                             $scope.openPage('/admin/home')
-                        } else if (role === "business owner") {
+                        } else if (role === "businessOwner") {
                             $scope.openPage('/businessOwner/home')
                         }
                     })

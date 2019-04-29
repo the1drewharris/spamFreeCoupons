@@ -395,6 +395,46 @@ core.controller('coreController',[
             ]);
         };
 
+        $scope.deleteBusiness = function () {
+
+            var id = $routeParams.id;
+            console.log(id);
+            if(id) {
+                businessesCalls.deleteBusiness({
+                    id: id
+                }).then(
+                    function (res) {
+                        business = angular.copy(res.data);
+                        $scope.business = business;
+                    },
+                    function (err) {
+                        $scope.badBusiness = 'Error deleting business: ' + JSON.stringify(err.data.message);
+                        console.error('Error deleting business: ' + JSON.stringify(err.data.message));
+                    }
+                );
+
+                couponCalls.deleteBCoupons({
+                    businessId: id
+                }).then(
+                    function (res) {
+                        coupon = angular.copy(res.data);
+                        $scope.coupon = coupon;
+                    },
+                    function (err) {
+                        $scope.badCoupon = 'Error deleting coupons: ' + JSON.stringify(err.data.message);
+                        console.error('Error deleting coupons: ' + JSON.stringify(err.data.message));
+                    }
+                )
+
+            } else {
+                console.log('id undefined');
+            }
+
+            $scope.openPage('admin/viewBusinesses');
+
+        };
+
+
         ///// Coupon FUNCTIONS ///////////////
 
         $scope.showBusiness = function () {
@@ -728,7 +768,47 @@ core.controller('coreController',[
 
         ///// AUTHENICATION FUNCTIONS ///////////////
 
+        $scope.isAuth = function() {
+            console.log("auth: " + $scope.match);
+            if (!$scope.match) {
+                $scope.openPage('notAuthorized')
+            }
+        };
 
+        $scope.checkRoles = function(Role, callback) {
+
+            var checkRole = Role;
+            console.log(checkRole);
+            $scope.match = false;
+
+
+
+            userCalls.getSignedInUser({}).then(
+                function (res) {
+                    console.dir(res.data.user.roles);
+
+                    res.data.user.roles.forEach(function (role) {
+                        console.log(checkRole);
+                        console.log(role);
+                        console.log(role === checkRole);
+                        if(role === checkRole) {
+                            $scope.match = true;
+                            console.log($scope.match);
+                        }
+                    });
+                    callback();
+
+
+                },
+                function (err) {
+                    console.error('Error getting businessOwners: ' + err.message);
+                }
+            );
+
+            console.log("Match : " + $scope.match);
+
+
+        };
 
         ///// Business Owner FUNCTIONS ///////////////
 

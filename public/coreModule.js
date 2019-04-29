@@ -94,7 +94,7 @@ cores.config([
                 })
                 .when('/admin/home',{
                     name: 'admin home',
-                    templateUrl:'modules/core/views/adminHome.client.view.html',
+                    templateUrl: 'modules/core/views/adminHome.client.view.html',
                     label: 'admin home',
                     controller: 'coreController',
                     resolve: {
@@ -211,6 +211,23 @@ cores.config([
                         }]
                     }
                 })
+                .when('/notAuthorized',{
+                    name: 'notAuthorized',
+                    templateUrl:'modules/core/views/notAuth.client.view.html',
+                    label: 'notAuthorized',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
         }
     ]
 );
@@ -223,6 +240,17 @@ cores.factory('userCalls', function($http, $routeParams) {
             var promise = $http({
                 method: 'GET',
                 url: '/user/list',
+                params: req
+            }).then(function (response) {
+                return response;
+            });
+            // Return the promise to the controller
+            return promise;
+        },
+        getSignedInUser: function(req){
+            var promise = $http({
+                method: 'GET',
+                url: '/user/me',
                 params: req
             }).then(function (response) {
                 return response;
@@ -341,6 +369,16 @@ cores.factory('couponCalls', function($http, $routeParams) {
             });
             // Return the promise to the controller
             return promise;
+        },
+        deleteBCoupons: function(req){
+        var promise = $http({
+            method: 'DELETE',
+            url: '/coupon/bDelete/' + req.businessId
+        }).then(function (response) {
+            return response;
+        });
+        // Return the promise to the controller
+        return promise;
         }
     };
     return couponsMasterService;
