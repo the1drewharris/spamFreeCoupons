@@ -879,9 +879,32 @@ core.controller('coreController',[
 
         };
 
-
-
-
+        $scope.createBusiness = function (newBusiness) {
+            console.dir(newBusiness);
+            businessesCalls.newBusiness({
+                id: newBusiness.id,
+                companyName: newBusiness.companyName,
+                address: newBusiness.address,
+                city: newBusiness.city,
+                state: newBusiness.state,
+                postalCode: newBusiness.postalCode,
+                phone: newBusiness.phone,
+                websiteURL: newBusiness.websiteURL,
+                facebook: newBusiness.facebook,
+                instagram: newBusiness.instagram,
+                twitter: newBusiness.twitter
+            }).then(
+                function (res) {
+                    newBusiness = angular.copy(res.data);
+                    $scope.getBusinesses();
+                    $scope.openPage('admin/viewBusinesses');
+                },
+                function (err) {
+                    $scope.badBusiness = 'Error creating business: ' + JSON.stringify(err.data.message);
+                    console.error('Error creating business: ' + JSON.stringify(err.data.message));
+                }
+            );
+        };
 
     }
 ]);
@@ -893,3 +916,32 @@ core.config(['ngToastProvider', function(ngToastProvider) {
         horizontalPosition: 'left'
     });
 }]);
+
+core.directive("importSheetJs", [SheetJSImportDirective]);
+
+function SheetJSImportDirective() {
+    return {
+        scope: { opts: '=', createBusiness: '&callbackFn' },
+        link: function ($scope, $elm) {
+            $elm.on('change', function (changeEvent) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    /* read workbook */
+                    var bstr = e.target.result;
+                    var workbook = XLSX.read(bstr, {type:'binary'});
+                    var d = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+
+                    console.dir(d);
+
+                    d.forEach(function(element) {
+                        console.log(element);
+                        $scope.createBusiness({newBusiness: element});
+                    });
+                };
+
+                reader.readAsBinaryString(changeEvent.target.files[0]);
+            });
+        }
+    };
+}

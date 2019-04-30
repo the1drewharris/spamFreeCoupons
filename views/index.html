@@ -22,10 +22,11 @@
 
     <link href="css/header.client.styles.css" rel="stylesheet">
     <link href="css/contentpane.client.styles.css" rel="stylesheet">
+    <link href="js/angular-ui-grid/ui-grid.css" rel="stylesheet">
     <!--<link href="modules/core/css/mainmenu.client.styles.css" rel="stylesheet">-->
 
     <link href="css/toggle.style.css" rel="stylesheet"> <!-- Toggle Switch styles : http://callmenick.com/post/css-toggle-switch-examples -->
-    <link href="js/angular-ui-grid/ui-grid.css" rel="stylesheet">
+
 
     <link href="modules/core/css/header.client.styles.css" rel="stylesheet">
 
@@ -79,15 +80,44 @@
     <!--Type ahead dropdown plugin -->
     <script src="js/gm.typeaheadDropdown.js"></script>
 
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+
     <script src="app.js"></script>
     <script src="/coreModule.js"></script>
 
 
 </head>
 
-<body>
+<body
+        id="OCL"
+        layout="row"
+        layout-wrap
+>
+    <header
+            data-ng-include="'modules/core/views/header.client.view.html'"
+            class="navbar"
+            flex-order="1"
+            flex-gt-md="100"
+            flex
+    ></header>
+
+    <nav
+            class="mainmenu show"
+            ng-include="'modules/core/views/nav.client.view.html'"
+            flex="none"
+            flex-order="2"
+    ></nav>
+
     {% raw %}
-        <ng-view></ng-view>
+
+    <ng-view
+            flex-xs="100"
+            flex-sm="100"
+            flex-md="100"
+            flex-gt-md="auto"
+            flex-order="3"
+    ></ng-view>
+
     {% endraw %}
 </body>
 </html>
