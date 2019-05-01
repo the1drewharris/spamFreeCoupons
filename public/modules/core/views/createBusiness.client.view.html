@@ -1,0 +1,20 @@
+<section>
+    <div ng-controller="coreController" ng-init="checkAuth()">
+        <h1>Business</h1>
+        <div>
+            <form>
+                <input title="Name" placeholder="Business Name" type="text" ng-model="business.companyName" ng-required="true"><br>
+                <input title="Address" placeholder="Address" type="text" ng-model="business.address" ng-required="true"><br>
+                <input title="City" placeholder="City" type="text" ng-model="business.city" ng-required="true"><br>
+                <input title="State" placeholder="State" type="text" ng-model="business.state" ng-required="true"><br>
+                <input title="Zip Code" placeholder="Zip Code" type="text" ng-model="business.postalCode" ng-required="true"><br>
+                <input title="Phone Number" placeholder="Phone Number" type="text" ng-model="business.phone" ng-required="true"><br>
+                <input title="Website URL" placeholder="Website URL" type="text" ng-model="business.websiteURL" ng-required="false"><br>
+                <input title="Facebook" placeholder="Facebook" type="text" ng-model="business.facebook" ng-required="false"><br>
+                <input title="Instagram" placeholder="Instagram" type="text" ng-model="business.instagram" ng-required="false"><br>
+                <input title="Twitter" placeholder="Twitter" type="text" ng-model="business.twitter" ng-required="false"><br>
+                <md-button type="submit" ng-click="createBusiness(business)"><i class="fas fa-plus-square"></i> Create Business</md-button>
+            </form>
+        </div>
+    </div>
+</section>

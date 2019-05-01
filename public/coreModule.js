@@ -228,6 +228,23 @@ cores.config([
                         }]
                     }
                 })
+                .when('/admin/createBusiness',{
+                    name: 'createBusiness',
+                    templateUrl:'modules/core/views/createBusiness.client.view.html',
+                    label: 'createBusiness',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
         }
     ]
 );
