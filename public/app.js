@@ -85,12 +85,75 @@ app.controller('headerController', function($scope, $window) {
 
 });
 
-app.controller('navController', function($scope, $location) {
+app.controller('navController', function($scope, $location, userCalls) {
 
     $scope.openPage = function (pageName) {
         $location.path(pageName.replace(/#/, ''));
     };
 
+    $scope.homeURL = function() {
+
+        if ($scope.match === true) {
+            $scope.openPage('admin/home')
+        } else {
+            $scope.openPage('businessOwner/home')
+        }
+
+    };
+
+    $scope.businessURL = function() {
+
+        if ($scope.match === true) {
+            $scope.openPage('admin/viewBusinesses')
+        } else {
+            $scope.openPage('businessOwner/viewBusinesses')
+        }
+
+    };
+
+    $scope.couponURL = function() {
+
+        if ($scope.match === true) {
+            $scope.openPage('admin/viewCoupons')
+        } else {
+            $scope.openPage('businessOwner/viewCoupons')
+        }
+
+    };
+
+    $scope.checkRoles = function(Role, callback) {
+
+        console.log('in checkRoles function');
+
+        var checkRole = Role;
+        console.log(checkRole);
+        $scope.match = false;
+
+        userCalls.getSignedInUser({}).then(
+            function (res) {
+                console.dir(res.data.user.roles);
+
+                res.data.user.roles.forEach(function (role) {
+                    console.log(checkRole);
+                    console.log(role);
+                    console.log(role === checkRole);
+                    if(role === checkRole) {
+                        $scope.match = true;
+                        console.log($scope.match);
+                    }
+                });
+                callback();
+
+
+            },
+            function (err) {
+                console.error('Error getting businessOwners: ' + err.message);
+            }
+        );
+
+        console.log("Match : " + $scope.match)
+
+    };
 });
 
 /* ================================================================================

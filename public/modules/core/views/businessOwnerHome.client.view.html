@@ -1,5 +1,11 @@
 <section>
-    Business Owner Home
     <div ng-controller="coreController" ng-init="checkRoles('businessOwner', isAuth)"></div>
-
+    <div ng-controller="coreController" ng-init="getClaimedBusinesses()">
+        <h1>Businesses</h1>
+        <md-input-container flex>
+            <label><i class="fa fa-search"></i>Search</label>
+            <input title="Search" ng-change="refreshData(search)" ng-model="search">
+        </md-input-container>
+        <div ui-grid="businessGridOptions" class="grid"></div>
+    </div>
 </section>

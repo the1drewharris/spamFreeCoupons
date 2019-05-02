@@ -93,7 +93,7 @@ exports.signOut = function(req, res) {
 exports.me = function(req,res){
     if(req.user){
         console.log('in auth.me');
-        console.dir(req.user.username);
+        console.dir(req.user.email);
         res.status(200).send({user: req.user})
     } else {
         res.status(400);

@@ -92,6 +92,23 @@ cores.config([
                         }]
                     }
                 })
+                .when('/businessOwner/editBusiness/:id',{
+                    name: 'businessOwner home',
+                    templateUrl:'modules/core/views/editBusiness.client.view.html',
+                    label: 'businessOwner home',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
                 .when('/admin/home',{
                     name: 'admin home',
                     templateUrl: 'modules/core/views/adminHome.client.view.html',

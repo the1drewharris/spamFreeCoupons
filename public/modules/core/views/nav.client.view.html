@@ -9,16 +9,19 @@
 
 <div ng-controller="navController" class="mainmenu" layout="column">
     <!-- side nav for full windows > 1280px wide -->
-    <h3>Navigation</h3><br/>
-    <md-button ng-click="openPage('admin/home')">Home</md-button><br/>
-    <md-button ng-click="openPage('admin/viewBusinesses')">Businesses</md-button><br/>
-    <md-button ng-click="openPage('admin/viewCoupons')">Coupons</md-button>
+    <div hide-xs
+         hide-sm
+         hide-md>
+        <h3>Navigation</h3><br/>
+        <md-button ng-click="checkRoles('admin', homeURL)">Home</md-button><br/>
+        <md-button ng-click="checkRoles('admin', businessURL)">Businesses</md-button><br/>
+        <md-button ng-click="checkRoles('admin', couponURL)">Coupons</md-button>
+    </div>
+
 
     <!-- for tablets and phones <= 1280px wide -->
-    <md-menu
-            hide-gt-md
-    >
-        <md-button aria-label="OCL Menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+    <md-menu hide-gt-md>
+        <md-button aria-label="AC Menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
             <i class="fa fa-bars"></i>
         </md-button>
         <md-menu-content width="3" id="mobileMenu">
@@ -30,7 +33,7 @@
                     </div>
                     <md-list>
                         <md-list-item title="Home" flex="100">
-                            <a ng-click="openPage('admin/home')" layout="row" flex="100"><span flex>Home</span></a>
+                            <a ng-click="checkRoles('admin', homeURL)" layout="row" flex="100"><span flex>Home</span></a>
                         </md-list-item>
                     </md-list>
                 </div>
@@ -43,7 +46,7 @@
                     </div>
                     <md-list>
                         <md-list-item title="Businesses" flex="100">
-                            <a ng-click="openPage('admin/viewBusinesses')" layout="row" flex="100"><span flex>Businesses</span></a>
+                            <a ng-click="checkRoles('admin', businessURL)" layout="row" flex="100"><span flex>Businesses</span></a>
                         </md-list-item>
                     </md-list>
                 </div>
@@ -56,7 +59,7 @@
                     </div>
                     <md-list>
                         <md-list-item title="Coupons" flex="100">
-                            <a ng-click="openPage('admin/viewCoupons')" layout="row" flex="100"><span flex>Coupons</span></a>
+                            <a ng-click="checkRoles('admin', couponURL)" layout="row" flex="100"><span flex>Coupons</span></a>
                         </md-list-item>
                     </md-list>
                 </div>

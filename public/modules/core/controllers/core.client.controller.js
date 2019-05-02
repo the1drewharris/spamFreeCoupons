@@ -255,6 +255,107 @@ core.controller('coreController',[
 
         };
 
+        $scope.getBusinessOwnersBusinesses = function () {
+
+            var id = $routeParams.id;
+            console.log(id);
+            if(id) {
+                businessesCalls.searchBusinesses({
+                    id: id
+                }).then(
+                    function (res) {
+                        business = angular.copy(res.data[0]);
+                        $scope.business = business;
+                    },
+                    function (err) {
+                        $scope.badBusiness = 'Error getting business: ' + JSON.stringify(err.data.message);
+                        console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                    }
+                );
+            } else {
+                console.log('id undefined');
+            }
+
+        };
+
+        $scope.createBusiness = function (newBusiness) {
+            console.dir(newBusiness);
+            businessesCalls.newBusiness({
+                id: newBusiness.id,
+                companyName: newBusiness.companyName,
+                address: newBusiness.address,
+                city: newBusiness.city,
+                state: newBusiness.state,
+                postalCode: newBusiness.postalCode,
+                phone: newBusiness.phone,
+                websiteURL: newBusiness.websiteURL,
+                facebook: newBusiness.facebook,
+                instagram: newBusiness.instagram,
+                twitter: newBusiness.twitter
+            }).then(
+                function (res) {
+                    newBusiness = angular.copy(res.data);
+                    $scope.getBusinesses();
+                    $scope.openPage('admin/viewBusinesses');
+                },
+                function (err) {
+                    $scope.badBusiness = 'Error creating business: ' + JSON.stringify(err.data.message);
+                    console.error('Error creating business: ' + JSON.stringify(err.data.message));
+                }
+            );
+        };
+
+        $scope.getClaimedBusinesses = function () {
+
+            async.series([
+                function(callback) {
+
+                    userCalls.getSignedInUser({}).then(
+                        function (res) {
+
+                            console.dir(res.data.user);
+                            $scope.user = res.data.user;
+                            callback();
+
+                        },
+                        function (err) {
+                            console.error('Error getting users: ' + err.message);
+                        }
+                    );
+
+                },
+                function() {
+
+                    businessesCalls.searchBusinesses({
+                        businessOwnerId: $scope.user.id
+                    }).then(
+                        function (res) {
+                            businesses = angular.copy(res.data);
+                            console.dir(res.data);
+                            $scope.businesses = businesses;
+                            $scope.businessGridOptions.data = res.data;
+                            if ($scope.businesses.length === 1) {
+
+                                openPage('businessOwner/editBusiness/' + $scope.businesses[0].id)
+
+                            }
+                        },
+                        function (err) {
+                            $scope.badBusinessOwner = 'Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message);
+                            console.error('Error getting UnclaimedBusinesses: ' + JSON.stringify(err.data.message));
+                        }
+                    );
+
+                }
+
+            ]);
+
+
+
+
+
+        };
+
         $scope.getBusinesses = function () {
             businessesCalls.getBusinesses({}).then(
                 function (res) {
@@ -775,13 +876,27 @@ core.controller('coreController',[
             }
         };
 
+        $scope.returnRole = function() {
+            return $scope.match;
+        };
+
+        $scope.homeURL = function() {
+
+            if ($scope.match === true) {
+                openPage('admin/home')
+            } else {
+                openPage('businessOwner/home')
+            }
+
+        };
+
         $scope.checkRoles = function(Role, callback) {
+
+            console.log('in checkRoles function');
 
             var checkRole = Role;
             console.log(checkRole);
             $scope.match = false;
-
-
 
             userCalls.getSignedInUser({}).then(
                 function (res) {
@@ -801,12 +916,11 @@ core.controller('coreController',[
 
                 },
                 function (err) {
-                    console.error('Error getting businessOwners: ' + err.message);
+                    console.error('Error getting users: ' + err.message);
                 }
             );
 
-            console.log("Match : " + $scope.match);
-
+            console.log("Match : " + $scope.match)
 
         };
 
@@ -879,32 +993,6 @@ core.controller('coreController',[
 
         };
 
-        $scope.createBusiness = function (newBusiness) {
-            console.dir(newBusiness);
-            businessesCalls.newBusiness({
-                id: newBusiness.id,
-                companyName: newBusiness.companyName,
-                address: newBusiness.address,
-                city: newBusiness.city,
-                state: newBusiness.state,
-                postalCode: newBusiness.postalCode,
-                phone: newBusiness.phone,
-                websiteURL: newBusiness.websiteURL,
-                facebook: newBusiness.facebook,
-                instagram: newBusiness.instagram,
-                twitter: newBusiness.twitter
-            }).then(
-                function (res) {
-                    newBusiness = angular.copy(res.data);
-                    $scope.getBusinesses();
-                    $scope.openPage('admin/viewBusinesses');
-                },
-                function (err) {
-                    $scope.badBusiness = 'Error creating business: ' + JSON.stringify(err.data.message);
-                    console.error('Error creating business: ' + JSON.stringify(err.data.message));
-                }
-            );
-        };
 
     }
 ]);
