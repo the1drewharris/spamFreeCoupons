@@ -166,6 +166,7 @@ exports.detail = function (req, res) {
  */
 exports.search = function (req, res) {
     var query = req.body;
+    console.dir(query);
     business.find(query).sort('-type').exec(function (err, businesses) {
         if (!business) {
             res.status(200).send({business: businesses})

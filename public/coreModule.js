@@ -93,9 +93,43 @@ cores.config([
                     }
                 })
                 .when('/businessOwner/editBusiness/:id',{
-                    name: 'businessOwner home',
+                    name: 'businessOwner editBusiness',
                     templateUrl:'modules/core/views/editBusiness.client.view.html',
-                    label: 'businessOwner home',
+                    label: 'businessOwner editBusiness',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
+                .when('/businessOwner/claimBusinesses',{
+                    name: 'businessOwner claimBusinesses',
+                    templateUrl:'modules/core/views/viewBusinesses.client.view.html',
+                    label: 'businessOwner claimBusinesses',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
+                .when('/businessOwner/claim/:id',{
+                    name: 'businessOwner claimBusiness',
+                    templateUrl:'modules/core/views/claimBusiness.client.view.html',
+                    label: 'businessOwner claimBusiness',
                     controller: 'coreController',
                     resolve: {
                         loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {

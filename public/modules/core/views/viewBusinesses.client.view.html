@@ -1,13 +1,24 @@
-<sectio>
-    <div ng-controller="coreController" ng-init="getBusinesses()">
-        <h1>Businesses</h1>
+<section>
+    <div ng-controller="coreController" ng-init="checkRoles('admin', doNothing)">
+        <h1 ng-if="match">Businesses</h1>
+        <h1 ng-if="!match">Claim Your Business</h1>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
             <input title="Search" ng-change="refreshData(search)" ng-model="search">
         </md-input-container>
-        <div ui-grid="businessGridOptions" class="grid"></div>
-        <md-button class="btn btnContainer" ng-click="openPage('admin/createBusiness')"><i class="fas fa-plus-square"></i> Create Business</md-button>
-        <h4>Import CSV: </h4>
-        <input type="file" import-sheet-js="" multiple="false" callback-fn="createBusiness(newBusiness)">
+
+        <div ng-if="match">
+            <div ng-init="getBusinesses()" ui-grid="businessGridOptions" class="grid"></div>
+        </div>
+        <div ng-if="!match">
+            <div ng-init="getUnclaimedBusinesses()" ui-grid="unclaimedBusinessGridOptions" class="grid"></div>
+        </div>
+
+        <div ng-if="match">
+            <md-button class="btn btnContainer" ng-click="openPage('admin/createBusiness')"><i class="fas fa-plus-square"></i> Create Business</md-button>
+            <h4>Import CSV: </h4>
+            <input type="file" import-sheet-js="" multiple="false" callback-fn="createBusiness(newBusiness)">
+        </div>
+
     </div>
-</sectio>
+</section>

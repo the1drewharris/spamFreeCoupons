@@ -106,7 +106,7 @@ app.controller('navController', function($scope, $location, userCalls) {
         if ($scope.match === true) {
             $scope.openPage('admin/viewBusinesses')
         } else {
-            $scope.openPage('businessOwner/viewBusinesses')
+            $scope.openPage('businessOwner/claimBusinesses')
         }
 
     };
@@ -121,25 +121,36 @@ app.controller('navController', function($scope, $location, userCalls) {
 
     };
 
+    $scope.btnName2 = function() {
+
+        if($scope.match === true) {
+            $scope.btn2 = 'businesses';
+        } else {
+            $scope.btn2 = 'claim business';
+        }
+
+    };
+
+
     $scope.checkRoles = function(Role, callback) {
 
-        console.log('in checkRoles function');
+        //console.log('in checkRoles function');
 
         var checkRole = Role;
-        console.log(checkRole);
+        //console.log(checkRole);
         $scope.match = false;
 
         userCalls.getSignedInUser({}).then(
             function (res) {
-                console.dir(res.data.user.roles);
+                //console.dir(res.data.user.roles);
 
                 res.data.user.roles.forEach(function (role) {
-                    console.log(checkRole);
-                    console.log(role);
-                    console.log(role === checkRole);
+                    //console.log(checkRole);
+                    //console.log(role);
+                    //console.log(role === checkRole);
                     if(role === checkRole) {
                         $scope.match = true;
-                        console.log($scope.match);
+                        //console.log($scope.match);
                     }
                 });
                 callback();
@@ -151,7 +162,7 @@ app.controller('navController', function($scope, $location, userCalls) {
             }
         );
 
-        console.log("Match : " + $scope.match)
+        //console.log("Match : " + $scope.match)
 
     };
 });

@@ -14,7 +14,7 @@
          hide-md>
         <h3>Navigation</h3><br/>
         <md-button ng-click="checkRoles('admin', homeURL)">Home</md-button><br/>
-        <md-button ng-click="checkRoles('admin', businessURL)">Businesses</md-button><br/>
+        <md-button ng-init="checkRoles('admin', btnName2)" ng-click="checkRoles('admin', businessURL)">{{btn2}}</md-button><br/>
         <md-button ng-click="checkRoles('admin', couponURL)">Coupons</md-button>
     </div>
 
@@ -27,41 +27,17 @@
         <md-menu-content width="3" id="mobileMenu">
             <md-menu-item>
                 <div layout="column">
-                    <div layout="row">
-                        <strong flex>Home</strong>
-                        <i title="Home"></i>
-                    </div>
-                    <md-list>
-                        <md-list-item title="Home" flex="100">
-                            <a ng-click="checkRoles('admin', homeURL)" layout="row" flex="100"><span flex>Home</span></a>
-                        </md-list-item>
-                    </md-list>
+                    <md-button ng-click="checkRoles('admin', homeURL)" layout="row" flex="100"><span flex>Home</span></md-button>
                 </div>
             </md-menu-item>
             <md-menu-item>
                 <div layout="column">
-                    <div layout="row">
-                        <strong flex>Businesses</strong>
-                        <i title="Businesses"></i>
-                    </div>
-                    <md-list>
-                        <md-list-item title="Businesses" flex="100">
-                            <a ng-click="checkRoles('admin', businessURL)" layout="row" flex="100"><span flex>Businesses</span></a>
-                        </md-list-item>
-                    </md-list>
+                    <md-button ng-init="checkRoles('admin', btnName2)" ng-click="checkRoles('admin', businessURL)" layout="row" flex="100"><span flex>{{btn2}}</span></md-button>
                 </div>
             </md-menu-item>
             <md-menu-item>
                 <div layout="column">
-                    <div layout="row">
-                        <strong flex>Coupons</strong>
-                        <i title="Coupons"></i>
-                    </div>
-                    <md-list>
-                        <md-list-item title="Coupons" flex="100">
-                            <a ng-click="checkRoles('admin', couponURL)" layout="row" flex="100"><span flex>Coupons</span></a>
-                        </md-list-item>
-                    </md-list>
+                    <md-button ng-click="checkRoles('admin', couponURL)" layout="row" flex="100"><span flex>Coupons</span></md-button>
                 </div>
             </md-menu-item>
         </md-menu-content>

@@ -46,7 +46,7 @@ businesses.config([
             })
             .when('/business/claim/:id',{
                 name: 'business claim',
-                templateUrl:'modules/businesses/views/claimBusiness.client.view.html',
+                templateUrl:'modules/core/views/claimBusiness.client.view.html',
                 label: 'business claim',
                 controller: 'businessesController',
                 resolve: {
