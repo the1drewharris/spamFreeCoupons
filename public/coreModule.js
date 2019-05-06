@@ -143,6 +143,40 @@ cores.config([
                         }]
                     }
                 })
+                .when('/businessOwner/addCoupon/:id',{
+                    name: 'businessOwner addCoupon',
+                    templateUrl:'modules/core/views/createCoupon.client.view.html',
+                    label: 'businessOwner addCoupon',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
+                .when('/businessOwner/business/viewCoupons/:id',{
+                    name: 'businessOwner viewCoupons',
+                    templateUrl:'modules/core/views/viewBusinessCoupon.client.view.html',
+                    label: 'businessOwner viewCoupons',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
                 .when('/admin/home',{
                     name: 'admin home',
                     templateUrl: 'modules/core/views/adminHome.client.view.html',

@@ -660,27 +660,17 @@ core.controller('coreController',[
                 console.log('id undefined');
             }
 
-            $scope.openPage('admin/viewBusinesses');
+            if ($scope.match) {
+                $scope.openPage('admin/viewBusinesses');
+            } else {
+                $scope.openPage('businessOwner/home');
+            }
+
 
         };
 
 
         ///// Coupon FUNCTIONS ///////////////
-
-        $scope.showBusiness = function () {
-            var id = $routeParams.id;
-            $scope.openPage('admin/editBusiness/' + id)
-        };
-
-        $scope.showAddCoupon = function () {
-            var id = $routeParams.id;
-            $scope.openPage('admin/addCoupon/' + id)
-        };
-
-        $scope.showViewCoupon = function () {
-            var id = $routeParams.id;
-            $scope.openPage('admin/business/viewCoupons/' + id)
-        };
 
         $scope.checkFrequency = function(repeatFrequency, day) {
             var state = true;
@@ -721,6 +711,19 @@ core.controller('coreController',[
         $scope.getBusinessCoupons = function () {
 
             var id = $routeParams.id;
+            businessesCalls.getBusiness({
+                id: id
+            }).then(
+                function (res) {
+                    console.dir(res.data);
+                    $scope.business = res.data[0];
+
+                },
+                function (err) {
+                    $scope.badCoupon = 'Error getting business: ' + JSON.stringify(err.data.message);
+                    console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                }
+            );
             couponCalls.searchCoupons({
                 businessId: id
             }).then(
@@ -1011,6 +1014,36 @@ core.controller('coreController',[
                 $scope.gridOptions = 'businessGridOptions';
             } else {
                 $scope.gridOptions = 'unclaimedBusinessGridOptions';
+            }
+
+        };
+
+        $scope.showAddCoupon = function () {
+            var id = $routeParams.id;
+            if ($scope.match) {
+                $scope.openPage('admin/addCoupon/' + id);
+            } else {
+                $scope.openPage('businessOwner/addCoupon/' + id);
+            }
+
+        };
+
+        $scope.showViewCoupon = function () {
+            var id = $routeParams.id;
+            if ($scope.match) {
+                $scope.openPage('admin/business/viewCoupons/' + id);
+            } else {
+                $scope.openPage('businessOwner/business/viewCoupons/' + id);
+            }
+
+        };
+
+        $scope.showBusiness = function () {
+            var id = $routeParams.id;
+            if ($scope.match) {
+                $scope.openPage('admin/editBusiness/' + id);
+            } else {
+                $scope.openPage('businessOwner/editBusiness/' + id);
             }
 
         };

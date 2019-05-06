@@ -1,6 +1,6 @@
 <section>
     <div ng-controller="coreController" ng-init="getBusinessCoupons()">
-        <h1>Coupons</h1>
+        <h1>{{business.companyName}}'s Coupons</h1>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
             <input title="Search" ng-change="refreshData(search)" ng-model="search">
