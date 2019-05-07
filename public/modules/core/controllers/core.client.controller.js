@@ -708,6 +708,59 @@ core.controller('coreController',[
             );
         };
 
+        $scope.getUserCoupons = function () {
+
+            async.series([
+                function(callback) {
+                    userCalls.getSignedInUser({}).then(
+                        function (res) {
+                            $scope.user = res.data.user;
+                            callback();
+                        },
+                        function (err) {
+                            console.error('Error getting users: ' + err.message);
+                        }
+                    );
+                },
+                function(callback) {
+                    businessesCalls.searchBusinesses({
+                        businessOwnerId: $scope.user.id
+                    }).then(
+                        function (res) {
+                            businesses = angular.copy(res.data);
+                            $scope.businesses = businesses;
+                            $scope.ids = [];
+                            businesses.forEach(function(business) {
+                                $scope.ids.push(business.id);
+                            });
+                            console.dir($scope.ids);
+                            $scope.queary = {businessId: { $in: $scope.ids}};
+                            callback();
+                        },
+                        function (err) {
+                            $scope.badBusiness = 'Error getting business: ' + JSON.stringify(err.data.message);
+                            console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                        }
+                    );
+                },
+                function() {
+
+                    couponCalls.searchCoupons($scope.queary).then(
+                        function (res) {
+                            coupons = angular.copy(res.data);
+                            $scope.coupons = coupons;
+                            $scope.allCouponsGridOptions.data = coupons;
+                        },
+                        function (err) {
+                            console.error('Error getting coupons: ' + err.message);
+                        }
+                    );
+
+                }
+            ]);
+
+        };
+
         $scope.getBusinessCoupons = function () {
 
             var id = $routeParams.id;

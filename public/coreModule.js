@@ -177,6 +177,23 @@ cores.config([
                         }]
                     }
                 })
+                .when('/businessOwner/viewCoupons',{
+                    name: 'businessOwner viewCoupons',
+                    templateUrl:'modules/core/views/viewCoupons.client.view.html',
+                    label: 'businessOwner viewCoupons',
+                    controller: 'coreController',
+                    resolve: {
+                        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'coreController',
+                                files:[
+                                    // Controllers
+                                    'modules/core/controllers/core.client.controller.js'
+                                ]
+                            });
+                        }]
+                    }
+                })
                 .when('/admin/home',{
                     name: 'admin home',
                     templateUrl: 'modules/core/views/adminHome.client.view.html',
