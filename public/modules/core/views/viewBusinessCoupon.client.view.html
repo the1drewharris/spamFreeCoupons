@@ -5,6 +5,7 @@
             <label><i class="fa fa-search"></i>Search</label>
             <input title="Search" ng-change="refreshData(search)" ng-model="search">
         </md-input-container>
-        <div ui-grid="allCouponsGridOptions" class="grid"></div>
+        <div ui-grid="businessCouponsGridOptions" class="grid"></div>
+        <md-button ng-click="checkRoles('admin', showAddCoupon)"><i class="fas fa-plus-square"></i> add coupon</md-button>
     </div>
 </section>

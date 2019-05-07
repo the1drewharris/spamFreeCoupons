@@ -48,6 +48,7 @@ exports.create = function (req, res) {
         couponCode: req.body.couponCode,
         postalCode: req.body.postalCode,
         businessId: req.body.businessId,
+        businessName: req.body.businessName,
         DateAdded: current_date
     });
 

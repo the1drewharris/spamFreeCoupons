@@ -39,6 +39,9 @@ var couponSchema = new Schema ({
     businessId: {
         type: String
     },
+    businessName: {
+        type: String
+    },
     dateAdded: {
         type: Date
     },

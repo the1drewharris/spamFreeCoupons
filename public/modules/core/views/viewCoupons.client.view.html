@@ -1,18 +1,10 @@
 <section>
-    <div ng-controller="coreController" ng-init="checkRoles('admin', doNothing)">
+    <div ng-controller="coreController">
         <h1>Coupons</h1>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
             <input title="Search" ng-change="refreshData(search)" ng-model="search">
         </md-input-container>
-
-        <div ng-if="match">
-            <div ng-init="getCoupons()" ui-grid="allCouponsGridOptions" class="grid"></div>
-        </div>
-        <div ng-if="!match">
-            <div ng-init="getUserCoupons()" ui-grid="allCouponsGridOptions" class="grid"></div>
-        </div>
-
-
+        <div ng-init="checkRoles('admin', couponControl)" ui-grid="allCouponsGridOptions" class="grid"></div>
     </div>
 </section>

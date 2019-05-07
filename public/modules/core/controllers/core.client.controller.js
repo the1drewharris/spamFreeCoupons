@@ -178,6 +178,67 @@ core.controller('coreController',[
             columnDefs: [
                 { name:'Title', field: 'title'},
                 { name: 'Description', field: 'description'},
+                {
+                    name: 'business',
+                    field: 'businessName'
+                },
+                {   name:'Categories',
+                    field: 'category',
+                    cellTemplate:
+                        '<md-chips ng-model="row.entity.category" readonly="true"></md-chips>'
+                },
+                {
+                    name:'Status',
+                    field: 'status',
+                    cellTemplate:
+                        '<md-switch ng-model="row.entity.status" class="category" ng-change="grid.appScope.switchChange(row.entity)" aria-label="Status" ng-true-value="\'active\'" ng-false-value="\'inactive\'">',
+                    width: 60
+                },
+                {
+                    name: 'Repeat Frequency',
+                    field: 'repeatFrequency',
+                    cellTemplate:
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Sunday\')" class="md-raised">S</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Sunday\')" class="md-raised md-primary">S</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Monday\')" class="md-raised">M</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Monday\')" class="md-raised md-primary">M</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Tuesday\')" class="md-raised">T</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Tuesday\')" class="md-raised md-primary">T</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Wednesday\')" class="md-raised">W</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Wednesday\')" class="md-raised md-primary">W</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Thursday\')" class="md-raised">T</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Thursday\')" class="md-raised md-primary">T</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Friday\')" class="md-raised">F</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Friday\')" class="md-raised md-primary">F</md-button>' +
+
+                        '   <md-button ng-if="grid.appScope.checkFrequency(row.entity.repeatFrequency, \'Saturday\')" class="md-raised">S</md-button>' +
+                        '   <md-button ng-if="grid.appScope.checkFrequencyMatch(row.entity.repeatFrequency, \'Saturday\')" class="md-raised md-primary">S</md-button>',
+                    width: 240
+                },
+                { name:'Coupon Code', field: 'couponCode'},
+                {
+                    name: 'Edit',
+                    cellTemplate:
+                        '<md-button class="btn-default" ng-click="grid.appScope.openPage(\'admin/editCoupon/\' + row.entity.id)">' +
+                        '   <i class="fas fa-pencil-alt fa-2x"></i>' +
+                        '</md-button>',
+                    width: 50
+                }
+            ],
+            rowHeight: 45,
+            data : []
+        };
+
+        $scope.businessCouponsGridOptions = {
+            enableSorting: true,
+            columnDefs: [
+                { name:'Title', field: 'title'},
+                { name: 'Description', field: 'description'},
                 {   name:'Categories',
                     field: 'category',
                     cellTemplate:
@@ -695,6 +756,8 @@ core.controller('coreController',[
         };
 
         $scope.getCoupons = function () {
+            console.log('in getCoupons');
+
             couponCalls.getCoupons().then(
                 function (res) {
                     coupons = angular.copy(res.data);
@@ -764,31 +827,41 @@ core.controller('coreController',[
         $scope.getBusinessCoupons = function () {
 
             var id = $routeParams.id;
-            businessesCalls.getBusiness({
-                id: id
-            }).then(
-                function (res) {
-                    console.dir(res.data);
-                    $scope.business = res.data[0];
+            console.log(id);
 
+            async.series([
+                function(callback) {
+                    businessesCalls.getBusiness({
+                        id: id
+                    }).then(
+                        function (res) {
+                            console.dir(res.data);
+                            $scope.business = res.data[0];
+                            callback();
+
+                        },
+                        function (err) {
+                            $scope.badCoupon = 'Error getting business: ' + JSON.stringify(err.data.message);
+                            console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                        }
+                    );
                 },
-                function (err) {
-                    $scope.badCoupon = 'Error getting business: ' + JSON.stringify(err.data.message);
-                    console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                function () {
+                    couponCalls.searchCoupons({
+                        businessId: id
+                    }).then(
+                        function (res) {
+                            coupons = angular.copy(res.data);
+                            $scope.coupons = coupons;
+                            console.dir(coupons);
+                            $scope.businessCouponsGridOptions.data = coupons;
+                        },
+                        function (err) {
+                            console.error('Error getting coupons: ' + err.message);
+                        }
+                    );
                 }
-            );
-            couponCalls.searchCoupons({
-                businessId: id
-            }).then(
-                function (res) {
-                    coupons = angular.copy(res.data);
-                    $scope.coupons = coupons;
-                    $scope.allCouponsGridOptions.data = coupons;
-                },
-                function (err) {
-                    console.error('Error getting coupons: ' + err.message);
-                }
-            );
+            ]);
 
         };
 
@@ -844,7 +917,8 @@ core.controller('coreController',[
                         id: id
                     }).then(
                         function (res) {
-                            $scope.business = res.data;
+                            business = res.data;
+                            $scope.business = business;
                             callback();
                         },
                         function (err) {
@@ -873,7 +947,8 @@ core.controller('coreController',[
                         category: $scope.categories,
                         status: newCoupon.status,
                         repeatFrequency: $scope.selected,
-                        businessId: id,
+                        businessId: $scope.business[0].id,
+                        businessName: $scope.business[0].companyName,
                         postalCode: $scope.business[0].postalCode
                     }).then(
                         function (res) {
@@ -1024,8 +1099,7 @@ core.controller('coreController',[
         };
 
         $scope.querySearch = function (query) {
-            var results = query ? self.categories.filter($scope.createFilterFor(query)) : [];
-            return results;
+            return query ? self.categories.filter($scope.createFilterFor(query)) : [];
         };
 
         $scope.createFilterFor = function (query) {
@@ -1099,6 +1173,71 @@ core.controller('coreController',[
                 $scope.openPage('businessOwner/editBusiness/' + id);
             }
 
+        };
+
+        $scope.couponControl = function () {
+            if ($scope.match) {
+                couponCalls.getCoupons().then(
+                    function (res) {
+                        coupons = angular.copy(res.data);
+                        $scope.coupons = coupons;
+                        $scope.allCouponsGridOptions.data = res.data
+                    },
+                    function (err) {
+                        $scope.badCoupon = 'Error getting coupon: ' + JSON.stringify(err.data.message);
+                        console.error('Error getting coupon: ' + JSON.stringify(err.data.message));
+                    }
+                );
+            } else {
+                async.series([
+                    function(callback) {
+                        userCalls.getSignedInUser({}).then(
+                            function (res) {
+                                $scope.user = res.data.user;
+                                callback();
+                            },
+                            function (err) {
+                                console.error('Error getting users: ' + err.message);
+                            }
+                        );
+                    },
+                    function(callback) {
+                        businessesCalls.searchBusinesses({
+                            businessOwnerId: $scope.user.id
+                        }).then(
+                            function (res) {
+                                businesses = angular.copy(res.data);
+                                $scope.businesses = businesses;
+                                $scope.ids = [];
+                                businesses.forEach(function(business) {
+                                    $scope.ids.push(business.id);
+                                });
+                                console.dir($scope.ids);
+                                $scope.queary = {businessId: { $in: $scope.ids}};
+                                callback();
+                            },
+                            function (err) {
+                                $scope.badBusiness = 'Error getting business: ' + JSON.stringify(err.data.message);
+                                console.error('Error getting business: ' + JSON.stringify(err.data.message));
+                            }
+                        );
+                    },
+                    function() {
+
+                        couponCalls.searchCoupons($scope.queary).then(
+                            function (res) {
+                                coupons = angular.copy(res.data);
+                                $scope.coupons = coupons;
+                                $scope.allCouponsGridOptions.data = coupons;
+                            },
+                            function (err) {
+                                console.error('Error getting coupons: ' + err.message);
+                            }
+                        );
+
+                    }
+                ]);
+            }
         };
 
         $scope.doNothing = function () {};
