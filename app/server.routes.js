@@ -44,6 +44,7 @@ router.get('/user/me', user.me);
 router.post('/user/search', user.search);
 router.post('/user/signIn',user.signIn);
 router.post('/user/create', user.create);
+router.post('/user/createBusinessOwner', user.createBusinessOwner);
 router.post('/user/update', user.update);
 router.delete('/user/delete/:id', user.delete);
 

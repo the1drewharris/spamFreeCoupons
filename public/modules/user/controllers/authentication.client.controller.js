@@ -21,6 +21,13 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
         if (IEVersion <= 9){
             $scope.reqUpgrade = true;
         }
+        $scope.passwordStrength = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        $scope.credentials = {
+            name:'',
+            email:'',
+            password:'',
+            confirmPassword:''
+        };
         $scope.env = 'http://localhost:3000';
 
         // show toast indicating success
@@ -42,25 +49,25 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
             $location.path(pageName.replace(/#/, ''));
         };
 
+
+
         ///// AUTHENICATION FUNCTIONS ///////////////
-        $scope.signIn = function(credentials) {
 
-           /* $http.post('/auth/signin', $scope.credentials).success(function(response) {
-// If successful we assign the response to the global user model
-                $rootScope.user = response;
+        $scope.createAccount = function() {
+            delete $scope.error;
 
-                /*Allows Redirect to specific url if false
-                if(window.location.href > -1) {
-                    window.location.href ='/';
-                } else {
-                    window.location.href = window.location.href;
-//reload here to bring up deep link screen after sign in
-                    location.reload();
-                }
-            }).error(function(response) {
-                $scope.error = response.message;
-            });*/
+            $http.post($scope.env + '/user/createBusinessOwner', $scope.credentials)
+                .success(function () {
+                    $scope.signIn();
+                })
+                .error(function (response) {
+                    console.dir("error: " + response.message);
+                    $scope.error = response.message;
+                });
 
+        };
+
+        $scope.signIn = function() {
             delete $scope.error;
             console.log('in signIn');
             $http.post($scope.env + '/user/signIn', $scope.credentials)
@@ -87,57 +94,6 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
                     console.dir("error: " + response);
                     $scope.error = response.message;
                 });
-        };
-
-        $scope.signInClaim = function(credentials) {
-            var id = $routeParams.id;
-            async.series([
-                function(callback) {
-
-                    businessOwnerCalls.searchBusinesses({
-                        id: id
-                    }).then(
-                        function (res) {
-                            $scope.business = res.data;
-                            callback();
-                        },
-                        function (err) {
-                            console.error('Error : ' + JSON.stringify(err.data.message));
-                        }
-                    )
-                },
-
-                function (callback) {
-
-                    delete $scope.error;
-                    $http.post($scope.env + '/businessOwner/signIn', credentials)
-                        .success(function(response) {
-
-                            if (id) {
-                                callback();
-                            } else if (response.businesses.length > 0) {
-                                if (response.businesses.length > 1) {
-                                    console.log('list businesses here');
-                                } else {
-                                    console.log('single business view');
-                                }
-                            } else {
-                                console.log('load claim');
-                                $scope.claimBusiness($scope.business);
-                            }
-                        })
-                        .error(function(response) {
-                            console.dir(response);
-                            $scope.createToast('Danger');
-                        });
-
-                },
-                function() {
-                    $scope.claimBusiness($scope.business);
-                }
-            ]);
-
-
         };
 
     }

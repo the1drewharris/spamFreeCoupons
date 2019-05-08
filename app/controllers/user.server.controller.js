@@ -145,6 +145,41 @@ exports.create = function (req, res) {
     });
 };
 
+exports.createBusinessOwner = function (req, res) {
+    // used to create ID
+    if (req.body.name === undefined) {
+        res.status(400).send({message: 'Name is Required!'})
+    } else if (req.body.email === undefined) {
+        res.status(400).send({message: 'Email is Required!'})
+    } else if (req.body.password === undefined || req.body.confirmPassword === undefined) {
+        res.status(400).send({message: 'Password is Required!'})
+    } else if (req.body.password === req.body.confirmPassword ) {
+        res.status(400).send({message: 'Passwords do Not Match!'})
+    } else {
+        var current_date = (new Date()).valueOf().toString();
+        var random = Math.random().toString();
+        var v = new user({
+            id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            businessId: req.body.businessId,
+            businesses: req.body.businesses,
+            roles: ['businessOwner'],
+            createdDate: current_date
+        });
+        v.save(function (err, user) {
+            if (err) {
+                return res.status(400).send({
+                    message:  err
+                });
+            } else {
+                res.status(200).send({success: true, id: user.id});
+            }
+        });
+    }
+};
+
 /**
  * @api {get} /user/list
  * @apiName list

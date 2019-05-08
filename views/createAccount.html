@@ -76,18 +76,49 @@
     {% raw %}
 
     <h4 ng-show="error" style="color:red;text-align: center">{{error}}</h4>
-    <form data-ng-submit="signIn()" class="signin form-horizontal" autocomplete="off" layout="row" layout-padding layout-align="center start">
+    <form data-ng-submit="createAccount()" class="signin form-horizontal" name="form" autocomplete="off" layout="row" layout-padding layout-align="center start">
         <fieldset flex="75">
             <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">name</span>
+                <input id="name" name="name" type="text" class="form-control" ng-required="true" data-ng-model="credentials.name" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">email</span>
-                <input id="username" name="username" type="text" class="form-control" data-ng-model="credentials.email" aria-describedby="basic-addon1">
+                <input id="email" name="email" type="email" class="form-control" ng-required="true" data-ng-model="credentials.email" aria-describedby="basic-addon1">
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">password</span>
-                <input id="password" name="password" type="password" class="form-control" data-ng-model="credentials.password" aria-describedby="basic-addon1">
+                <input id="password"
+                       name="password"
+                       type="password"
+                       class="form-control"
+                       ng-required="true"
+                       data-ng-model="credentials.password"
+                       ng-pattern="passwordStrength"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">confirm password</span>
+                <input
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        type="password"
+                        class="form-control"
+                        ng-required="true"
+                        data-ng-model="credentials.confirmPassword"
+                        aria-describedby="basic-addon1">
+            </div>
+
+            <div ng-show="!form.password.$valid" style="color:red">
+                Password should be at least 8 characters long
+                and should contain one number, one character, and one special
+                character
+            </div>
+            <div ng-show="credentials.password != credentials.confirmPassword" style="color:red">
+                Passwords must Match
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-default btn-block">Sign In</button>
+                <button type="submit" ng-disabled="credentials.password != credentials.confirmPassword || credentials.password == undefined || credentials.confirmPassword == undefined" class="btn btn-default btn-block">Create Account</button>
             </div>
         </fieldset>
     </form>
