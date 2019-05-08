@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var router = express.Router();
 
 router.get('/',core.index);
+router.get('/createAccount', core.signUp);
 
 
 /*

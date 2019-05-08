@@ -45,6 +45,9 @@ exports.index = function (req, res) {
     //  }
 
 };
+exports.signUp = function(req,res) {
+    res.render('createAccount');
+};
 
 
 /**
@@ -263,7 +266,7 @@ function plantSeeds (myModel,myMode,dupField,app,myseeds) {
             thisMode = 'update and append';
             console.log(thisMode);
         } else {
-            console.log('seeds: ')
+            console.log('seeds: ');
             console.dir(myseeds);
             //console.log(err);
             console.error('There are no seeds for ' + app + '.');
