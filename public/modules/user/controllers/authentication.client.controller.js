@@ -73,20 +73,24 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
             $http.post($scope.env + '/user/signIn', $scope.credentials)
                 .success(function(response) {
 
-                   if(window.location.href > -1) {
+                    console.log(window.location.href);
+
+                    /*
+                    if(window.location.href > -1) {
                         window.location.href ='/';
+                        location.reload();
                     } else {
                         window.location.href = window.location.href;
                         //reload here to bring up deep link screen after sign in
                         location.reload();
-                    }
+                    }*/
 
                     // CHECK ROLES //
                     response.roles.forEach(function(role) {
                         if (role === "admin") {
-                            $scope.openPage('/admin/home')
+                            window.location.href = $scope.env + '/#/admin/home';
                         } else if (role === "businessOwner") {
-                            $scope.openPage('/businessOwner/home')
+                            window.location.href = $scope.env + '/#/businessOwner/home';
                         }
                     })
                 })

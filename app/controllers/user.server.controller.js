@@ -153,30 +153,48 @@ exports.createBusinessOwner = function (req, res) {
         res.status(400).send({message: 'Email is Required!'})
     } else if (req.body.password === undefined || req.body.confirmPassword === undefined) {
         res.status(400).send({message: 'Password is Required!'})
-    } else if (req.body.password === req.body.confirmPassword ) {
+    } else if (req.body.password !== req.body.confirmPassword) {
+        console.log(typeof req.body.password);
+        console.log(typeof req.body.confirmPassword);
+        console.log(req.body.password + ': '  + req.body.confirmPassword);
         res.status(400).send({message: 'Passwords do Not Match!'})
     } else {
-        var current_date = (new Date()).valueOf().toString();
-        var random = Math.random().toString();
-        var v = new user({
-            id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            businessId: req.body.businessId,
-            businesses: req.body.businesses,
-            roles: ['businessOwner'],
-            createdDate: current_date
-        });
-        v.save(function (err, user) {
+
+        user.findOne({email: req.body.email}).exec(function (err, foundUser){
             if (err) {
-                return res.status(400).send({
-                    message:  err
+                console.log('there was a problem checking email');
+            } else if (foundUser) {
+                console.log('found user with email');
+
+                res.status(400).send({message: 'User with that email already exists!'})
+
+            } else if (!foundUser) {
+                console.log('did NOT find user with email');
+                var current_date = (new Date()).valueOf().toString();
+                var random = Math.random().toString();
+                var v = new user({
+                    id: crypto.createHash('sha1').update(current_date + random).digest('hex'),
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: req.body.password,
+                    businessId: req.body.businessId,
+                    businesses: req.body.businesses,
+                    roles: ['businessOwner'],
+                    createdDate: current_date
                 });
-            } else {
-                res.status(200).send({success: true, id: user.id});
+                v.save(function (err, user) {
+                    if (err) {
+                        return res.status(400).send({
+                            message:  err
+                        });
+                    } else {
+                        res.status(200).send({success: true, id: user.id});
+                    }
+                });
             }
         });
+
+
     }
 };
 

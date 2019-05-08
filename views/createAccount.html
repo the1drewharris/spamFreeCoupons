@@ -47,7 +47,8 @@
 
     <script src="js/ngToast.min.js"></script> <!-- ngToast -->
 
-    <script src="/modules/user/controllers/authentication.client.controller.js"></script>  <!-- need an authencitation controller for signin stuff-->
+    <script src="/modules/user/controllers/authentication.client.controller.js"></script>  <!-- need an authentication controller for signin stuff-->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </head>
 
@@ -117,10 +118,19 @@
             <div ng-show="credentials.password != credentials.confirmPassword" style="color:red">
                 Passwords must Match
             </div>
+            <div class="g-recaptcha" data-sitekey="6Lceg6IUAAAAABZyCqPZtG5dMO444FUiPlOOLMa2"></div>
             <div class="text-center">
-                <button type="submit" ng-disabled="credentials.password != credentials.confirmPassword || credentials.password == undefined || credentials.confirmPassword == undefined" class="btn btn-default btn-block">Create Account</button>
+                <button
+                        type="submit"
+                        ng-disabled="credentials.password != credentials.confirmPassword || credentials.password == undefined || credentials.confirmPassword == undefined"
+                        class="btn btn-default btn-block"
+                >
+                    Create Account
+                </button>
             </div>
+
         </fieldset>
+
     </form>
     <div class="help-login text-center">
         <p><em>Log in using your Anonymous Coupons Credentials</em></p>
