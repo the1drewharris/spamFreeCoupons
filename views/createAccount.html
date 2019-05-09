@@ -49,6 +49,8 @@
 
     <script src="/modules/user/controllers/authentication.client.controller.js"></script>  <!-- need an authentication controller for signin stuff-->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script type="text/javascript" src="js/angular-recaptcha.js"></script>
+
 
 </head>
 
@@ -84,11 +86,11 @@
                 <input id="name" name="name" type="text" class="form-control" ng-required="true" data-ng-model="credentials.name" aria-describedby="basic-addon1">
             </div>
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">email</span>
+                <span class="input-group-addon" >email</span>
                 <input id="email" name="email" type="email" class="form-control" ng-required="true" data-ng-model="credentials.email" aria-describedby="basic-addon1">
             </div>
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">password</span>
+                <span class="input-group-addon" >password</span>
                 <input id="password"
                        name="password"
                        type="password"
@@ -99,7 +101,7 @@
                        aria-describedby="basic-addon1">
             </div>
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">confirm password</span>
+                <span class="input-group-addon" >confirm password</span>
                 <input
                         id="confirmPassword"
                         name="confirmPassword"
@@ -118,11 +120,11 @@
             <div ng-show="credentials.password != credentials.confirmPassword" style="color:red">
                 Passwords must Match
             </div>
-            <div class="g-recaptcha" data-sitekey="6Lceg6IUAAAAABZyCqPZtG5dMO444FUiPlOOLMa2"></div>
+            <div vc-recaptcha data-ng-model="credentials.captcha" key="'6Lceg6IUAAAAABZyCqPZtG5dMO444FUiPlOOLMa2'"></div>
             <div class="text-center">
                 <button
                         type="submit"
-                        ng-disabled="credentials.password != credentials.confirmPassword || credentials.password == undefined || credentials.confirmPassword == undefined"
+                        ng-disabled="credentials.password != credentials.confirmPassword || credentials.password == undefined || credentials.confirmPassword == undefined || credentials.captcha == undefined"
                         class="btn btn-default btn-block"
                 >
                     Create Account

@@ -29,7 +29,8 @@
     "superagent": "^2.2.0",
     "swig": "^1.4.2",
     "twilio": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "request": "*"
   },
   "devDependencies": {
     "jasmine": "*",

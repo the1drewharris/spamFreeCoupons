@@ -9,10 +9,10 @@ if (IEVersion <= 9){
 //d.className = d.className + "show";
 }
 
-var users = angular.module('users',['ngAnimate','ngMaterial']);
+var users = angular.module('users',['ngAnimate','ngMaterial','vcRecaptcha']);
 
-users.controller('AuthenticationController',['$scope','$http','$log','$location','$rootScope',
-    function($scope,$http,$log,$location,$rootScope) {
+users.controller('AuthenticationController',['$scope','$http','$log','$location','$rootScope','vcRecaptchaService',
+    function($scope,$http,$log,$location,$rootScope, vcRecaptchaService) {
 
 //This block of code checks for the browser version, and if not IE9, injects Angular Material
         var ua = window.navigator.userAgent;
@@ -54,7 +54,10 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
         ///// AUTHENICATION FUNCTIONS ///////////////
 
         $scope.createAccount = function() {
+
             delete $scope.error;
+
+            console.dir($scope.credentials);
 
             $http.post($scope.env + '/user/createBusinessOwner', $scope.credentials)
                 .success(function () {
