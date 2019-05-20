@@ -1242,6 +1242,13 @@ core.controller('coreController',[
 
         $scope.doNothing = function () {};
 
+        $scope.openPayment = function () {
+
+            if ($scope.match === false) {
+                // run ecomerse stuff
+            }
+
+        };
 
         $scope.checkRoles = function(Role, callback) {
 

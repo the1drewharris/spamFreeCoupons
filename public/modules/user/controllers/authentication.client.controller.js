@@ -92,8 +92,10 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
                     response.roles.forEach(function(role) {
                         if (role === "admin") {
                             window.location.href = $scope.env + '/#/admin/home';
+                            location.reload();
                         } else if (role === "businessOwner") {
                             window.location.href = $scope.env + '/#/businessOwner/home';
+                            location.reload();
                         }
                     })
                 })

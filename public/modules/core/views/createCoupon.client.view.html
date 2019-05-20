@@ -2,7 +2,8 @@
     <div>
         <h1>Create Coupon</h1>
     </div>
-    <div ng-controller="coreController as coupon">
+    <div ng-controller="coreController">
+        <div ng-init="checkRoles('active', openPayment)"></div>
         <form>
             Title*: <input title="title" type="text" ng-model="coupon.title" ng-required="true"><br>
             Description*: <br><input name="description" ng-model="coupon.description" ng-required="true"><br> <!-- TODO: make a text area -->
