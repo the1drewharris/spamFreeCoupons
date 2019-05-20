@@ -42,7 +42,29 @@ Install nodejs
 3: pull project from git
 -----
 
-github url:
+install git
 
-``https://github.com/the1drewharris/anonymousCoupons.git``
+``sudo apt install git-all``
 
+cd into the file where you want to store the project
+
+``cd /home/user/my_project``
+
+clone repository:
+
+``git clone https://github.com/the1drewharris/anonymousCoupons.git``
+
+4: run project
+-----
+
+cd to project folder
+
+``cd /home/user/my_project/anonymousCoupons``
+
+to run mongo run the command:
+
+``mongod``
+
+then start node with:
+
+``node server.js``
