@@ -650,6 +650,18 @@ core.controller('coreController',[
             ]);
         };
 
+        $scope.resendCode = function () {
+
+            businessesCalls.sendCode($scope.business).then(
+                function (res) {
+
+                },
+                function (err) {
+                    console.error('Error sending verifyCode for business : ' + JSON.stringify(err.data.message));
+                }
+            )
+        };
+
         $scope.finishClaimBusiness = function (verifyCode) {
 
             var id = $routeParams.id;

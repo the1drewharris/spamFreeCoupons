@@ -14,6 +14,12 @@
             Twitter: {{business.twitter}}<br>
         </div>
         <div>
+            We have called your business via the phone number above with your verification code.<br>
+            If you missed our call please click the button below to have us call you again.<br>
+
+        </div>
+        <md-button ng-click="resendCode()">send code again</md-button>
+        <div>
             <form>
                 <input placeholder="Verify Code" ng-model="form.submitCode"><br>
                 <md-button type="submit" ng-click="finishClaimBusiness(form.submitCode)">Submit</md-button>
