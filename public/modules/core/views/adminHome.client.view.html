@@ -6,7 +6,7 @@
         <md-button ng-init="checkAuth()" ng-click="logout()"><i class="fas fa-user"></i> Logout</md-button> -->
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
-            <input title="Search" ng-change="refreshData(search)" ng-model="search">
+            <input title="Search" ng-change="refreshDataBO(search)" ng-model="search">
         </md-input-container>
         <div ui-grid="businessOwnersGridOptions" class="grid"></div>
     </div>

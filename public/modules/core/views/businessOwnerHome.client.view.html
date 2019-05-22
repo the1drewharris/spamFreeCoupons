@@ -4,7 +4,7 @@
         <h1>Businesses</h1>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
-            <input title="Search" ng-change="refreshData(search)" ng-model="search">
+            <input title="Search" ng-change="refreshDataCB(search)" ng-model="search">
         </md-input-container>
         <div ui-grid="claimedBusinessGridOptions" class="grid"></div>
     </div>

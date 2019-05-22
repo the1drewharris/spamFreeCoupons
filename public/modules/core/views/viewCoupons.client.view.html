@@ -3,7 +3,7 @@
         <h1>Coupons</h1>
         <md-input-container flex>
             <label><i class="fa fa-search"></i>Search</label>
-            <input title="Search" ng-change="refreshData(search)" ng-model="search">
+            <input title="Search" ng-change="refreshDataAC(search)" ng-model="search">
         </md-input-container>
         <div ng-init="checkRoles('admin', couponControl)" ui-grid="allCouponsGridOptions" class="grid"></div>
     </div>

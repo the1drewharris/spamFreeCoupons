@@ -310,11 +310,61 @@ core.controller('coreController',[
             $scope.openPage('signIn/business/' + id)
         };
 
-        $scope.refreshData = function (keyword) {
-            $scope.gridOptions.data = $scope.businesses;
+        $scope.refreshDataUB = function (keyword) {
+            $scope.unclaimedBusinessGridOptions.data = $scope.businesses;
             while (keyword) {
                 var oSearchArray = keyword.split(' ');
-                $scope.gridOptions.data = $filter('filter')($scope.gridOptions.data, oSearchArray[0], undefined);
+                $scope.unclaimedBusinessGridOptions.data = $filter('filter')($scope.unclaimedBusinessGridOptions.data, oSearchArray[0], undefined);
+                oSearchArray.shift();
+                keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';
+            }
+        };
+
+        $scope.refreshDataB = function (keyword) {
+            $scope.businessGridOptions.data = $scope.businesses;
+            while (keyword) {
+                var oSearchArray = keyword.split(' ');
+                $scope.businessGridOptions.data = $filter('filter')($scope.businessGridOptions.data, oSearchArray[0], undefined);
+                oSearchArray.shift();
+                keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';
+            }
+        };
+
+        $scope.refreshDataAC = function (keyword) {
+            $scope.allCouponsGridOptions.data = $scope.coupons;
+            while (keyword) {
+                var oSearchArray = keyword.split(' ');
+                $scope.allCouponsGridOptions.data = $filter('filter')($scope.allCouponsGridOptions.data, oSearchArray[0]);
+                oSearchArray.shift();
+                keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';
+            }
+        };
+
+        $scope.refreshDataBC = function (keyword) {
+            $scope.businessCouponsGridOptions.data = $scope.coupons;
+            while (keyword) {
+                var oSearchArray = keyword.split(' ');
+                $scope.businessCouponsGridOptions.data = $filter('filter')($scope.businessCouponsGridOptions.data, oSearchArray[0]);
+                oSearchArray.shift();
+                keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';
+            }
+        };
+
+        $scope.refreshDataCB = function (keyword) {
+            $scope.claimedBusinessGridOptions.data = $scope.businesses;
+            while (keyword) {
+                var oSearchArray = keyword.split(' ');
+                $scope.claimedBusinessGridOptions.data = $filter('filter')($scope.claimedBusinessGridOptions.data, oSearchArray[0], undefined);
+                oSearchArray.shift();
+                keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';
+            }
+        };
+
+        $scope.refreshDataBO = function (keyword) {
+            $scope.businessOwnersGridOptions.data = $scope.businessOwners;
+            while (keyword) {
+                var oSearchArray = keyword.split(' ');
+                $scope.businessOwnersGridOptions.data = $filter('filter')($scope.businessOwnersGridOptions.data, oSearchArray[0]);
                 oSearchArray.shift();
                 keyword = (oSearchArray.length !== 0) ? oSearchArray.join(' ') : '';
             }
@@ -734,24 +784,38 @@ core.controller('coreController',[
         ///// Coupon FUNCTIONS ///////////////
 
         $scope.checkFrequency = function(repeatFrequency, day) {
-            var state = true;
-            repeatFrequency.forEach(foo);
-            function foo(item){
-                if (item === day) {
-                    state = false
-                }
+            if (repeatFrequency !== undefined) {
+                var state = true;
+                repeatFrequency.forEach(
+                    function (item){
+                        if (item === day) {
+                            state = false
+                        }
+                    }
+                );
+            } else {
+                console.log("repeatFrequency undefined");
+                state = false
             }
+
             return state
         };
 
         $scope.checkFrequencyMatch = function(repeatFrequency, day) {
-            var state = false;
-            repeatFrequency.forEach(foo);
-            function foo(item){
-                if (item === day) {
-                    state = true
-                }
+            if (repeatFrequency !== undefined) {
+                var state = false;
+                repeatFrequency.forEach(
+                    function (item){
+                        if (item === day) {
+                            state = true
+                        }
+                    }
+                );
+            } else {
+                console.log("repeatFrequency undefined");
+                state = false
             }
+
             return state
         };
 

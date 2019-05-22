@@ -2,15 +2,24 @@
     <div ng-controller="coreController" ng-init="checkRoles('admin', doNothing)">
         <h1 ng-if="match">Businesses</h1>
         <h1 ng-if="!match">Claim Your Business</h1>
-        <md-input-container flex>
-            <label><i class="fa fa-search"></i>Search</label>
-            <input title="Search" ng-change="refreshData(search)" ng-model="search">
-        </md-input-container>
+
 
         <div ng-if="match">
+
+            <md-input-container flex>
+                <label><i class="fa fa-search"></i>Search</label>
+                <input title="Search" ng-change="refreshDataB(search)" ng-model="search">
+            </md-input-container>
+
             <div ng-init="getBusinesses()" ui-grid="businessGridOptions" class="grid"></div>
         </div>
         <div ng-if="!match">
+
+            <md-input-container flex>
+                <label><i class="fa fa-search"></i>Search</label>
+                <input title="Search" ng-change="refreshDataUB(search)" ng-model="search">
+            </md-input-container>
+
             <div ng-init="getUnclaimedBusinesses()" ui-grid="unclaimedBusinessGridOptions" class="grid"></div>
         </div>
 
