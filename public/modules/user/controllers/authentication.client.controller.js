@@ -59,6 +59,8 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
 
             console.dir($scope.credentials);
 
+            $scope.credentials.email = $scope.credentials.email.toLowerCase();
+
             $http.post($scope.env + '/user/createBusinessOwner', $scope.credentials)
                 .success(function () {
                     $scope.signIn(false);
@@ -73,6 +75,7 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
         $scope.signIn = function(reload) {
             delete $scope.error;
             console.log('in signIn');
+            $scope.credentials.email = $scope.credentials.email.toLowerCase();
             $http.post($scope.env + '/user/signIn', $scope.credentials)
                 .success(function(response) {
 
