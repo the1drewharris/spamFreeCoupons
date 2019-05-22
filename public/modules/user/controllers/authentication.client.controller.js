@@ -61,7 +61,7 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
 
             $http.post($scope.env + '/user/createBusinessOwner', $scope.credentials)
                 .success(function () {
-                    $scope.signIn();
+                    $scope.signIn(false);
                 })
                 .error(function (response) {
                     console.dir("error: " + response.message);
@@ -70,7 +70,7 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
 
         };
 
-        $scope.signIn = function() {
+        $scope.signIn = function(reload) {
             delete $scope.error;
             console.log('in signIn');
             $http.post($scope.env + '/user/signIn', $scope.credentials)
@@ -92,10 +92,14 @@ users.controller('AuthenticationController',['$scope','$http','$log','$location'
                     response.roles.forEach(function(role) {
                         if (role === "admin") {
                             window.location.href = $scope.env + '/#/admin/home';
-                            location.reload();
+                            if (reload) {
+                                location.reload();
+                            }
                         } else if (role === "businessOwner") {
                             window.location.href = $scope.env + '/#/businessOwner/home';
-                            location.reload();
+                            if (reload) {
+                                location.reload();
+                            }
                         }
                     })
                 })
