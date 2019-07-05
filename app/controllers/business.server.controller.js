@@ -239,7 +239,7 @@ exports.sendCode = function (req, res) {
             console.log('in send code function for bizId: ' + req.params.id + ' With code: ' + businessCode);
             client.calls.create({
                     url: 'https://handler.twilio.com/twiml/EH709db3cd5812c6bf1722fe5f6811eddb?code=' +  businessCode,
-                    to: '+19188042101',
+                    to: '+1' + req.params.phone,
                     from: '+19189927111'
                 },
                 function (err) {
