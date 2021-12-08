@@ -1,4 +1,4 @@
-AnonymousCoupons Setup
+Spam Free Coupons Setup
 ======
 
 Goal
