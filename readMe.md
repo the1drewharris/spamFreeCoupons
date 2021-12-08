@@ -52,14 +52,14 @@ cd into the file where you want to store the project
 
 clone repository:
 
-``git clone https://github.com/the1drewharris/anonymousCoupons.git``
+``git clone https://github.com/the1zachharris/spamFreeCoupons.git``
 
 4: run project
 -----
 
 cd to project folder
 
-``cd /home/user/my_project/anonymousCoupons``
+``cd /home/user/my_project/spamFreeCoupons``
 
 to run mongo run the command:
 
