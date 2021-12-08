@@ -3,7 +3,7 @@ Spam Free Coupons Setup
 
 Goal
 ------
-Step by step instructions for cloud deployment of Anonymous Coupons app.
+Step by step instructions for cloud deployment of Spam Free Coupons app.
 
 1: download and install Mongodb
 ------
